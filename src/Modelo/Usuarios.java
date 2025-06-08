@@ -1,10 +1,10 @@
 package Modelo;
 
 import Interfaces.IServicioPrestamos;
+import Interfaces.IServiciosRecursos;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 
 
 /**
@@ -45,7 +45,7 @@ abstract class Usuario {
     }
 }
 
-class Alumno extends Usuarios implements IServicioPrestamos {
+class Alumno extends Usuario implements IServicioPrestamos {
     private String carrera;
 
     public Alumno(String id_codigo, String contraseña, String nombre, String apellido, String carrera) {
