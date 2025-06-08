@@ -5,7 +5,6 @@
 package Interfaces;
 
 /**
- *
  * @author Dayanna
  */
 public interface IServicioPrestamos {
