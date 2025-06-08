@@ -1,0 +1,47 @@
+
+package Modelo;
+
+public class ArchivoDigital extends Material {
+    private String formato;
+    private String ruta;
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+    
+    public ArchivoDigital(String codigo, String nombre, String estado, String autor, int añoPublicacion,
+                          String formato, String ruta) {
+        super(codigo, nombre, estado, autor, añoPublicacion);
+        this.formato = formato;
+        this.ruta = ruta;
+    }
+
+    public void abrir() {
+        System.out.println("Abriendo archivo digital desde: " + ruta);
+    }
+
+    public void cerrar() {
+        System.out.println("Cerrando archivo digital.");
+    }
+
+    public void descargar() {
+        System.out.println("Descargando archivo digital...");
+    }
+
+    @Override
+    public void mostrarInfo() {
+        System.out.println("Archivo Digital: " + nombre + " [" + formato + "] en " + ruta);
+    }
+}
