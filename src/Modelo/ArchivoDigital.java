@@ -1,11 +1,13 @@
 
 package Modelo;
 
+import java.util.Date;
+
 public class ArchivoDigital extends Material {
     private String formato;
     private String ruta;
 
-    public ArchivoDigital(String codigo, String nombre, String estado, String autor, java.util.Date fechaPublicacion,
+    public ArchivoDigital(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
                           String formato, String ruta) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
         this.formato = formato;

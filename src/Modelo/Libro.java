@@ -1,12 +1,14 @@
 
 package Modelo;
 
+import java.util.Date;
+
 public class Libro extends Material {
     private boolean disponibilidad;
     private String titulo;
     private String genero;
 
-    public Libro(String codigo, String nombre, String estado, String autor, java.util.Date fechaPublicacion,
+    public Libro(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
                  boolean disponibilidad, String titulo, String genero) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
         this.disponibilidad = disponibilidad;

@@ -1,13 +1,14 @@
 
 package Modelo;
 
+import java.util.Date;
 
 public class ArchivoMultimedia extends Material {
     private double tamaño;
     private double duracion;
     private String formato;
 
-    public ArchivoMultimedia(String codigo, String nombre, String estado, String autor, java.util.Date fechaPublicacion,
+    public ArchivoMultimedia(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
                              double tamaño, double duracion, String formato) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
         this.tamaño = tamaño;
