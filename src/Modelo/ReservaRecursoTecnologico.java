@@ -4,6 +4,7 @@ public class ReservaRecursoTecnologico extends Reserva {
     private String tipoReserva;
     private String IDcodigo;
     private RecursoTecnologico recursoTecnologico;
+    
 
     public ReservaRecursoTecnologico(String tipoReserva, String IDcodigo, RecursoTecnologico recursoTecnologico) {
         this.tipoReserva = tipoReserva;

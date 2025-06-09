@@ -13,7 +13,7 @@ public class Computadora extends RecursoTecnologico implements IBloqueo {
         this.cpu = cpu;
         this.bloqueada = false;
     }
-
+    
     @Override
     public void bloquear() {
         bloqueada = true;

@@ -1,6 +1,5 @@
 package Modelo;
 
-
 import Modelo.RecursoTecnologico;
 
 public class Tablet extends RecursoTecnologico {

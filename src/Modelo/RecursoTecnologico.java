@@ -2,9 +2,9 @@ package Modelo;
 
 public class RecursoTecnologico {
     String IDcodigo;
-
+//
     public boolean VerificarDisponibilidad() {
-        return true; // simula disponibilidad
+        return true; 
     }
 
     public String getIDcodigo() {
