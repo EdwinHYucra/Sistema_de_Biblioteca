@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package Interfaces;
 
 /**
- *
- * @author ehuan
+ * @author Dayanna
  */
-public class clsUsuario {
-    
+public interface IServicioPrestamos {
+    boolean validarDisponibilidadReserva();
+    boolean solicitarReserva();
+    void cancelarReserva();
 }
