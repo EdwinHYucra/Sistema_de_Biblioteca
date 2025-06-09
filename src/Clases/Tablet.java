@@ -1,6 +1,6 @@
-package Modelo;
+package Clases;
 
-import Modelo.RecursoTecnologico;
+import Clases.RecursoTecnologico;
 
 public class Tablet extends RecursoTecnologico {
     private String modelo;
