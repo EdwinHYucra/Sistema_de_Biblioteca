@@ -1,9 +1,17 @@
 package Modelo;
 
 public class RecursoTecnologico {
-    protected String IDcodigo;
+    String IDcodigo;
 
-    public boolean verificarDisponibilidad() {
-        return true; // Simulación básica
+    public boolean VerificarDisponibilidad() {
+        return true; // simula disponibilidad
+    }
+
+    public String getIDcodigo() {
+        return IDcodigo;
+    }
+
+    public void setIDcodigo(String IDcodigo) {
+        this.IDcodigo = IDcodigo;
     }
 }
