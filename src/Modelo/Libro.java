@@ -6,9 +6,9 @@ public class Libro extends Material {
     private String titulo;
     private String genero;
 
-    public Libro(String codigo, String nombre, String estado, String autor, int añoPublicacion,
+    public Libro(String codigo, String nombre, String estado, String autor, java.util.Date fechaPublicacion,
                  boolean disponibilidad, String titulo, String genero) {
-        super(codigo, nombre, estado, autor, añoPublicacion);
+        super(codigo, nombre, estado, autor, fechaPublicacion);
         this.disponibilidad = disponibilidad;
         this.titulo = titulo;
         this.genero = genero;
@@ -18,28 +18,23 @@ public class Libro extends Material {
         return disponibilidad;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
     public void setDisponibilidad(boolean disponibilidad) {
         this.disponibilidad = disponibilidad;
+    }
+
+    public String getTitulo() {
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public String getGenero() {
+        return genero;
     }
 
-    @Override
-    public void mostrarInfo() {
-        System.out.println("Libro: " + titulo + " (" + genero + ") - " + (disponibilidad ? "Disponible" : "No disponible"));
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 }

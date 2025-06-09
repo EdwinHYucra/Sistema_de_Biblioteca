@@ -1,10 +1,19 @@
 
 package Modelo;
 
+
 public class ArchivoMultimedia extends Material {
     private double tamaño;
     private double duracion;
     private String formato;
+
+    public ArchivoMultimedia(String codigo, String nombre, String estado, String autor, java.util.Date fechaPublicacion,
+                             double tamaño, double duracion, String formato) {
+        super(codigo, nombre, estado, autor, fechaPublicacion);
+        this.tamaño = tamaño;
+        this.duracion = duracion;
+        this.formato = formato;
+    }
 
     public double getTamaño() {
         return tamaño;
@@ -29,15 +38,9 @@ public class ArchivoMultimedia extends Material {
     public void setFormato(String formato) {
         this.formato = formato;
     }
- 
-    public ArchivoMultimedia(String codigo, String nombre, String estado, String autor, int añoPublicacion,
-                             double tamaño, double duracion, String formato) {
-        super(codigo, nombre, estado, autor, añoPublicacion);
-        this.tamaño = tamaño;
-        this.duracion = duracion;
-        this.formato = formato;
-    }
 
+    
+    
     public void reproducir() {
         System.out.println("Reproduciendo archivo multimedia...");
     }
@@ -48,10 +51,5 @@ public class ArchivoMultimedia extends Material {
 
     public void descargar() {
         System.out.println("Descargando archivo multimedia...");
-    }
-
-    @Override
-    public void mostrarInfo() {
-        System.out.println("Archivo Multimedia: " + nombre + " [" + formato + "] - " + tamaño + "MB, " + duracion + "min");
     }
 }
