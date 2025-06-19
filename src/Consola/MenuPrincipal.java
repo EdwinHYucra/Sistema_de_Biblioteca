@@ -8,8 +8,12 @@ public class MenuPrincipal {
     private Scanner scanner;
     private Usuario usuario;
 
-    public MenuPrincipal(Scanner scanner, Usuario usuario) {
+    public MenuPrincipal() {
         this.scanner = new Scanner(System.in);
+        //this.usuario = usuario;
+    }
+    public MenuPrincipal(Scanner scanner, Usuario usuario) {
+        this.scanner = scanner;
         this.usuario = usuario;
     }
 
@@ -94,7 +98,7 @@ public class MenuPrincipal {
                     System.out.println("Devolviendo libro...");
                     break;
                 case 5:
-                    usuario.cerrarSesion();
+                    //usuario.cerrarSesion();
                     return;
                 default:
                     System.out.println("Opción inválida.");
@@ -128,7 +132,7 @@ public class MenuPrincipal {
                     System.out.println("Buscar usuario...");
                     break;
                 case 5:
-                    usuario.cerrarSesion();
+                    //usuario.cerrarSesion();
                     return;
                 default:
                     System.out.println("Opción inválida.");
@@ -166,7 +170,7 @@ public class MenuPrincipal {
                     System.out.println("Ver reportes...");
                     break;
                 case 6:
-                    usuario.cerrarSesion();
+                    //usuario.cerrarSesion();
                     return;
                 default:
                     System.out.println("Opción inválida.");
