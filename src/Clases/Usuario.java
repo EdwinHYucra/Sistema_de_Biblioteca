@@ -2,12 +2,12 @@ package Clases;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import Interfaces.IAutenticacion;
 
 /**
  * @author Dayanna
  */
-public abstract class Usuario {
+public abstract class Usuario implements IAutenticacion {
     protected String id_codigo;
     protected String contraseña;
     protected String nombre;

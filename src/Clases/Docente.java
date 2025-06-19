@@ -6,12 +6,23 @@ package Clases;
 
 import Interfaces.IServicioPrestamos;
 
-/**
- *
- * @author Dayanna
- */
 public class Docente extends Usuario implements IServicioPrestamos {
+
     private String especialidad;
+
+    public Docente(String id_codigo, String contraseña) {
+        this.id_codigo = id_codigo;
+        this.contraseña = contraseña;
+        this.tipoDeUser = "Docente";
+    }
+
+    //Constructor de Prueba
+    public Docente(String id_codigo, String contraseña, String nombre) {
+        this.id_codigo = id_codigo;
+        this.contraseña = contraseña;
+        this.nombre = nombre;
+        this.tipoDeUser = "Docente";
+    }
 
     public Docente(String id_codigo, String contraseña, String nombre, String apellido, String especialidad) {
         this.id_codigo = id_codigo;
@@ -22,8 +33,13 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.especialidad = especialidad;
     }
 
-    public String getEspecialidad() { return especialidad; }
-    public void setEspecialidad(String especialidad) { this.especialidad = especialidad; }
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
 
     public boolean validarDisponibilidadReserva() {
         return !estaPenalizado();
@@ -40,5 +56,19 @@ public class Docente extends Usuario implements IServicioPrestamos {
     public void mostrarInfo() {
         System.out.println("Docente: " + nombre + " " + apellido + ", Especialidad: " + especialidad);
     }
+
+    @Override
+    public void verificarCredenciales() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public void bloquearUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public void cerrarSesion() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
 }
-    
