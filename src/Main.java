@@ -1,19 +1,16 @@
-
 import Clases.*;
 import Consola.MenuPrincipal;
+import Acceso_Datos.ConexionBD;
 import java.util.Scanner;
 
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        /*Scanner scanner = new Scanner(System.in);
+        //ConexionBD.conectar();
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Ingrese su código de usuario: ");
+        /*System.out.print("Ingrese su código de usuario: ");
         String codigo = scanner.nextLine();
 
         System.out.print("Ingrese su contraseña: ");
@@ -24,5 +21,4 @@ public class Main {
         MenuPrincipal menu = new MenuPrincipal();
         menu.iniciar();
     }
-
 }
