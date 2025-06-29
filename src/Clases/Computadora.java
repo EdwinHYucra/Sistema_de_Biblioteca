@@ -1,4 +1,6 @@
-package Modelo;
+package Clases;
+
+import Interfaces.IBloqueo;
 
 public class Computadora extends RecursoTecnologico implements IBloqueo {
     private String ram;
@@ -14,24 +16,24 @@ public class Computadora extends RecursoTecnologico implements IBloqueo {
         this.bloqueada = false;
     }
     
-    @Override
+
     public void bloquear() {
         bloqueada = true;
         System.out.println("Computadora bloqueada.");
     }
 
-    @Override
     public void desbloquear() {
         bloqueada = false;
         System.out.println("Computadora desbloqueada.");
     }
 
-    @Override
+    
     public boolean estaBloqueada() {
         return bloqueada;
     }
-
-    public void verificarBloqueo() {
+    
+    @Override
+    public void restringirAcceso() {
         if (bloqueada) {
             System.out.println("La computadora está bloqueada.");
         } else {
