@@ -1,8 +1,11 @@
 package Consola;
 
+import Clases.Material;
+import Clases.RecursoTecnologico;
 import Clases.Usuario;
 
 import Controladores.LoginController;
+import java.util.List;
 
 import java.util.Scanner;
 
@@ -50,7 +53,7 @@ public class MenuPrincipal {
         }
     }
 
-    private static void mostrarMenu(Usuario usuario) {
+    public static void mostrarMenu(Usuario usuario) {
         
         switch (usuario.getTipoDeUser()) {
             case "Administrador":
@@ -76,8 +79,7 @@ public class MenuPrincipal {
 
         while (activo) {
             System.out.println("\n=== MENÚ ADMINISTRADOR ===");
-            System.out.println("1. Modulo Material");
-            System.out.println("2. Gestionar recursos");
+            System.out.println("1. Agregar Material");
             System.out.println("3. Exportar datos");
             System.out.println("9. Cerrar sesión");
 
@@ -90,7 +92,7 @@ public class MenuPrincipal {
                     admin.agregarMaterial();
                     break;
                 case 2:
-                    admin.gestionarRecursos();
+                    //admin.gestionarRecursos();
                     break;
                 case 3:
                     admin.exportarInfo();
