@@ -166,8 +166,8 @@ private static void mostrarMenuDocente(Clases.Docente docente) {
                 docente.verCatalogoLibros();
                 System.out.print("Ingrese el código del libro que desea reservar: ");
                 String codigoSeleccionado = sc.nextLine();
-              
-                break;
+                docente.solicitarReservaLibro(codigoSeleccionado);
+                break;  
             case 3:
                 // docente.verReservas(); 
                 break;

@@ -12,7 +12,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
 
     private String especialidad;
     private List<ReservaLibro> reservas = new ArrayList<>();
-    private List<Libro> salaDocente = new ArrayList<>();
+    private List<Libro> listaLibros; 
 
     public void agregarReserva(ReservaLibro RLibro) {
         reservas.add(RLibro);
@@ -38,6 +38,27 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.apellido = apellido;
         this.tipoDeUser = "Docente";
         this.especialidad = especialidad;
+         this.listaLibros = new ArrayList<>();
+        listaLibros.add(new Libro(
+                "M001",
+                "Programación en Java",
+                "Disponible",
+                "James Gosling",
+                new java.util.Date(),
+                true,
+                "Programación en Java",
+                "Programación"
+        ));
+        listaLibros.add(new Libro(
+                "M002",
+                "Estructuras de Datos",
+                "Disponible",
+                "Robert Lafore",
+                new java.util.Date(),
+                true,
+                "Estructuras de Datos",
+                "Computación"
+        ));
     }
 
     public Docente(String id_codigo, String contraseña, String nombre, String apellido) {
@@ -46,6 +67,27 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.nombre = nombre;
         this.apellido = apellido;
         this.tipoDeUser = "Docente";
+        this.listaLibros = new ArrayList<>();
+        listaLibros.add(new Libro(
+                "M001",
+                "Programación en Java",
+                "Disponible",
+                "James Gosling",
+                new java.util.Date(),
+                true,
+                "Programación en Java",
+                "Programación"
+        ));
+        listaLibros.add(new Libro(
+                "M002",
+                "Estructuras de Datos",
+                "Disponible",
+                "Robert Lafore",
+                new java.util.Date(),
+                true,
+                "Estructuras de Datos",
+                "Computación"
+        ));
     }
 
     public String getEspecialidad() {
@@ -55,19 +97,18 @@ public class Docente extends Usuario implements IServicioPrestamos {
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
     }
-
+/*
     public void agregarLibroASala(Libro libro) {
         salaDocente.add(libro);
     }
-
+*/
     public void verCatalogoLibros() {
-        List<Libro> lista = obtenerLibros();
 
         System.out.println("--- Catálogo de la sala del docente ---");
-        if (lista.isEmpty()) {
+        if (listaLibros.isEmpty()) {
             System.out.println("No hay libros en la sala.");
         } else {
-            for (Libro libro : lista) {
+            for (Libro libro : listaLibros) {
                 System.out.println("Código: " + libro.getCodigo() + " | Título: " + libro.getTitulo() + " | Disponibilidad: " + (libro.isDisponibilidad() ? "Disponible" : "No disponible"));
 
             }
@@ -81,10 +122,9 @@ public class Docente extends Usuario implements IServicioPrestamos {
 
     //@Override
     public boolean solicitarReservaLibro(String codigoLibro) {
-        List<Libro> lista = obtenerLibros();
         Libro libroRecep = null;
-        for (Libro libro : lista) {
-            if (libro.getCodigo() == codigoLibro){              
+        for (Libro libro : listaLibros) {
+            if (libro.getCodigo().equals(codigoLibro)){           
             libroRecep = libro;
             break;
             }
@@ -97,7 +137,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                             ReservaLibro reservaL = new ReservaLibro(null, libroRecep, "pendiente", LocalDate.now(),12.2, LocalTime.now(), this);
                             libroRecep.setDisponibilidad(false);
                             agregarReserva(reservaL); 
-                            System.out.println("✅ Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
+                            System.out.println("Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
                         } else {
                             System.out.println("Reserva cancelada.");
                         }
@@ -106,31 +146,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
 
     //Metodo de prueba
     public List<Libro> obtenerLibros() {
-        Libro libro1 = new Libro(
-                "M001",
-                "Programación en Java",
-                "Disponible",
-                "James Gosling",
-                new java.util.Date(),
-                true,
-                "Programación en Java",
-                "Programación"
-        );
-
-        Libro libro2 = new Libro(
-                "M002",
-                "Estructuras de Datos",
-                "Disponible",
-                "Robert Lafore",
-                new java.util.Date(),
-                true,
-                "Estructuras de Datos",
-                "Computación"
-        );
-        List<Libro> lista = new ArrayList();
-        lista.add(libro1);
-        lista.add(libro2);
-        return lista;
+        return listaLibros;
     }
 
     @Override
