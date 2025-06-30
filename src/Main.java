@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
 
         boolean salir = false;
 
@@ -39,6 +39,8 @@ public class Main {
                 default:
                     System.out.println("Opción no válida.");
             }
-        }
+        }*/
+             Recepcionista Rep = new Recepcionista("d001",  "123",  "gillermito" ) ;
+             MenuPrincipal.mostrarMenu(Rep);
     }
 }
