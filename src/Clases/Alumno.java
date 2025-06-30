@@ -7,15 +7,12 @@ import Interfaces.IServicioPrestamos;
 public class Alumno extends Usuario implements IServicioPrestamos {
     private String carrera;
     
-    public Alumno(String contraseña, String id_codigo){
-        this.id_codigo = id_codigo;
-        this.contraseña = contraseña;
-    }
     //Constructor de Prueba
-    public Alumno(String contraseña, String id_codigo, String nombre){
+    public Alumno(String contraseña, String id_codigo, String nombre,String apellido){
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.tipoDeUser = "Alumno";
     }
     public Alumno(String id_codigo, String contraseña, String nombre, String apellido, String carrera) {

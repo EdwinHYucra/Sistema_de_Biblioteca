@@ -17,10 +17,11 @@ public class Docente extends Usuario implements IServicioPrestamos {
     }
 
     //Constructor de Prueba
-    public Docente(String id_codigo, String contraseña, String nombre) {
+    public Docente(String id_codigo, String contraseña, String nombre,String apellido) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.tipoDeUser = "Docente";
     }
 

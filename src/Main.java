@@ -1,24 +1,44 @@
+
 import Clases.*;
 import Consola.MenuPrincipal;
-import Acceso_Datos.ConexionBD;
+import Acceso_Datos.*;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        //ConexionBD.conectar();
-        Scanner scanner = new Scanner(System.in);
 
-        /*System.out.print("Ingrese su código de usuario: ");
-        String codigo = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
 
-        System.out.print("Ingrese su contraseña: ");
-        String clave = scanner.nextLine();
+        boolean salir = false;
 
-        Usuario usuario = new Usuario(codigo, clave);*/
-        
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.iniciar();
+        while (!salir) {
+            System.out.println("=== SISTEMA DE BIBLIOTECA ===");
+            System.out.println("1. Iniciar sesión");
+            System.out.println("2. Salir");
+            System.out.print("Elige una opción: ");
+
+            String opcionStr = sc.nextLine();
+            int opcion;
+
+            try {
+                opcion = Integer.parseInt(opcionStr);
+            } catch (NumberFormatException e) {
+                System.out.println("Debes ingresar un número.");
+                continue;
+            }
+            switch (opcion) {
+                case 1:
+                    MenuPrincipal.iniciarLogin();
+                    break;
+                case 2:
+                    System.out.println("Gracias por usar el sistema.");
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        }
     }
 }
