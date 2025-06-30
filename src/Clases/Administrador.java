@@ -519,4 +519,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             System.out.println("Error al exportar información: " + e.getMessage());
         }
     }
+
+    @Override
+    public void verificarReservas() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
