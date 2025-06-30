@@ -4,30 +4,13 @@
  */
 import java.util.*;
 
-// ------------------ CLASES BASE ------------------
-abstract class Usuario {
-    protected String id_codigo;
-    protected String contrasena;
-    protected String nombre;
-    protected String apellido;
-    protected String tipoDeUser;
-
-    public boolean iniciarSesion(String id, String clave) {
-        return this.id_codigo.equals(id) && this.contrasena.equals(clave);
-    }
-
-    public String getNombreCompleto() {
-        return nombre + " " + apellido;
-    }
-}
 
 interface IServicioPrestamos {
     boolean solicitarReserva(String nombreRecurso, int cantidad);
     void cancelarReserva();
     void mostrarInfo();
 }
-
-// ------------------ CLASES DE RECURSO ------------------
+ 
 abstract class Recurso {
     protected String nombre;
     protected String estado = "Disponible";
@@ -86,7 +69,6 @@ class Sala extends Recurso {
     }
 }
 
-// ------------------ RESERVA ------------------
 class Reserva {
     Recurso recurso;
     String estado; // Reservado, Usado, Devuelto, Vencido
@@ -103,8 +85,7 @@ class Reserva {
     public String getEstado() { return estado; }
     public String getNombreRecurso() { return recurso.getNombre(); }
 }
-
-// ------------------ ALUMNO ------------------
+ 
 class Alumno extends Usuario implements IServicioPrestamos {
     private List<Reserva> historial = new ArrayList<>();
     private List<Recurso> recursosDisponibles;
@@ -183,7 +164,6 @@ class Alumno extends Usuario implements IServicioPrestamos {
     }
 }
 
-// ------------------ MAIN ------------------
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
