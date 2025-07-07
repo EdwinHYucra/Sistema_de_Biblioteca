@@ -30,4 +30,8 @@ public class ReservaRecursoTecnologico extends Reserva {
     public void mostrarInfo(){
         System.out.println("Mostrando informacion del la clase padre como la del hijo");
     }
+
+    Object getRecurso() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
