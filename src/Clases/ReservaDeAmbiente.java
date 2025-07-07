@@ -6,13 +6,15 @@ package Clases;
  */
 
 import Interfaces.IBloqueo;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 /**
  *
  * @author user
  */
-public class ReservaDeAmbiente implements IBloqueo {
+public class ReservaDeAmbiente extends Reserva  implements IBloqueo {
     private String codigo;
     private int capacidadMax;
     private String estado = "Disponible";
@@ -20,13 +22,15 @@ public class ReservaDeAmbiente implements IBloqueo {
     private List<Alumno> listaAlumnos;
     private Sala sala;
 
-    public ReservaDeAmbiente(String codigo, int capacidad, int tiempoEnMinutos, Sala sala) {
+    public ReservaDeAmbiente(String codigo, int tiempoEnMinutos, Sala sala, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
+        super(fechaReserva, duracion, horaReserva, usuario);
+
         if (tiempoEnMinutos < 60 || tiempoEnMinutos > 120) {
             throw new IllegalArgumentException("El tiempo debe estar entre 60 y 120 minutos.");
         }
 
         this.codigo = codigo;
-        this.capacidadMax = capacidad;
+        this.capacidadMax = sala.getCapacidadMax();
         this.tiempoRestante = tiempoEnMinutos;
         this.sala = sala;
         this.listaAlumnos = new ArrayList<>();
@@ -98,5 +102,10 @@ public class ReservaDeAmbiente implements IBloqueo {
         estado = "Bloqueada";
         tiempoRestante = 0;
         System.out.println("Sala [" + codigo + "] bloqueada por tiempo expirado.");
+    }
+
+    @Override
+    public void mostrarInfo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
