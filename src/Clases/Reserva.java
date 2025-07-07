@@ -16,12 +16,15 @@ public abstract class Reserva {
     protected double duracion;
     protected LocalTime horaReserva;
     protected Usuario usuario;
+    protected String estado; //metodo nueovo
 
     public Reserva(LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
         this.fechaReserva = fechaReserva;
         this.duracion = duracion;
         this.horaReserva = horaReserva;
         this.usuario = usuario;
+        this.estado = "Pendiente"; //  Estado por defecto
+    
     }
     
     public LocalDate getFechaReserva() {
@@ -55,6 +58,16 @@ public abstract class Reserva {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    // nuevo met para estad
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    // Método abstracto común a todos los hijos
     /*
     public boolean verificarDisponivilidad(){
         System.out.println("Se esta verificando");

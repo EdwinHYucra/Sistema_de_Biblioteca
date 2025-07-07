@@ -14,4 +14,8 @@ public class RecursoTecnologico {
     public void setIDcodigo(String IDcodigo) {
         this.IDcodigo = IDcodigo;
     }
+
+    void mostrarInfo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
