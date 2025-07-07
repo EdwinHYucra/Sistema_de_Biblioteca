@@ -35,7 +35,6 @@ public class Recepcionista extends Usuario {
     public void mostrarInfo() {
         System.out.println("Recepcionista: " + nombre + " " + apellido);
     }
-// metodos recep
 public void validarReservaLibro(ReservaLibro reslibro) {
     if (reslibro != null && reslibro.getLibro() != null) {
         Libro libro = reslibro.getLibro();
@@ -62,23 +61,5 @@ public void validarReservaTecnologica(ReservaRecursoTecnologico resTECno) {
         System.out.println("Reserva de recurso tecnológico recepcionada para: " + resTECno.getUsuario().getNombre());
     } else {
         System.out.println("️ Recurso no disponible o reserva nula.");
-    }
-}
-
-
-    // Méto
-    @Override
-    public void verificarCredenciales() {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public void bloquearUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public void cerrarSesion() {
-        throw new UnsupportedOperationException("Not supported yet."); 
     }
 }

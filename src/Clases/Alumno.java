@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * @author Dayanna
- */
 public class Alumno extends Usuario implements IServicioPrestamos {
 
     private String carrera;

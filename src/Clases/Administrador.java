@@ -7,10 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;  
 
-/**
- *
- * @author Dayanna
- */
 public class Administrador extends Usuario implements IServiciosRecursos {
 
     public Administrador(String id_codigo, String contraseña) {

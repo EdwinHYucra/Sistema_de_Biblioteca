@@ -149,39 +149,43 @@ public class MenuPrincipal {
     }
 
     private static void mostrarMenuDocente(Clases.Docente docente) {
-        Scanner sc = new Scanner(System.in);
-        boolean activo = true;
+    Scanner sc = new Scanner(System.in);
+    boolean activo = true;
 
-        while (activo) {
-            System.out.println("\n=== MENÚ DOCENTE ===");
-            System.out.println("1. Ver información personal");
-            System.out.println("2. Consultar reservas");
-            System.out.println("3. Pedir material especial");
-            System.out.println("9. Cerrar sesión");
+    while (activo) {
+        System.out.println("\n=== MENÚ DOCENTE ===");
+        System.out.println("1. Ver información personal");
+        System.out.println("2. Reservar libro");
+        System.out.println("3. Ver mis reservas");
+        System.out.println("9. Cerrar sesión");
 
-            System.out.print("Opción: ");
-            int op = sc.nextInt();
-            sc.nextLine();
+        System.out.print("Opción: ");
+        int op = sc.nextInt();
+        sc.nextLine();
 
-            switch (op) {
-                case 1:
-                    docente.mostrarInfo();
-                    break;
-                case 2:
-                    System.out.println("Funcionalidad de consultar reservas (por implementar).");
-                    break;
-                case 3:
-                    System.out.println("Funcionalidad de pedir material especial (por implementar).");
-                    break;
-                case 9:
-                    System.out.println("Sesión cerrada.");
-                    activo = false;
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
-            }
+        switch (op) {
+            case 1:
+                docente.mostrarInfo();
+                break;
+            case 2:
+                // Mostrar catálogo
+                docente.verCatalogoLibros();
+                System.out.print("Ingrese el código del libro que desea reservar: ");
+                String codigoSeleccionado = sc.nextLine();
+                docente.solicitarReservaLibro(codigoSeleccionado);
+                break;  
+            case 3:
+                // docente.verReservas(); 
+                break;
+            case 9:
+                System.out.println("Sesión cerrada.");
+                activo = false;
+                break;
+            default:
+                System.out.println("Opción no válida.");
         }
     }
+}
 
         private static void mostrarMenuRecepcionista(Clases.Recepcionista recep) {
     Scanner sc = new Scanner(System.in);
@@ -265,4 +269,3 @@ public class MenuPrincipal {
         }
     }
 }
-
