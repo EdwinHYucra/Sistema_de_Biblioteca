@@ -7,10 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;  
 
-/**
- *
- * @author Dayanna
- */
 public class Administrador extends Usuario implements IServiciosRecursos {
 
     public Administrador(String id_codigo, String contraseña) {
@@ -176,6 +172,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             System.out.println("Genero: ");
             String genero = ad.nextLine();
             
+            //usuarioAD.agregarLibro()
             Libro libro = new Libro(codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero);
             
             System.out.println("\nLibro agregado correctamente:  ");
@@ -375,7 +372,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             System.out.print("Stock: ");
             int stock = Integer.parseInt(ad.nextLine());
 
-            Tablet tablet = new Tablet(IDcodigo, modelo, stock);
+            Tablet tablet = new Tablet(IDcodigo, modelo);
 
             System.out.println("\nTablet agregada correctamente:");
             tablet.mostrarInfo();
@@ -433,7 +430,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             String modelo = ad.nextLine();
             if (!modelo.isEmpty()) tablet.setModelo(modelo);
 
-            System.out.print("Nuevo stock: ");
+            /*System.out.print("Nuevo stock: ");
             String stockStr = ad.nextLine();
             if (!stockStr.isEmpty()) {
                 try {
@@ -441,7 +438,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 } catch (NumberFormatException e) {
                     System.out.println("Stock inválido. No se actualizó.");
                 }
-            }
+            }*/
 
         } else if (recursoEncontrado instanceof Computadora) {
             Computadora compu = (Computadora) recursoEncontrado;

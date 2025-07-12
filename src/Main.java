@@ -1,4 +1,3 @@
-
 import Clases.*;
 import Consola.MenuPrincipal;
 import Acceso_Datos.*;
@@ -10,8 +9,10 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        /*Scanner sc = new Scanner(System.in); 
 
+        Scanner sc = new Scanner(System.in);
+
+        /*Scanner sc = new Scanner(System.in); 
         boolean salir = false;
 
         while (!salir) {
@@ -39,11 +40,11 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opción no válida.");
-            }
-        } */
+            }*/
+
+
         Usuario usuario = new Administrador("FGEE", "EEEEE", "HOLI", "EFE");
         usuario.setTipoDeUser("Administrador");
         MenuPrincipal.mostrarMenu(usuario);
-        
     }
 }
