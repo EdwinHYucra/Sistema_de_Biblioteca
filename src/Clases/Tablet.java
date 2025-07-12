@@ -11,10 +11,10 @@ public class Tablet extends RecursoTecnologico {
         this.estado = "disponible";
     }
 
-    @Override
+    /*@Override
     public boolean VerificarDisponibilidad() {
         return stock > 0;
-    }
+    }*/
 
     public String getModelo() {
         return modelo;
@@ -24,18 +24,18 @@ public class Tablet extends RecursoTecnologico {
         this.modelo = modelo;
     }
 
-    public int getStock() {
+    /*public int getStock() {
         return stock;
     }
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
+    }*/
 
     public void mostrarInfo() {
         System.out.println("ID Código: " + IDcodigo);
         System.out.println("Modelo: " + modelo);
-        System.out.println("Stock: " + stock);
+        //System.out.println("Stock: " + stock);
         System.out.println("Disponible: " + (VerificarDisponibilidad() ? "Sí" : "No"));
     }
 }
