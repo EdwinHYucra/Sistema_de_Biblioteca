@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * @author Dayanna
- */
 public class Alumno extends Usuario implements IServicioPrestamos {
 
     private String carrera;
@@ -111,7 +108,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         
         // 2) Buscar la sala
         Sala sala1 = new Sala("SALA101", "Disponible",6);
-        ReservaDeAmbiente reservaAmb = new ReservaDeAmbiente(
+        /*ReservaDeAmbiente reservaAmb = new ReservaDeAmbiente(
             "RES001", // código de reserva
             5,        // capacidad máxima
             90,       // tiempo en minutos
@@ -156,7 +153,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         
         // 7) Mostrar estado de la reserva
         reservaAmb.verificarEstado();
-        System.out.println("Ha reservado la sala correctamente.");
+        System.out.println("Ha reservado la sala correctamente.");*/
     }
 
     public void ReservarRecursoTecnologico() {
@@ -183,7 +180,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
             switch (opcion) {
                 case 1:
 
-                    Tablet tablet1 = new Tablet("T001", "Samsung Galaxy Tab A8", 5);
+                    Tablet tablet1 = new Tablet("T001", "Samsung Galaxy Tab A8");
 
                     ReservaRecursoTecnologico rRecTecTap = new ReservaRecursoTecnologico("Computadora", "14625", tablet1, LocalDate.now(), 12.5, LocalTime.now(), this);
                     reservasRT.add(rRecTecTap);

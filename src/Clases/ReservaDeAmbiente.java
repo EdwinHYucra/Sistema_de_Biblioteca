@@ -4,17 +4,18 @@ package Clases;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 import Interfaces.IBloqueo;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author user
  */
-public class ReservaDeAmbiente extends Reserva  implements IBloqueo {
+public class ReservaDeAmbiente extends Reserva implements IBloqueo {
+
     private String codigo;
     private int capacidadMax;
     private String estado = "Disponible";
