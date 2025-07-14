@@ -34,4 +34,12 @@ public class ReservaRecursoTecnologico extends Reserva {
     Object getRecurso() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    void setFechaDevolucion(String fechaDevolucion) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getCodigo() {
+        return null;
+    }
 }

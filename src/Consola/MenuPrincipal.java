@@ -1,10 +1,12 @@
 package Consola;
 
+import Acceso_Datos.UsuarioDA;
 import Clases.*;
 
 import Controladores.LoginController;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -187,8 +189,92 @@ public class MenuPrincipal {
             }
         }
     }
+    public static void mostrarMenuRecepcionista(Recepcionista recep) {
+        Scanner sc = new Scanner(System.in);
+        boolean activo = true;
 
-    private static void mostrarMenuRecepcionista(Clases.Recepcionista recep) {
+        while (activo) {
+            System.out.println("\n=== MENÚ RECEPCIONISTA ===");
+            System.out.println("1. Validar reserva de libro");
+            System.out.println("2. Validar reserva de recurso tecnológico");
+            System.out.println("3. Validar reserva de ambiente");
+            System.out.println("4. Generar reporte");
+            System.out.println("5. Cerrar sesión");
+            System.out.print("Opción: ");
+            int op = sc.nextInt();
+            sc.nextLine(); // limpiar buffer
+
+            switch (op) {
+                case 1: {
+                    System.out.print("Ingrese el código de reserva del libro: ");
+                    String codigo = sc.nextLine();
+                    Reserva reserva = UsuarioDA.BuscarReserva(codigo);
+
+                    if (reserva instanceof ReservaLibro) {
+                        System.out.print("Ingrese fecha de devolución (yyyy-MM-dd): ");
+                        String fechaDev = sc.nextLine();
+                        recep.validarReservaLibro((ReservaLibro) reserva, fechaDev);
+                    } else {
+                        System.out.println(" No se encontró una reserva de libro con ese código.");
+                    }
+                    break;
+                }
+
+                case 2: {
+                    System.out.print("Ingrese el código de reserva tecnológica: ");
+                    String codigo = sc.nextLine();
+                    Reserva reserva = UsuarioDA.BuscarReserva(codigo);
+
+                    if (reserva instanceof ReservaRecursoTecnologico) {
+                        System.out.print("Ingrese fecha de devolución (yyyy-MM-dd): ");
+                        String fechaDev = sc.nextLine();
+                        recep.validarReservaTecnologica((ReservaRecursoTecnologico) reserva, fechaDev);
+                    } else {
+                        System.out.println(" No se encontró una reserva tecnológica con ese código.");
+                    }
+                    break;
+                }
+
+                case 3: {
+                    System.out.print("Ingrese el código de reserva de ambiente: ");
+                    String codigo = sc.nextLine();
+                    Reserva reserva = UsuarioDA.BuscarReserva(codigo);
+
+                    if (reserva instanceof ReservaDeAmbiente) {
+                        System.out.print("Ingrese fecha de devolución (yyyy-MM-dd): ");
+                        String fechaDev = sc.nextLine();
+                        recep.validarReservaAmbiente((ReservaDeAmbiente) reserva, fechaDev);
+                    } else {
+                        System.out.println(" No se encontró una reserva de ambiente con ese código.");
+                    }
+                    break;
+                }
+
+                case 4: {
+                    System.out.print("Ingrese fecha de inicio (yyyy-MM-dd): ");
+                    String fechaInicioStr = sc.nextLine();
+                    System.out.print("Ingrese fecha de fin (yyyy-MM-dd): ");
+                    String fechaFinStr = sc.nextLine();
+
+                    LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                    LocalDate fechaFin = LocalDate.parse(fechaFinStr, DateTimeFormatter.ISO_LOCAL_DATE);
+
+                   recep.generarReporte(fechaInicio, fechaFin);
+                    break;
+                }
+
+                case 5:
+                    System.out.println(" Sesión cerrada.");
+                    activo = false;
+                    break;
+
+                default:
+                    System.out.println(" Opción inválida.");
+            }
+        }
+    }
+
+    /*private static void mostrarMenuRecepcionista(Clases.Recepcionista recep) {
         Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
@@ -198,6 +284,7 @@ public class MenuPrincipal {
             System.out.println("2. Validar reserva de recurso tecnológico");
             System.out.println("3. Validar reserva de ambiente");
             System.out.println("4. Cerrar sesión");
+            System.out.println("5. Generar reporte");
             System.out.print("Opción: ");
             int op = sc.nextInt();
             sc.nextLine();
@@ -207,7 +294,7 @@ public class MenuPrincipal {
                     // Simulación: Reserva de Libro
                     Libro libro = new Libro("L001", "Cien Años de Soledad", "Disponible", "Gabriel García Márquez", new Date(), true, ",", "accion");
                     Usuario estudiante = new Alumno("EST123", "pass123", "Sofía", "López");
-                    ReservaLibro reservaLibro = new ReservaLibro(
+                    ReservaLibro reservaLibro = new ReservaLibro(//creo un scanner creas una variable donde vas almacenar ese codigo y ese codigo lo pasas en
                             LocalDate.now().plusDays(7), // Fecha devolución
                             libro,
                             "Pendiente", // Estado inicial
@@ -263,10 +350,13 @@ public class MenuPrincipal {
                     System.out.println("Sesión cerrada.");
                     activo = false;
                     break;
+               /* case 5:
+                    recep.generadorReporte();
+                    break;
 
                 default:
                     System.out.println("Opción no válida.");
             }
         }
-    }
+    }*/
 }

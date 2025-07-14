@@ -43,8 +43,10 @@ public class Main {
             }*/
 
 
-        Usuario usuario = new Administrador("FGEE", "EEEEE", "HOLI", "EFE");
-        usuario.setTipoDeUser("Administrador");
+        Usuario usuario = new Recepcionista ("FGEE", "EEEEE", "HOLI", "EFE");
+        usuario.setTipoDeUser("Recepcionista");
         MenuPrincipal.mostrarMenu(usuario);
+        ConexionBD.conectar();
     }
 }
+

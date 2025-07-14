@@ -49,4 +49,12 @@ public class ReservaLibro extends Reserva {
     public void mostrarInfo(){
         System.out.println("Mostrando informacion del la clase padre como la del hijo");
     }
+
+    void setFechaDevolucion(String fechaDevolucion) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getCodigo() {
+        return null;
+    }
 }

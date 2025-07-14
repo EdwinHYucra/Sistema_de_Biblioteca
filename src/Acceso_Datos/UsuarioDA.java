@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class UsuarioDA {
         return usuario;
     }
 
+   
     //Crud Libro
     // 1 Consultar
     public List<Libro> obtenerLibros() {
@@ -179,5 +181,38 @@ public class UsuarioDA {
     public boolean agregarReservaLibro(String id){
         return true;
     }
-    
+    public static List<ReservaLibro> reservasLibro = new ArrayList<>();
+    public static List<ReservaDeAmbiente> reservasAmbiente = new ArrayList<>();
+    public static List<ReservaRecursoTecnologico> reservasTecnologicas = new ArrayList<>();
+
+     public static Reserva BuscarReserva(String codigo) {
+        for (ReservaLibro r : reservasLibro) {
+        if (r.getCodigo().equalsIgnoreCase(codigo)) {
+            return r;
+        }
+    }
+    for (ReservaDeAmbiente r : reservasAmbiente) {
+        if (r.getCodigo().equalsIgnoreCase(codigo)) {
+            return r;
+        }
+    }
+    for (ReservaRecursoTecnologico r : reservasTecnologicas) {
+        if (r.getCodigo().equalsIgnoreCase(codigo)) {
+            return r;
+        }
+    }
+    return null;
+
+    }
+     public static List<ReservaLibro> getReservasLibro() {
+    return reservasLibro;
+     }
+
+     public static List<ReservaDeAmbiente> getReservasAmbiente() {
+    return reservasAmbiente;
+     }
+
+    public static List<ReservaRecursoTecnologico> getReservasTecnologicas() {
+    return reservasTecnologicas;
+    }
 }
