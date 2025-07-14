@@ -81,8 +81,16 @@ public class MenuPrincipal {
         while (activo) {
             System.out.println("\n=== MENÚ ADMINISTRADOR ===");
             System.out.println("1. Agregar Material");
-            System.out.println("3. Exportar datos");
-            System.out.println("9. Cerrar sesión");
+            System.out.println("2. Editar Material");
+            System.out.println("3. Eliminar Material");
+            System.out.println("4. Agregar Recursos Tecnologicos");
+            System.out.println("5. Editar Recursos Tecnologicos");
+            System.out.println("6. Eliminar Recursos Tecnologicos");
+            System.out.println("7. Agregar Ambientes");
+            System.out.println("8. Editar Ambientes");
+            System.out.println("9. Eliminar Ambientes");
+            System.out.println("10. Exportar datos");
+            System.out.println("11. Cerrar sesión");
 
             System.out.print("Opción: ");
             int op = sc.nextInt();
@@ -93,21 +101,44 @@ public class MenuPrincipal {
                     admin.agregarMaterial();
                     break;
                 case 2:
-                    //admin.gestionarRecursos();
+                    admin.editarMaterial(); 
                     break;
                 case 3:
+                    admin.eliminarMaterial(); 
+                    break;
+                case 4:
+                    admin.agregarRecursoTecnologico(); 
+                    break;
+                case 5:
+                    admin.editarRecursoTecnologico(); 
+                    break;    
+                case 6:
+                    admin.eliminarRecursoTecnologico(); 
+                    break;
+                case 7:
+                    admin.agregarAmbiente(); 
+                    break;
+                case 8:
+                    admin.editarAmbiente(); 
+                    break;    
+                case 9:
+                    admin.eliminarAmbiente(); 
+                case 10:
                     admin.exportarInfo();
                     break;
-                case 9:
+                case 11:
                     System.out.println("Sesión cerrada.");
                     activo = false;
                     break;
                 default:
                     System.out.println("Opción no válida.");
             }
-        }
+        /*while { agregar hasta que numero es valido. 
+        }*/
     }
 
+    
+    
     private static void mostrarMenuAlumno(Clases.Alumno alumno) {
         Scanner sc = new Scanner(System.in);
         boolean activo = true;
@@ -187,6 +218,7 @@ public class MenuPrincipal {
             }
         }
     }
+}
 
     private static void mostrarMenuRecepcionista(Clases.Recepcionista recep) {
         Scanner sc = new Scanner(System.in);

@@ -180,9 +180,9 @@ public class Alumno extends Usuario implements IServicioPrestamos {
             switch (opcion) {
                 case 1:
 
-                    Tablet tablet1 = new Tablet("T001", "Samsung Galaxy Tab A8");
+                    Tablet tablet = new Tablet("T001", "Samsung Galaxy Tab A8");
 
-                    ReservaRecursoTecnologico rRecTecTap = new ReservaRecursoTecnologico("Computadora", "14625", tablet1, LocalDate.now(), 12.5, LocalTime.now(), this);
+                    ReservaRecursoTecnologico rRecTecTap = new ReservaRecursoTecnologico("Computadora", "14625", tablet, LocalDate.now(), 12.5, LocalTime.now(), this);
                     reservasRT.add(rRecTecTap);
                     System.out.println("Ha reservado una Tablet correctamente.");
 

@@ -62,4 +62,9 @@ public class Sala {
     String getNombre() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public void mostrarInfo() {
+        System.out.println("ID Código: " + codigo);
+        System.out.println("Modelo: " + estado);
+        System.out.println("CantidadMax: " + capacidadMax);
+    }
 }

@@ -75,44 +75,80 @@ public class UsuarioDA {
         return listalibros;
     }
 
-    public Libro buscarLibro(String id) {
-        Libro libro = null;
+    public static Libro buscarLibro(String id) { //busca el objeto... c: libro
+        Libro libro = null; //instancia
 
         // consulta para buscar los libro
         return libro;
     }
 
     //2 Agregar Libro
-    public boolean agregarLibro()/* <-- Todos los parametros*/ {
+    public static boolean agregarLibro(Libro libro){
+        /*try (Connection conn = ConexionSQLServer.conectar();*/ //llama al sql, ya no es conectar 
         return true;
     }
 
     //3 Modificar Libro
-    public boolean modificarLibro()/* <-- Todos los parametros*/ {
+    public static boolean editarLibro(Libro libro){
+        return true;
+    }
+    
+    public static boolean actualizarLibro(Libro libro){
         return true;
     }
 
     //4 Eliminar Libro
-    public boolean eliminarLibro(String id) {
+    public static boolean eliminarLibro(Libro libro) {
         return true;
     }
 
     /*Crud Recurso Tecnologico*/
     //1 insetar Recurso Tecnologico
-    public boolean agregarTablet() {
+    
+    /*****AGREGAR ARCHIVOS, EDITAR Y ELIMINAR*****/
+    public static Tablet buscarTablet(String id) { //busca el objeto... c: libro
+        Tablet tablet = null; //instancia
+
+        // consulta para buscar los libro
+        return tablet;
+    }
+    public static boolean agregarTablet(Tablet tablet) {
         return true;
     }
+    
+    public static boolean editarTablet(Tablet tablet) {
+        return true;
+    }
+    
+    public static boolean actualizarTablet(Tablet tablet){
+        return true;
+    }
+    
+    public static boolean eliminarTablet(Tablet tablet) {
+        return true;
+    }
+    
+    public static Computadora buscarComputadora(String id) { //busca el objeto... c: libro
+        Computadora computadora = null; //instancia
 
-    public boolean agregarComputadora() {
+        // consulta para buscar los libro
+        return computadora;
+    }
+
+    public static boolean agregarComputadora(Computadora computadora) {
         return true;
     }
 
     //2 Eliminar Recurso Tecnologico
-    public boolean eliminarTablet(String id) {
+    public static boolean editarComputadora(Computadora computadora) {
+        return true;
+    }
+    
+    public static boolean actualizarComputadora(Computadora computadora){
         return true;
     }
 
-    public boolean eliminarComputadora(String id) {
+    public static boolean eliminarComputadora(Computadora computadora) {
         return true;
     }
 
@@ -124,13 +160,6 @@ public class UsuarioDA {
         return listaTablets;
     }
 
-    public Tablet buscarTablet(String id) {
-        Tablet Tablet = null;
-
-        // consulta para buscar los libro
-        return Tablet;
-    }
-
     public List<Computadora> obtenerComputadoras() {
         List<Computadora> listaComputadoras = new ArrayList();
 
@@ -138,20 +167,28 @@ public class UsuarioDA {
         return listaComputadoras;
     }
 
-    public Computadora buscarComputadora(String id) {
-        Computadora computadora = null;
-
-        // consulta para buscar los libro
-        return computadora;
-    }
 
     /*Crud Sala*/
     //1 Crud Sala
-    public boolean agregarSala() {
+    public static boolean agregarSala(Sala sala) {
         return true;
     }
+    
+    public static Sala buscarSala(String id) {
+        Sala sala = null;
 
-    public boolean eliminarSala(String id) {
+        // consulta para buscar los libro
+        return sala;
+    }
+    public static boolean editarSala(Sala sala) {
+        return true;
+    }
+    
+    public static boolean actualizarSala(Sala sala){
+        return true;
+    }
+    
+    public static boolean eliminarSala(Sala sala) {
         return true;
     }
     public List<Sala> obtenerSalas() {
@@ -161,12 +198,7 @@ public class UsuarioDA {
         return listaSala;
     }
 
-    public Sala buscarSala(String id) {
-        Sala sala = null;
 
-        // consulta para buscar los libro
-        return sala;
-    }
 
     /*Crud Reservas*/
     /*1 insertar Reserva de Libro*/

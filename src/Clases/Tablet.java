@@ -2,10 +2,9 @@ package Clases;
 
 public class Tablet extends RecursoTecnologico {
     private String modelo;
-
     private String estado;
 
-    public Tablet(String IDcodigo, String modelo ) {
+    public Tablet(String IDcodigo, String modelo,String estado) {
         this.IDcodigo = IDcodigo;
         this.modelo = modelo;
         this.estado = "disponible";
@@ -23,19 +22,19 @@ public class Tablet extends RecursoTecnologico {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
-
-    /*public int getStock() {
-        return stock;
+    public String getEstado() {
+        return modelo;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }*/
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 
     public void mostrarInfo() {
         System.out.println("ID Código: " + IDcodigo);
         System.out.println("Modelo: " + modelo);
-        //System.out.println("Stock: " + stock);
+        System.out.println("Estado: " + estado);
         System.out.println("Disponible: " + (VerificarDisponibilidad() ? "Sí" : "No"));
     }
 }
