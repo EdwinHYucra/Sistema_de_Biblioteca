@@ -24,7 +24,7 @@ public class ConexionBD {
     public static Connection conectar() {
         Connection conn = null;
         try {
-            String url = "jdbc:sqlite:C:\\Users\\ehuan\\Documents\\DB_SqLite\\db_library_system.db";
+            String url = "jdbc:sqlite:resources/db_library_system.db";
             conn = DriverManager.getConnection(url);
             System.out.println("Conexión a SQLite establecida.");
         } catch (SQLException e) {

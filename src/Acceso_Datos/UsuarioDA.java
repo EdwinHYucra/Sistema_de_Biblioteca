@@ -68,19 +68,72 @@ public class UsuarioDA {
 
     //Crud Libro
     // 1 Consultar
-    public List<Libro> obtenerLibros() {
-        List<Libro> listalibros = new ArrayList();
+public List<Libro> obtenerLibros() {
+    List<Libro> listaLibros = new ArrayList<>();
 
-        // consulta para buscar los libro
-        return listalibros;
+    String sql = "SELECT codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero FROM Libro";
+
+    try (Connection conn = ConexionBD.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Libro libro = new Libro(
+                rs.getString("codigo"),
+                rs.getString("nombre"),
+                rs.getString("estado"),
+                rs.getString("autor"),
+                rs.getDate("fechaPublicacion"),
+                rs.getBoolean("disponibilidad"),
+                rs.getString("titulo"),
+                rs.getString("genero")
+            );
+            listaLibros.add(libro);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al obtener libros: " + e.getMessage());
     }
 
-    public Libro buscarLibro(String id) {
-        Libro libro = null;
+    return listaLibros;
+}
 
-        // consulta para buscar los libro
-        return libro;
+
+  public Libro buscarLibro(String id) {
+    Libro libro = null;
+
+    String sql = "SELECT codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero "
+               + "FROM Libro WHERE codigo=?";
+
+    try (Connection conn = ConexionBD.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            libro = new Libro(
+                rs.getString("codigo"),
+                rs.getString("nombre"),
+                rs.getString("estado"),
+                rs.getString("autor"),
+                rs.getDate("fechaPublicacion"),
+                rs.getBoolean("disponibilidad"),
+                rs.getString("titulo"),
+                rs.getString("genero")
+            );
+        } else {
+            System.out.println("No se encontró un libro con el código: " + id);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al buscar libro: " + e.getMessage());
     }
+
+    return libro;
+}
+
 
     //2 Agregar Libro
     public boolean agregarLibro()/* <-- Todos los parametros*/ {
@@ -180,4 +233,113 @@ public class UsuarioDA {
         return true;
     }
     
+    // RUC - DOCENTE
+    
+    // Buscar un docente por código
+    
+   public Docente buscarDocente(String codigoDocente) {
+    Docente docente = null;
+
+    String sql = "SELECT codigo, nombre, apellido, contrasenia, especialidad FROM Usuario WHERE tipo_usuario='Docente' AND codigo=?";
+
+    try (Connection conn = ConexionSQLServer.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, codigoDocente);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            String codigo = rs.getString("codigo");
+            String nombre = rs.getString("nombre");
+            String apellido = rs.getString("apellido");
+            String contrasenia = rs.getString("contrasenia");
+            String especialidad = rs.getString("especialidad");
+
+            docente = new Docente(codigo, contrasenia, nombre, apellido, especialidad);
+        } else {
+            System.out.println("No se encontró un docente con el código: " + codigoDocente);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al buscar docente: " + e.getMessage());
+    }
+
+    return docente;
 }
+ 
+   // Agregar un docente
+   
+   public boolean agregarDocente(Docente docente) {
+    String sql = "INSERT INTO Usuario (codigo, nombre, apellido, contrasenia, tipo_usuario, especialidad) VALUES (?, ?, ?, ?, 'Docente', ?)";
+
+    try (Connection conn = ConexionSQLServer.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, docente.getId_codigo());
+        stmt.setString(2, docente.getNombre());
+        stmt.setString(3, docente.getApellido());
+        stmt.setString(4, docente.getContraseña());
+        stmt.setString(5, docente.getEspecialidad());
+
+        int filas = stmt.executeUpdate();
+        return filas > 0;
+
+    } catch (SQLException e) {
+        System.out.println("Error al agregar docente: " + e.getMessage());
+    }
+
+    return false;
+}
+ 
+    // Modificar un docente
+   
+    public boolean modificarDocente(Docente docente) {
+    String sql = "UPDATE Usuario SET nombre=?, apellido=?, contrasenia=?, especialidad=? WHERE codigo=? AND tipo_usuario='Docente'";
+
+    try (Connection conn = ConexionSQLServer.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, docente.getNombre());
+        stmt.setString(2, docente.getApellido());
+        stmt.setString(3, docente.getContraseña());
+        stmt.setString(4, docente.getEspecialidad());
+        stmt.setString(5, docente.getId_codigo());
+
+        int filas = stmt.executeUpdate();
+        return filas > 0;
+
+    } catch (SQLException e) {
+        System.out.println("Error al modificar docente: " + e.getMessage());
+    }
+
+    return false;
+}
+
+    // Eliminar un docente
+    
+    public boolean eliminarDocente(String codigoDocente) {
+    String sql = "DELETE FROM Usuario WHERE codigo=? AND tipo_usuario='Docente'";
+
+    try (Connection conn = ConexionSQLServer.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, codigoDocente);
+
+        int filas = stmt.executeUpdate();
+        return filas > 0;
+
+    } catch (SQLException e) {
+        System.out.println("Error al eliminar docente: " + e.getMessage());
+    }
+
+    return false;
+}
+
+    
+    
+    
+    
+}
+
+
