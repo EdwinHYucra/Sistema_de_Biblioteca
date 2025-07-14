@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * @author ehuan
  */
 public abstract class Reserva {
+    protected int id;
     protected LocalDate fechaReserva;
     protected double duracion;
     protected LocalTime horaReserva;
@@ -25,6 +26,14 @@ public abstract class Reserva {
         this.usuario = usuario;
         this.estado = "Pendiente"; //  Estado por defecto
     
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public LocalDate getFechaReserva() {
