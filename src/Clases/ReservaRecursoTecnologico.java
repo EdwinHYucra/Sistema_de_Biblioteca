@@ -13,7 +13,10 @@ public class ReservaRecursoTecnologico extends Reserva {
         this.IDcodigo = IDcodigo;
         this.recursoTecnologico = recursoTecnologico;
     }
-    
+    public RecursoTecnologico getRecursoTecnologico() {
+        return recursoTecnologico;
+    }
+
     public void realizar() {
         System.out.println("Reserva de recurso tecnológico realizada.");
     }
