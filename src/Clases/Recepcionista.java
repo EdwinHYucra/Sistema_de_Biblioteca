@@ -1,5 +1,10 @@
 package Clases;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  *
  * @author Dayanna
@@ -28,10 +33,55 @@ public class Recepcionista extends Usuario {
         this.tipoDeUser = "Recepcionista";
     }
 
-    public void registrarDevolucion() {
-        System.out.println("Devolución registrada correctamente.");
-    }
+       public void registrarDevolucion(List<Reserva> reservas, Usuario usuario) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese la fecha de la reserva (AAAA-MM-DD): ");
+        String inputFecha = scanner.nextLine();
 
+        LocalDate fechaBuscada;
+        try {
+            fechaBuscada = LocalDate.parse(inputFecha);
+        } catch (Exception e) {
+            System.out.println("Fecha inválida");
+            return;
+        }
+
+        Reserva reservaEncontrada = null;
+        for (Reserva r : reservas) {
+            if (r.getUsuario().equals(usuario) && r.getFechaReserva().equals(fechaBuscada)) {
+                reservaEncontrada = r;
+                break;
+            }
+        }
+
+        if (reservaEncontrada == null) {
+            System.out.println("No se encontró la reserva para esa fecha");
+            return;
+        }
+
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaDevolucion = reservaEncontrada.getFechaReserva().plusDays((long) reservaEncontrada.getDuracion());
+
+        if (fechaActual.isAfter(fechaDevolucion)) {
+            int diasRetraso = (int) (fechaActual.toEpochDay() - fechaDevolucion.toEpochDay());
+            Penalidad penalidad = new Penalidad(new Date(), "Devolución tardía", diasRetraso, usuario);
+            penalidad.aplicar();
+            System.out.println("Devolución registrada. Penalidad por " + diasRetraso + " días de retraso");
+        } else {
+            System.out.println("Devolución registrada correctamente");
+        }
+
+        reservaEncontrada.setEstado("Finalizado");
+
+        if (reservaEncontrada instanceof ReservaLibro reservaLibro) {
+            reservaLibro.getLibro().setEstado("Disponible");
+        } else if (reservaEncontrada instanceof ReservaDeAmbiente reservaDeAmbiente) {
+            reservaDeAmbiente.getSala().setEstado("Disponible");
+        } else if (reservaEncontrada instanceof ReservaRecursoTecnologico reservaRecursoTecnologico) {
+            reservaRecursoTecnologico.getRecursoTecnologico().setEstado("Disponible");
+        }
+    }
+       
     public void mostrarInfo() {
         System.out.println("Recepcionista: " + nombre + " " + apellido);
     }
