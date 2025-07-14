@@ -45,6 +45,7 @@ public class Main {
 
         Usuario usuario = new Administrador("FGEE", "EEEEE", "HOLI", "EFE");
         usuario.setTipoDeUser("Administrador");
-        MenuPrincipal.mostrarMenu(usuario);
+        MenuPrincipal mp = new MenuPrincipal();
+        mp.iniciarLogin();
     }
 }

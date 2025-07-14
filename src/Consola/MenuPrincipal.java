@@ -5,7 +5,6 @@ import Clases.*;
 import Controladores.LoginController;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 import java.util.Scanner;
@@ -21,11 +20,11 @@ public class MenuPrincipal {
     }
 
     public MenuPrincipal(Scanner scanner, Usuario usuario) {
-        this.sc = scanner;
+        this.sc = scanner;s
         this.usuario = usuario;
     }
 
-    public static void iniciarLogin() {
+    public void iniciarLogin() {
         //Scanner sc = new Scanner(System.in);
         boolean volverAlMenuGeneral = false;
 
@@ -54,13 +53,13 @@ public class MenuPrincipal {
         }
     }
 
-    public static void mostrarMenu(Usuario usuario) {
+    public void mostrarMenu(Usuario usuario) {
 
         switch (usuario.getTipoDeUser()) {
             case "Administrador":
                 mostrarMenuAdministrador((Clases.Administrador) usuario);
                 break;
-            case "Alumno":
+            /*case "Alumno":
                 mostrarMenuAlumno((Clases.Alumno) usuario);
                 break;
             case "Docente":
@@ -68,13 +67,13 @@ public class MenuPrincipal {
                 break;
             case "Recepcionista":
                 mostrarMenuRecepcionista((Clases.Recepcionista) usuario);
-                break;
+                break;*/
             default:
                 System.out.println("Tipo de usuario no reconocido.");
         }
     }
 
-    private static void mostrarMenuAdministrador(Clases.Administrador admin) {
+    private void mostrarMenuAdministrador(Clases.Administrador admin) {
         //Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
@@ -101,28 +100,29 @@ public class MenuPrincipal {
                     admin.agregarMaterial();
                     break;
                 case 2:
-                    admin.editarMaterial(); 
+                    admin.editarMaterial();
                     break;
                 case 3:
-                    admin.eliminarMaterial(); 
+                    admin.eliminarMaterial();
                     break;
                 case 4:
-                    admin.agregarRecursoTecnologico(); 
+                    admin.agregarRecursoTecnologico();
                     break;
                 case 5:
-                    admin.editarRecursoTecnologico(); 
-                    break;    
+                    admin.editarRecursoTecnologico();
+                    break;
                 case 6:
-                    admin.eliminarRecursoTecnologico(); 
+                    admin.eliminarRecursoTecnologico();
                     break;
                 case 7:
-                    admin.agregarAmbiente(); 
+                    admin.agregarSala();
                     break;
                 case 8:
-                    admin.editarAmbiente(); 
-                    break;    
+                    admin.editarSala();
+                    break;
                 case 9:
-                    admin.eliminarAmbiente(); 
+                    admin.eliminarSala();
+                    break;
                 case 10:
                     admin.exportarInfo();
                     break;
@@ -133,13 +133,10 @@ public class MenuPrincipal {
                 default:
                     System.out.println("Opción no válida.");
             }
-        /*while { agregar hasta que numero es valido. 
-        }*/
+        }
     }
 
-    
-    
-    private static void mostrarMenuAlumno(Clases.Alumno alumno) {
+    /*private void mostrarMenuAlumno(Clases.Alumno alumno) {
         Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
@@ -180,7 +177,7 @@ public class MenuPrincipal {
         }
     }
 
-    private static void mostrarMenuDocente(Clases.Docente docente) {
+    private void mostrarMenuDocente(Clases.Docente docente) {
         Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
@@ -220,7 +217,7 @@ public class MenuPrincipal {
     }
 }
 
-    private static void mostrarMenuRecepcionista(Clases.Recepcionista recep) {
+    private void mostrarMenuRecepcionista(Clases.Recepcionista recep) {
         Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
@@ -301,4 +298,4 @@ public class MenuPrincipal {
             }
         }
     }
-}
+}*/

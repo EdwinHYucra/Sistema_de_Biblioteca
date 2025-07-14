@@ -75,7 +75,7 @@ public class UsuarioDA {
         return listalibros;
     }
 
-    public static Libro buscarLibro(String id) { //busca el objeto... c: libro
+    public static Libro buscarLibro(int id) { //busca el objeto... c: libro
         Libro libro = null; //instancia
 
         // consulta para buscar los libro
@@ -98,7 +98,9 @@ public class UsuarioDA {
     }
 
     //4 Eliminar Libro
-    public static boolean eliminarLibro(Libro libro) {
+    public static boolean eliminarLibro(int id) {
+        
+       // delete tablaLibro where (lol)
         return true;
     }
 
@@ -106,7 +108,7 @@ public class UsuarioDA {
     //1 insetar Recurso Tecnologico
     
     /*****AGREGAR ARCHIVOS, EDITAR Y ELIMINAR*****/
-    public static Tablet buscarTablet(String id) { //busca el objeto... c: libro
+    public static Tablet buscarTablet(int IDcodigo) { //busca el objeto... c: libro
         Tablet tablet = null; //instancia
 
         // consulta para buscar los libro
@@ -124,11 +126,11 @@ public class UsuarioDA {
         return true;
     }
     
-    public static boolean eliminarTablet(Tablet tablet) {
+    public static boolean eliminarTablet(int codigo) {
         return true;
     }
     
-    public static Computadora buscarComputadora(String id) { //busca el objeto... c: libro
+    public static Computadora buscarComputadora(int codigo) { //busca el objeto... c: libro
         Computadora computadora = null; //instancia
 
         // consulta para buscar los libro
@@ -148,7 +150,7 @@ public class UsuarioDA {
         return true;
     }
 
-    public static boolean eliminarComputadora(Computadora computadora) {
+    public static boolean eliminarComputadora(int codigo) {
         return true;
     }
 
@@ -174,7 +176,7 @@ public class UsuarioDA {
         return true;
     }
     
-    public static Sala buscarSala(String id) {
+    public static Sala buscarSala(int codigo) {
         Sala sala = null;
 
         // consulta para buscar los libro
@@ -188,7 +190,7 @@ public class UsuarioDA {
         return true;
     }
     
-    public static boolean eliminarSala(Sala sala) {
+    public static boolean eliminarSala(int codigo) {
         return true;
     }
     public List<Sala> obtenerSalas() {

@@ -8,8 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Administrador extends Usuario implements IServiciosRecursos {
+
     Scanner ad = new Scanner(System.in);
-    
+
     public Administrador(String id_codigo, String contraseña) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
@@ -33,20 +34,21 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         this.tipoDeUser = "Administrador";
     }
 
-    public void opcionesAdmi(){
+    public void opcionesAdmi() {
         //agregar menu de agregar material, agregarrecursostecnologicos, editar o eliminar
     }
+
     public void agregarMaterial() {
         int opcionM = 0;
-        String MaterialesM = 
-            "=== AGREGAR MATERIAL ===\n" +      
-            "Seleccione tipo material\n"+
-            "1. Libro\n"+
-            "2. Archivo Multimedia\n"+
-            "3. Archivo Digital\n"+
-            "4. Salir\n"+
-            "=========================\n"+
-            "Elija una opcion: ";
+        String MaterialesM
+                = "=== AGREGAR MATERIAL ===\n"
+                + "Seleccione tipo material\n"
+                + "1. Libro\n"
+                + "2. Archivo Multimedia\n"
+                + "3. Archivo Digital\n"
+                + "4. Salir\n"
+                + "=========================\n"
+                + "Elija una opcion: ";
 
         do {
             System.out.println(MaterialesM);
@@ -68,7 +70,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         System.out.println("Codigo no puede estar vacío.");
                         break;
                     }
-                    
+
                     System.out.print("Nombre del libro: ");
                     String nombreL = ad.nextLine().trim();
                     if (nombreL.isEmpty()) {
@@ -199,7 +201,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     }
                     break;*/
 
-                /*case 3: // ARCHIVO DIGITAL
+ /*case 3: // ARCHIVO DIGITAL
                     System.out.println("El código se generará automáticamente: " + codigo);
 
                     System.out.print("Nombre del archivo: ");
@@ -257,7 +259,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     case 4: // Salida del meú
 
                 default:
-                    System.out.println("Opción inválida. Ingrese solo 1, 2, 3 o 4.");*/ 
+                    System.out.println("Opción inválida. Ingrese solo 1, 2, 3 o 4.");*/
             }
 
         } while (opcionM < 1 || opcionM > 4);
@@ -266,12 +268,12 @@ public class Administrador extends Usuario implements IServiciosRecursos {
     public void editarMaterial() {
         int opcionEM = 0;
         String menuEM = "\n=== EDITAR MATERIAL ===\n"
-                    + "Seleccione el tipo de material a editar:\n"
-                    + "1. Libro\n"
-                    + "2. Archivo Multimedia\n"
-                    + "3. Archivo Digital\n"
-                    + "0. Cancelar\n"
-                    + "Elija una opción: ";
+                + "Seleccione el tipo de material a editar:\n"
+                + "1. Libro\n"
+                + "2. Archivo Multimedia\n"
+                + "3. Archivo Digital\n"
+                + "0. Cancelar\n"
+                + "Elija una opción: ";
 
         System.out.print(menuEM);
         try {
@@ -284,11 +286,11 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         switch (opcionEM) {
             case 1: {
                 System.out.print("Ingrese el código del libro a editar: ");
-                String codBusL = ad.nextLine();
-                Material materialEncontrado = UsuarioDA.buscarLibro(codBusL);
+                int codL = ad.nextInt();
+                Material materialEncontrado = UsuarioDA.buscarLibro(codL);
 
                 if (materialEncontrado == null) {
-                    System.out.println("Libro no encontrado con el código: " + codBusL);
+                    System.out.println("Libro no encontrado con el código: " + codL);
                     return;
                 }
 
@@ -298,15 +300,21 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
                 System.out.print("Nuevo nombre: ");
                 String nombreL = ad.nextLine();
-                if (!nombreL.isEmpty()) materialEncontrado.setNombre(nombreL);
+                if (!nombreL.isEmpty()) {
+                    materialEncontrado.setNombre(nombreL);
+                }
 
                 System.out.print("Nuevo estado: ");
                 String estadoL = ad.nextLine();
-                if (!estadoL.isEmpty()) materialEncontrado.setEstado(estadoL);
+                if (!estadoL.isEmpty()) {
+                    materialEncontrado.setEstado(estadoL);
+                }
 
                 System.out.print("Nuevo autor: ");
                 String autorL = ad.nextLine();
-                if (!autorL.isEmpty()) materialEncontrado.setAutor(autorL);
+                if (!autorL.isEmpty()) {
+                    materialEncontrado.setAutor(autorL);
+                }
 
                 System.out.print("Nueva fecha de publicación (dd-MM-yy): ");
                 String fechaStr = ad.nextLine();
@@ -334,14 +342,17 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
                     System.out.print("Nuevo título: ");
                     String titulo = ad.nextLine();
-                    if (!titulo.isEmpty()) libro.setTitulo(titulo);
+                    if (!titulo.isEmpty()) {
+                        libro.setTitulo(titulo);
+                    }
 
                     System.out.print("Nuevo género: ");
                     String genero = ad.nextLine();
-                    if (!genero.isEmpty()) libro.setGenero(genero);
+                    if (!genero.isEmpty()) {
+                        libro.setGenero(genero);
+                    }
 
-                    boolean actualizado = UsuarioDA.actualizarLibro(libro);
-                    if (actualizado) {
+                    if (UsuarioDA.actualizarLibro(libro)) {
                         System.out.println("Libro editado correctamente:");
                         libro.mostrarInfo();
                     } else {
@@ -414,8 +425,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     String formato = ad.nextLine();
                     if (!formato.isEmpty()) archivo.setFormato(formato);
 
-                    boolean actualizado = UsuarioDA.actualizarArchivoMultimedia(archivo);
-                    if (actualizado) {
+                    if (UsuarioDA.actualizarArchivoMultimedia(archivo)) {
                         System.out.println("Archivo multimedia editado correctamente:");
                         archivo.mostrarInfo();
                     } else {
@@ -472,8 +482,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     String ruta = ad.nextLine();
                     if (!ruta.isEmpty()) archivo.setRuta(ruta);
 
-                    boolean actualizado = UsuarioDA.actualizarArchivoDigital(archivo);
-                    if (actualizado) {
+                    if (UsuarioDA.actualizarArchivoDigital(archivo)) {
                         System.out.println("Archivo digital editado correctamente:");
                         archivo.mostrarInfo();
                     } else {
@@ -485,19 +494,20 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             default:
                 System.out.println("Opción inválida.");
                 break;
-                
-        } while (opcionEM < 1 || opcionEM > 4);
+
+        }
+        while (opcionEM < 0 || opcionEM > 3);
     }
-    
-    public void eliminarMaterial(){
+
+    public void eliminarMaterial() {
         int opcionEM = 0;
         String menuEM = "\n=== ELIMINAR MATERIAL ===\n"
-                      + "Seleccione el tipo de material a eliminar:\n"
-                      + "1. Libro\n"
-                      + "2. Archivo Multimedia\n"
-                      + "3. Archivo Digital\n"
-                      + "0. Cancelar\n"
-                      + "Elija una opción: ";
+                + "Seleccione el tipo de material a eliminar:\n"
+                + "1. Libro\n"
+                + "2. Archivo Multimedia\n"
+                + "3. Archivo Digital\n"
+                + "0. Cancelar\n"
+                + "Elija una opción: ";
 
         System.out.print(menuEM);
         try {
@@ -510,7 +520,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         switch (opcionEM) {
             case 1: {
                 System.out.print("Ingrese el código del libro a eliminar: ");
-                String codL = ad.nextLine();
+                int codL = ad.nextInt();
                 Material materialEncontrado = UsuarioDA.buscarLibro(codL);
 
                 if (materialEncontrado == null) {
@@ -524,8 +534,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 System.out.print("¿Está seguro que desea eliminar este libro? (si/no): ");
                 String confirmacion = ad.nextLine();
                 if (confirmacion.equalsIgnoreCase("si")) {
-                    boolean eliminado = UsuarioDA.eliminarLibro(codL);
-                    if (eliminado) {
+
+                    if (UsuarioDA.eliminarLibro(codL)) {
                         System.out.println("Libro eliminado correctamente.");
                     } else {
                         System.out.println("Error al eliminar el libro.");
@@ -552,8 +562,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 System.out.print("¿Está seguro que desea eliminar este archivo multimedia? (si/no): ");
                 String confirmacion = ad.nextLine();
                 if (confirmacion.equalsIgnoreCase("si")) {
-                    boolean eliminado = UsuarioDA.eliminarArchivoMultimedia(codM);
-                    if (eliminado) {
+                    if (UsuarioDA.eliminarArchivoMultimedia(codM)) {
                         System.out.println("Archivo multimedia eliminado correctamente.");
                     } else {
                         System.out.println("Error al eliminar el archivo multimedia.");
@@ -580,8 +589,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 System.out.print("¿Está seguro que desea eliminar este archivo digital? (si/no): ");
                 String confirmacion = ad.nextLine();
                 if (confirmacion.equalsIgnoreCase("si")) {
-                    boolean eliminado = UsuarioDA.eliminarArchivoDigital(codD);
-                    if (eliminado) {
+                    if (UsuarioDA.eliminarArchivoDigital(codD)) {
                         System.out.println("Archivo digital eliminado correctamente.");
                     } else {
                         System.out.println("Error al eliminar el archivo digital.");
@@ -591,7 +599,6 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 }
                 break;
             }*/
-
             case 0:
                 System.out.println("Operación cancelada.");
                 break;
@@ -601,18 +608,17 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 break;
         }
     }
-    
-    
+
     public void agregarRecursoTecnologico() {
         int opcionRT = 0;
-        String RecTec = 
-            "=== AGREGAR RECURSO TECNOLOGICO ===\n" +      
-            "Seleccione tipo material\n"+
-            "1. Tablet\n"+
-            "2. Computadora\n"+
-            "3. Salir del menú\n"+
-            "=========================\n"+
-            "Elija una opcion: ";
+        String RecTec
+                = "=== AGREGAR RECURSO TECNOLOGICO ===\n"
+                + "Seleccione tipo material\n"
+                + "1. Tablet\n"
+                + "2. Computadora\n"
+                + "0. Salir del menú\n"
+                + "=========================\n"
+                + "Elija una opcion: ";
 
         do {
             System.out.println(RecTec);
@@ -632,7 +638,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         System.out.println("Codigo no puede estar vacío.");
                         break;
                     }
-                    
+
                     System.out.print("Ingrese el modelo de la tablet");
                     String modeloT = ad.nextLine().trim();
                     if (modeloT.isEmpty()) {
@@ -647,7 +653,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         break;
                     }
 
-                    Tablet tablet = new Tablet(IDcodigoT,modeloT, estadoT);
+                    Tablet tablet = new Tablet(IDcodigoT, modeloT, estadoT);
                     if (UsuarioDA.agregarTablet(tablet)) {
                         System.out.println("\nTablet agregado correctamente:");
                         tablet.mostrarInfo();
@@ -687,21 +693,21 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     }
 
                     System.out.print("¿Disponible? (true/false): ");
-                        String estadoStr = ad.nextLine().trim();
+                    String estadoStr = ad.nextLine().trim();
 
-                        if (estadoStr.isEmpty()) {
-                            System.out.println("Estado no puede estar vacío.");
-                            break;
-                        }
+                    if (estadoStr.isEmpty()) {
+                        System.out.println("Estado no puede estar vacío.");
+                        break;
+                    }
 
-                        if (!estadoStr.equalsIgnoreCase("true") && !estadoStr.equalsIgnoreCase("false")) {
-                            System.out.println("Ingrese 'true' o 'false'.");
-                            break;
-                        }
+                    if (!estadoStr.equalsIgnoreCase("true") && !estadoStr.equalsIgnoreCase("false")) {
+                        System.out.println("Ingrese 'true' o 'false'.");
+                        break;
+                    }
 
-                        boolean estadoC = Boolean.parseBoolean(estadoStr);
+                    boolean estadoC = Boolean.parseBoolean(estadoStr);
 
-                    Computadora computadora = new Computadora(IDcodigoC, ramC, procC, Cpu,estadoC );
+                    Computadora computadora = new Computadora(IDcodigoC, ramC, procC, Cpu, estadoC);
                     if (UsuarioDA.agregarComputadora(computadora)) {
                         System.out.println("\nComputadora agregado correctamente:");
                         computadora.mostrarInfo();
@@ -709,24 +715,24 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         System.out.println("Error al agregar la computadora.");
                     }
                     break;
-                case 3:
-                    //salir
+                case 0:
+                //salir
 
                 default:
                     System.out.println("Opción inválida. Ingrese solo 1, 2 o 3.");
             }
 
-        } while (opcionRT < 1 || opcionRT > 3);
+        } while (opcionRT < 0 || opcionRT > 2);
     }
-    
+
     public void editarRecursoTecnologico() { //codigos string id
         int opcionERT = 0;
         String menuERT = "\n=== EDITAR RECURSOS TECNOLOGICO ===\n"
-                    + "Seleccione el tipo de recurso tecnologico a editar:\n"
-                    + "1. Tablet\n"
-                    + "2. Computadora\n"
-                    + "0. Cancelar\n"
-                    + "Elija una opción: ";
+                + "Seleccione el tipo de recurso tecnologico a editar:\n"
+                + "1. Tablet\n"
+                + "2. Computadora\n"
+                + "0. Cancelar\n"
+                + "Elija una opción: ";
 
         System.out.print(menuERT);
         try {
@@ -739,8 +745,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         switch (opcionERT) {
             case 1: {
                 System.out.print("Ingrese el código del la tablet a editar: ");
-                String codTab = ad.nextLine();
-                RecursoTecnologico recursoEncontrado = UsuarioDA.buscarTablet(codTab);
+                int codTab = ad.nextInt();
+                Tablet recursoEncontrado = UsuarioDA.buscarTablet(codTab);
 
                 if (recursoEncontrado == null) {
                     System.out.println("Tablet no encontrada con el código: " + codTab);
@@ -749,23 +755,24 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
                 System.out.println("Tablet encontrada:");
                 recursoEncontrado.mostrarInfo();
-                System.out.println("Ingrese los nuevos datos (deje en blanco si no desea cambiar):");
+                System.out.println("Ingrese los nuevos datos (deje en blanco si no desea cambiar):"); //necesito crear un metodo para modificar, pero si esta... no modificar
 
-                
-                
                 if (recursoEncontrado instanceof RecursoTecnologico) {
                     Tablet tablet = (Tablet) recursoEncontrado;
-                    
+
                     System.out.print("Nuevo modelo: ");
                     String modeloT = ad.nextLine();
-                    if (!modeloT.isEmpty()) recursoEncontrado.setModelo(modeloT);
+                    if (!modeloT.isEmpty()) {
+                        recursoEncontrado.setModelo(modeloT);
+                    }
 
                     System.out.print("Nuevo estado: ");
                     String estadoT = ad.nextLine();
-                    if (!estadoT.isEmpty()) recursoEncontrado.setEstado(estadoT);
-                    
-                    boolean actualizado = UsuarioDA.actualizarTablet(tablet);
-                    if (actualizado) {
+                    if (!estadoT.isEmpty()) {
+                        recursoEncontrado.setEstado(estadoT);
+                    }
+
+                    if (UsuarioDA.actualizarTablet(tablet)) {
                         System.out.println("Tablet editado correctamente:");
                         tablet.mostrarInfo();
                     } else {
@@ -776,8 +783,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             }
             case 2: {
                 System.out.print("Ingrese el código de la Computadora a editar: ");
-                String codCom = ad.nextLine();
-                RecursoTecnologico recursoEncontrado = UsuarioDA.buscarComputadora(codCom);
+                int codCom = ad.nextInt();
+                Computadora recursoEncontrado = UsuarioDA.buscarComputadora(codCom);
 
                 if (recursoEncontrado == null) {
                     System.out.println("Computadora no encontrada con el código: " + codCom);
@@ -793,15 +800,21 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
                     System.out.print("Nueva RAM: ");
                     String ramC = ad.nextLine();
-                    if (!ramC.isEmpty()) computadora.setRam(ramC);
+                    if (!ramC.isEmpty()) {
+                        computadora.setRam(ramC);
+                    }
 
                     System.out.print("Nuevo procesador: ");
                     String procC = ad.nextLine();
-                    if (!procC.isEmpty()) computadora.setProcesador(procC);
+                    if (!procC.isEmpty()) {
+                        computadora.setProcesador(procC);
+                    }
 
                     System.out.print("Nuevo CPU: ");
                     String cpu = ad.nextLine();
-                    if (!cpu.isEmpty()) computadora.setCpu(cpu);
+                    if (!cpu.isEmpty()) {
+                        computadora.setCpu(cpu);
+                    }
 
                     System.out.print("¿Condición desbloqueada? (true/false): ");
                     String estadoC = ad.nextLine();
@@ -815,8 +828,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         }
                     }
 
-                    boolean actualizado = UsuarioDA.actualizarComputadora(computadora);
-                    if (actualizado) {
+                    if (UsuarioDA.actualizarComputadora(computadora)) {
                         System.out.println("Computadora editada correctamente:");
                         computadora.mostrarInfo();
                     } else {
@@ -827,35 +839,36 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 }
                 break;
             }
- 
+
             default:
                 System.out.println("Opción inválida.");
                 break;
-        } while (opcionERT < 1 || opcionERT > 3);
+        }
+        while (opcionERT < 1 || opcionERT > 3);
     }
-    
+
     public void eliminarRecursoTecnologico() {
-         int opcionER = 0;
+        int opcionEER = 0;
         String menuER = "\n=== ELIMINAR RECURSO TECNOLÓGICO ===\n"
-                      + "Seleccione el tipo de recurso a eliminar:\n"
-                      + "1. Tablet\n"
-                      + "2. Computadora\n"
-                      + "0. Cancelar\n"
-                      + "Elija una opción: ";
+                + "Seleccione el tipo de recurso a eliminar:\n"
+                + "1. Tablet\n"
+                + "2. Computadora\n"
+                + "0. Cancelar\n"
+                + "Elija una opción: ";
 
         System.out.print(menuER);
         try {
-            opcionER = Integer.parseInt(ad.nextLine());
+            opcionEER = Integer.parseInt(ad.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("Opción inválida.");
             return;
         }
 
-        switch (opcionER) {
-            case 1: {
+        switch (opcionEER) {
+            case 1 -> {
                 System.out.print("Ingrese el código de la Tablet a eliminar: ");
-                String codTab = ad.nextLine();
-                RecursoTecnologico recursoEncontrado = UsuarioDA.buscarTablet(codTab);
+                int codTab = ad.nextInt();
+                Tablet recursoEncontrado = UsuarioDA.buscarTablet(codTab);
 
                 if (recursoEncontrado == null) {
                     System.out.println("Tablet no encontrada con el código: " + codTab);
@@ -869,8 +882,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 String confirmacion = ad.nextLine();
 
                 if (confirmacion.equalsIgnoreCase("si")) {
-                    boolean eliminado = UsuarioDA.eliminarTablet(codTab);
-                    if (eliminado) {
+                    if (UsuarioDA.eliminarTablet(codTab)) {
                         System.out.println("Tablet eliminada correctamente.");
                     } else {
                         System.out.println("Error al eliminar la tablet.");
@@ -878,12 +890,11 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 } else {
                     System.out.println("Eliminación cancelada.");
                 }
-                break;
             }
 
-            case 2: {
+            case 2 -> {
                 System.out.print("Ingrese el código de la Computadora a eliminar: ");
-                String codCom = ad.nextLine();
+                int codCom = ad.nextInt();
                 RecursoTecnologico recursoEncontrado = UsuarioDA.buscarComputadora(codCom);
 
                 if (recursoEncontrado == null) {
@@ -896,10 +907,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
                 System.out.print("¿Está seguro que desea eliminar esta computadora? (si/no): ");
                 String confirmacion = ad.nextLine();
-
                 if (confirmacion.equalsIgnoreCase("si")) {
-                    boolean eliminado = UsuarioDA.eliminarComputadora(codCom);
-                    if (eliminado) {
+                    if (UsuarioDA.eliminarComputadora(codCom)) {
                         System.out.println("Computadora eliminada correctamente.");
                     } else {
                         System.out.println("Error al eliminar la computadora.");
@@ -907,66 +916,60 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 } else {
                     System.out.println("Eliminación cancelada.");
                 }
-                break;
             }
 
-            case 0:
+            case 0 ->
                 System.out.println("Operación cancelada.");
-                break;
 
-            default:
+            default ->
                 System.out.println("Opción inválida.");
-                break;
         }
     }
 
     public void agregarSala() {
         System.out.println("\n=== AGREGAR SALA ===");
-        
-        System.out.println("=== Por favor ingrese los siguientes datos ===");
-                System.out.println("Codigo del libro: ");
-                String codigoS = ad.nextLine().trim();
-                if (codigoS.isEmpty()) {
-                    System.out.println("Codigo no puede estar vacío.");
-                        
-        System.out.print("Estado del ambiente: ");
-        String estadoS = ad.nextLine().trim();
-        if (estadoS.isEmpty()) {
-            System.out.println("Estado no puede estar vacío.");
-            return;
-        }
 
-        System.out.print("Capacidad máxima: ");
-        int capacidadMax;
-        try {
-            capacidadMax = Integer.parseInt(ad.nextLine());
-            if (capacidadMax <= 0) {
-                System.out.println("Capacidad debe ser mayor que cero.");
+        System.out.println("=== Por favor ingrese los siguientes datos ===");
+        System.out.println("Codigo del libro: ");
+        String codigoS = ad.nextLine().trim();
+        if (codigoS.isEmpty()) {
+            System.out.println("Codigo no puede estar vacío.");
+
+            System.out.print("Estado del ambiente: ");
+            String estadoS = ad.nextLine().trim();
+            if (estadoS.isEmpty()) {
+                System.out.println("Estado no puede estar vacío.");
                 return;
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Capacidad inválida.");
-            return;
-        }
 
-        Sala sala = new Sala(codigoS,estadoS, capacidadMax);
+            System.out.print("Capacidad máxima: ");
+            int capacidadMax;
+            try {
+                capacidadMax = Integer.parseInt(ad.nextLine());
+                if (capacidadMax <= 0) {
+                    System.out.println("Capacidad debe ser mayor que cero.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Capacidad inválida.");
+                return;
+            }
 
-        boolean agregar = UsuarioDA.agregarSala(sala);
-        if (agregar) {
-            System.out.println("Ambiente agregado correctamente:");
-            sala.mostrarInfo();
-        } else {
-            System.out.println("Error al agregar ambiente.");
+            Sala sala = new Sala(codigoS, estadoS, capacidadMax);
+
+            if (UsuarioDA.agregarSala(sala)) {
+                System.out.println("Ambiente agregado correctamente:");
+                sala.mostrarInfo();
+            } else {
+                System.out.println("Error al agregar ambiente.");
+            }
         }
     }
-    
-  
-    
-    public void editarSala(){
 
+    public void editarSala() {
         System.out.println("\n=== EDITAR AMBIENTE ===");
         System.out.print("Ingrese el código del ambiente a editar: ");
-        String codS = ad.nextLine();
+        int codS = ad.nextInt();
 
         Sala salaEncontrada = UsuarioDA.buscarSala(codS);
         if (salaEncontrada == null) {
@@ -980,33 +983,37 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
         System.out.print("Nuevo estado: ");
         String estado = ad.nextLine();
-        if (!estado.isEmpty()) salaEncontrada.setEstado(estado);
+        if (!estado.isEmpty()) {
+            salaEncontrada.setEstado(estado);
+        }
 
         System.out.print("Nueva capacidad máxima: ");
         String capStr = ad.nextLine();
         if (!capStr.isEmpty()) {
             try {
                 int cap = Integer.parseInt(capStr);
-                if (cap > 0) salaEncontrada.setCapacidadMax(cap);
-                else System.out.println("Capacidad inválida. No se actualizó.");
+                if (cap > 0) {
+                    salaEncontrada.setCapacidadMax(cap);
+                } else {
+                    System.out.println("Capacidad inválida. No se actualizó.");
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Formato inválido. No se actualizó.");
             }
         }
 
-        boolean actualizado = UsuarioDA.actualizarSala(salaEncontrada);
-        if (actualizado) {
+        if (UsuarioDA.actualizarSala(salaEncontrada)) {
             System.out.println("Ambiente editado correctamente:");
             salaEncontrada.mostrarInfo();
         } else {
             System.out.println("Error al actualizar ambiente.");
         }
     }
-    
+
     public void eliminarSala() {
         System.out.println("\n=== ELIMINAR AMBIENTE ===");
         System.out.print("Ingrese el código del ambiente a eliminar: ");
-        String codS = ad.nextLine();
+        int codS = ad.nextInt();
 
         Sala salaEncontrada = UsuarioDA.buscarSala(codS);
         if (salaEncontrada == null) {
@@ -1020,8 +1027,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         System.out.print("¿Está seguro que desea eliminar este ambiente? (si/no): ");
         String confirmacion = ad.nextLine();
         if (confirmacion.equalsIgnoreCase("si")) {
-            boolean eliminado = UsuarioDA.eliminarSala(codS);
-            if (eliminado) {
+            if (UsuarioDA.eliminarSala(codS)) {
                 System.out.println("Ambiente eliminado correctamente.");
             } else {
                 System.out.println("Error al eliminar ambiente.");
@@ -1030,7 +1036,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
             System.out.println("Eliminación cancelada.");
         }
     }
-    
+
     public void exportarInfo() {
         try {
             FileWriter writer = new FileWriter("exportacion.txt");
