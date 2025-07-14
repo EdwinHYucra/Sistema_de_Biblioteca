@@ -1,5 +1,6 @@
 package Clases;
 
+import Acceso_Datos.UsuarioDA;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -33,29 +34,24 @@ public class Recepcionista extends Usuario {
         this.tipoDeUser = "Recepcionista";
     }
 
-       public void registrarDevolucion(List<Reserva> reservas, Usuario usuario) {
+       public void registrarDevolucion() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese la fecha de la reserva (AAAA-MM-DD): ");
-        String inputFecha = scanner.nextLine();
+        System.out.print("Ingrese el codigo: ");
+        String inputCodigo = scanner.nextLine();
 
-        LocalDate fechaBuscada;
+        /*LocalDate fechaBuscada;
         try {
             fechaBuscada = LocalDate.parse(inputFecha);
         } catch (Exception e) {
             System.out.println("Fecha inválida");
             return;
         }
-
-        Reserva reservaEncontrada = null;
-        for (Reserva r : reservas) {
-            if (r.getUsuario().equals(usuario) && r.getFechaReserva().equals(fechaBuscada)) {
-                reservaEncontrada = r;
-                break;
-            }
-        }
-
+       
+        */
+        Reserva reservaEncontrada = UsuarioDA.buscarReserva(inputCodigo);
+        
         if (reservaEncontrada == null) {
-            System.out.println("No se encontró la reserva para esa fecha");
+            System.out.println("No se encontró la reserva");
             return;
         }
 
@@ -64,14 +60,15 @@ public class Recepcionista extends Usuario {
 
         if (fechaActual.isAfter(fechaDevolucion)) {
             int diasRetraso = (int) (fechaActual.toEpochDay() - fechaDevolucion.toEpochDay());
-            Penalidad penalidad = new Penalidad(new Date(), "Devolución tardía", diasRetraso, usuario);
-            penalidad.aplicar();
+            Penalidad penalidad = new Penalidad(LocalDate.now(),LocalDate.now().plusDays(7), "Devolución tardía", diasRetraso, Usuario);
+            UsuarioDA.agregarPenalidad(penalidad);
             System.out.println("Devolución registrada. Penalidad por " + diasRetraso + " días de retraso");
         } else {
             System.out.println("Devolución registrada correctamente");
         }
 
         reservaEncontrada.setEstado("Finalizado");
+        update UsuarioDA.modificarReserva(reservaEncontrada.getId());
 
         if (reservaEncontrada instanceof ReservaLibro reservaLibro) {
             reservaLibro.getLibro().setEstado("Disponible");
