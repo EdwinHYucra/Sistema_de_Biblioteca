@@ -1,12 +1,11 @@
 package Consola;
 
+import Acceso_Datos.UsuarioDA;
 import Clases.*;
-
-import Controladores.LoginController;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
+
 
 import java.util.Scanner;
 
@@ -35,7 +34,7 @@ public class MenuPrincipal {
             System.out.print("Contraseña: ");
             String password = sc.nextLine();
 
-            Usuario usuario = LoginController.autenticar(codigo, password);
+            Usuario usuario = UsuarioDA.autenticar(codigo, password);
 
             if (usuario != null) {
                 System.out.println("Bienvenido, " + usuario.getNombre());
@@ -57,16 +56,16 @@ public class MenuPrincipal {
     public static void mostrarMenu(Usuario usuario) {
 
         switch (usuario.getTipoDeUser()) {
-            case "Administrador":
+            case 1:
                 mostrarMenuAdministrador((Clases.Administrador) usuario);
                 break;
-            case "Alumno":
+            case 2:
                 mostrarMenuAlumno((Clases.Alumno) usuario);
                 break;
-            case "Docente":
+            case 3:
                 mostrarMenuDocente((Clases.Docente) usuario);
                 break;
-            case "Recepcionista":
+            case 4:
                 mostrarMenuRecepcionista((Clases.Recepcionista) usuario);
                 break;
             default:

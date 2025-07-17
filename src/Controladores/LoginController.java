@@ -1,5 +1,6 @@
 package Controladores;
 
+import Acceso_Datos.ConexionBD;
 import Clases.Usuario;
 import Clases.Administrador;
 import Clases.Alumno;
@@ -22,9 +23,9 @@ public class LoginController {
     public static Usuario autenticar(String codigo, String password) {
         Usuario usuario = null;
 
-        String sql = "SELECT codigo, nombre, apellido, tipo_usuario FROM Usuario WHERE codigo=? AND contrasenia=?";
+        String sql = "SELECT codigo, nombre, apellido, tipo_usuario_id FROM Usuario WHERE codigo=? AND contrasenia=?"; //AGREGAR
 
-        try (Connection conn = ConexionSQLServer.conectar();
+        try (Connection conn = ConexionBD.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, codigo);
@@ -34,23 +35,23 @@ public class LoginController {
 
             if (rs.next()) {
                 
-                String tipo = rs.getString("tipo_usuario");
+                int tipo = rs.getInt("tipo_usuario_id");
                 
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
 
                 // factoría polimórfica
                 switch(tipo) {
-                    case "Alumno":
+                    case 2:
                         usuario = new Alumno(codigo, password, nombre, apellido);
                         break;
-                    case "Docente":
+                    case 3:
                         usuario = new Docente(codigo, password, nombre, apellido);
                         break;
-                    case "Administrador":
+                    case 1:
                         usuario = new Administrador(codigo, password, nombre, apellido);
                         break;
-                    case "Recepcionista":
+                    case 4:
                         usuario = new Recepcionista(codigo, password, nombre, apellido);
                         break;
                     default:

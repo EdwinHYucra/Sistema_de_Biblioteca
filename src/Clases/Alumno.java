@@ -22,7 +22,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+        this.tipoDeUser = 2;
         this.listaLibros = new ArrayList<>();
         listaLibros.add(new Libro(
                 "M001",
@@ -51,7 +51,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+        this.tipoDeUser = 2;
         this.carrera = carrera;
         this.listaLibros = new ArrayList<>();
         listaLibros.add(new Libro(

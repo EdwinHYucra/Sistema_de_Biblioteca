@@ -12,7 +12,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
     public Administrador(String id_codigo, String contraseña) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     //Constructor de Prueba
@@ -21,7 +21,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         this.contraseña = contraseña;
         this.nombre = nombre;
 
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     public Administrador(String id_codigo, String contraseña, String nombre, String apellido) {
@@ -29,7 +29,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     /* 

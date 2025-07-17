@@ -10,21 +10,11 @@ import java.sql.SQLException;
 
 public class ConexionBD {
 
-    public static void Conectar() {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
-            if (conn != null) {
-                System.out.println("Conexión a SQLite establecida correctamente.");
-                conn.close();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
+    
     public static Connection conectar() {
         Connection conn = null;
         try {
-            String url = "jdbc:sqlite:resources/db_library_system.db";
+            String url = "jdbc:sqlite:C:\\Users\\Usuario\\Downloads\\db_library_system.db";
             conn = DriverManager.getConnection(url);
             System.out.println("Conexión a SQLite establecida.");
         } catch (SQLException e) {
