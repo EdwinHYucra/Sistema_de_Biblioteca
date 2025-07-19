@@ -1,15 +1,16 @@
 
 package Clases;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ArchivoDigital extends Material {
     private String formato;
     private String ruta;
 
-    public ArchivoDigital(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
+    public ArchivoDigital(int codigo, String nombre, String autor, LocalDate fechaPublicacion,
                           String formato, String ruta) {
-        super(codigo, nombre, estado, autor, fechaPublicacion);
+        super(codigo, nombre,autor, fechaPublicacion);
         this.formato = formato;
         this.ruta = ruta;
     }

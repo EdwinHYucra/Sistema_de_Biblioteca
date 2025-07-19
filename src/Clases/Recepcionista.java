@@ -39,7 +39,7 @@ public class Recepcionista extends Usuario {
     public void validarReservaLibro(ReservaLibro reslibro) {
         if (reslibro != null && reslibro.getLibro() != null) {
             Libro libro = reslibro.getLibro();
-            libro.setEstado("No disponible");  // Marcar el libro como prestado
+            //libro.setEstado("No disponible");  // Marcar el libro como prestado
             reslibro.setEstado("Reservado");  // Marcar la reserva como efectuada
             System.out.println("Reserva de libro recepcionada para: " + reslibro.getUsuario().getNombre());
         } else {

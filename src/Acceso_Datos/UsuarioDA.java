@@ -6,10 +6,12 @@ package Acceso_Datos;
 
 import Acceso_Datos.ConexionBD;
 import Clases.*;
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class UsuarioDA {
     public static Usuario autenticar(String codigo, String password) {
         Usuario usuario = null;
 
-        String sql = "SELECT codigo, nombre, apellido, tipo_usuario_id FROM Usuario WHERE codigo=? AND contrasenia=?"; //AGREGAR
+        String sql = "SELECT codigo, nombre, apellido, correo, carrera_id, tipo_usuario_id, especialidad_id FROM Usuario WHERE codigo=? AND contrasenia=?"; //AGREGAR
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -67,25 +69,24 @@ public class UsuarioDA {
         return usuario;
     }
 
-    //Crud Libro
-    // 1 Consultar
     public List<Libro> obtenerLibros() {
         List<Libro> listaLibros = new ArrayList<>();
 
-        String sql = "SELECT codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero FROM Libro";
+        String sql = "SELECT libro_id, nombre, autor, fecha_publicacion, genero, idioma, ISBN, editorial, edicion FROM Libro";
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Libro libro = new Libro(
-                        rs.getString("codigo"),
+                        rs.getInt("libro_id"),
                         rs.getString("nombre"),
-                        rs.getString("estado"),
                         rs.getString("autor"),
-                        rs.getDate("fechaPublicacion"),
-                        rs.getBoolean("disponibilidad"),
-                        rs.getString("titulo"),
-                        rs.getString("genero")
+                        LocalDate.parse(rs.getString("fecha_publicacion")),
+                        rs.getString("genero"),
+                        rs.getString("idioma"),
+                        rs.getString("ISBN"),
+                        rs.getString("editorial"),
+                        rs.getString("edicion")
                 );
                 listaLibros.add(libro);
             }
@@ -97,38 +98,180 @@ public class UsuarioDA {
         return listaLibros;
     }
 
-    public Libro buscarLibro(String id) {
+    public boolean ValidarEjemplares(int Libro_id) throws SQLException {
+
+        String sql = "SELECT count()as 'Cantidad', ejemplar_id, estado from Ejemplar WHERE ESTADO = 'disponible' and libro_id = ? ";
+        Connection con = ConexionBD.conectar();
+        try {
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, Libro_id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int cantidad = rs.getInt("Cantidad");
+                if (cantidad > 0) {
+                    System.out.println("Ejemplares diaponibles");
+                    return true;
+
+                } else {
+                    System.out.println("Ejemplares de libro no disponible");
+                }
+                return false;
+            } else {
+                System.out.println("EJEMPLAR NO ENCONTRADO");
+            }
+            return false;
+
+        } catch (SQLException e) {
+            System.out.println("Error en login: " + e.getMessage());
+            return false;
+        } finally {
+            con.close();
+        }
+
+    }
+//
+
+    public Libro buscarLibro(int id) throws SQLException {
         Libro libro = null;
 
-        String sql = "SELECT codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero "
+        String sql = "SELECT libro_id, nombre, autor, fecha_publicacion, disponibilidad, titulo, genero "
                 + "FROM Libro WHERE codigo=?";
 
-        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection con = ConexionBD.conectar();
+        PreparedStatement stmt = con.prepareStatement(sql);
+        try {
 
-            stmt.setString(1, id);
+            stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 libro = new Libro(
-                        rs.getString("codigo"),
+                        rs.getInt("libro_id"),
                         rs.getString("nombre"),
-                        rs.getString("estado"),
                         rs.getString("autor"),
-                        rs.getDate("fechaPublicacion"),
-                        rs.getBoolean("disponibilidad"),
-                        rs.getString("titulo"),
-                        rs.getString("genero")
+                        LocalDate.parse(rs.getString("fecha_publicacion")),
+                        rs.getString("genero"),
+                        rs.getString("idioma"),
+                        rs.getString("ISBN"),
+                        rs.getString("editorial"),
+                        rs.getString("edicion")
                 );
+
             } else {
                 System.out.println("No se encontró un libro con el código: " + id);
             }
 
         } catch (SQLException e) {
             System.out.println("Error al buscar libro: " + e.getMessage());
+        } finally {
+            con.close();
         }
 
         return libro;
+    }
+
+    public int ObtenerEjemplar(int id) throws SQLException {
+        String sql = "Select ejemplar_id from ejemplar where libro_id = ? and estado = 'disponible'";
+        Connection con = ConexionBD.conectar();
+        PreparedStatement stmt = con.prepareStatement(sql);
+        try {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ejemplar_id");
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return 0;
+        } finally {
+            con.close();
+        }
+    }
+
+    public int RegistarReserva(String usuario, int tipodeReserva) throws SQLException {
+        String sql = "INSERT INTO Reserva(fechaReserva, tipoReserva_id, estado_id, usuario_responsable_id) VALUES (date('now'), ?, 1, ?)";
+        
+        Connection con = ConexionBD.conectar(); 
+        PreparedStatement stmt = con.prepareStatement(sql);
+        try  {
+
+            stmt.setInt(1, tipodeReserva);
+            stmt.setString(2, usuario);
+            stmt.executeUpdate();
+
+            String sql2 = "SELECT last_insert_rowid() AS 'id'";
+
+            try (PreparedStatement stmt2 = con.prepareStatement(sql2); ResultSet rs = stmt2.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al registrar reserva: " + e.getMessage());
+        }finally {
+            con.close();
+        }
+        return 0;
+
+    }
+
+    
+    
+    public boolean RegistarReservadeLibro(int reservar_id, int ejemplar_id) throws SQLException {
+        String sql = "insert into ReservaLibro(reserva_id, ejemplar_id)\n"
+                + "values\n"
+                + "(?, ?);";
+        
+        Connection conn = ConexionBD.conectar(); 
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        try  {
+
+            stmt.setInt(1, reservar_id);
+            stmt.setInt(2, ejemplar_id);
+            stmt.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return false;
+        }finally {
+            conn.close();
+        }
+
+    }
+
+    public boolean ModificarEjemplar(int id_ejemplar) throws SQLException {
+        String sql = "UPDATE Ejemplar\n"
+                + "set estado = 'no disponible'\n"
+                + "where ejemplar_id = ?";
+        
+        
+        Connection conn = ConexionBD.conectar(); 
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        try  {
+
+            stmt.setInt(1, id_ejemplar);
+            stmt.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return false;
+        }finally {
+            conn.close();
+        }
     }
 
     //2 Agregar Libro
@@ -231,9 +374,8 @@ public class UsuarioDA {
     public boolean agregarReservaLibro(String id) {
         return true;
     }
-
-    // RUC - DOCENTE
-    // Buscar un docente por código
+}
+/*
     public Docente buscarDocente(String codigoDocente) {
         Docente docente = null;
 
@@ -326,4 +468,4 @@ public class UsuarioDA {
         return false;
     }
 
-}
+}*/

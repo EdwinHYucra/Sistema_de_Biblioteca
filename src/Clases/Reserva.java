@@ -27,6 +27,13 @@ public abstract class Reserva {
     
     }
     
+        public Reserva(LocalDate fechaReserva, Usuario usuario) {
+        this.fechaReserva = fechaReserva;
+        this.usuario = usuario;
+        this.estado = "Pendiente"; //  Estado por defecto
+    
+    }
+    
     public LocalDate getFechaReserva() {
         return fechaReserva;
     }

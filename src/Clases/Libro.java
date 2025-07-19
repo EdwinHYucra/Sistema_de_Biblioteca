@@ -1,35 +1,24 @@
 
 package Clases;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Libro extends Material {
-    private boolean disponibilidad;
-    private String titulo;
     private String genero;
+    private String idioma;
+    private String isbn;
+    private String editorial;
+    private String edicion;
 
-    public Libro(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
-                 boolean disponibilidad, String titulo, String genero) {
-        super(codigo, nombre, estado, autor, fechaPublicacion);
-        this.disponibilidad = disponibilidad;
-        this.titulo = titulo;
+    public Libro(int codigo, String nombre,String autor, LocalDate fechaPublicacion, 
+            String genero, String idioma, String isbn, String editorial, String edicion) {
+        super(codigo, nombre, autor, fechaPublicacion);
         this.genero = genero;
-    }
-
-    public boolean isDisponibilidad() {
-        return disponibilidad;
-    }
-
-    public void setDisponibilidad(boolean disponibilidad) {
-        this.disponibilidad = disponibilidad;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        this.idioma = idioma;
+        this.isbn = isbn;
+        this.editorial = editorial;
+        this.edicion = edicion;
     }
 
     public String getGenero() {

@@ -1,6 +1,7 @@
 
 package Clases;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ArchivoMultimedia extends Material {
@@ -8,9 +9,9 @@ public class ArchivoMultimedia extends Material {
     private double duracion;
     private String formato;
 
-    public ArchivoMultimedia(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
+    public ArchivoMultimedia(int codigo, String nombre, String autor, LocalDate fechaPublicacion,
                              double tamaño, double duracion, String formato) {
-        super(codigo, nombre, estado, autor, fechaPublicacion);
+        super(codigo, nombre,autor, fechaPublicacion);
         this.tamaño = tamaño;
         this.duracion = duracion;
         this.formato = formato;

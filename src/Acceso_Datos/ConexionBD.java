@@ -14,7 +14,7 @@ public class ConexionBD {
     public static Connection conectar() {
         Connection conn = null;
         try {
-            String url = "jdbc:sqlite:C:\\Users\\Usuario\\Downloads\\db_library_system.db";
+            String url = "jdbc:sqlite:C:\\Users\\Usuario\\Downloads\\db_library_system(1).db";
             conn = DriverManager.getConnection(url);
             System.out.println("Conexión a SQLite establecida.");
         } catch (SQLException e) {

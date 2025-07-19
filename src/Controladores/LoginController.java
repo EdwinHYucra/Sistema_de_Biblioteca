@@ -23,7 +23,7 @@ public class LoginController {
     public static Usuario autenticar(String codigo, String password) {
         Usuario usuario = null;
 
-        String sql = "SELECT codigo, nombre, apellido, tipo_usuario_id FROM Usuario WHERE codigo=? AND contrasenia=?"; //AGREGAR
+        String sql = "SELECT codigo, nombre, apellido, correo, tipo_usuario_id, carrera_id, especialidad_id FROM Usuario WHERE codigo=? AND contrasenia=?"; //AGREGAR
 
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

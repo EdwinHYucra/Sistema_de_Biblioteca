@@ -2,6 +2,7 @@ package Consola;
 
 import Acceso_Datos.UsuarioDA;
 import Clases.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
@@ -24,7 +25,7 @@ public class MenuPrincipal {
         this.usuario = usuario;
     }
 
-    public static void iniciarLogin() {
+    public static void iniciarLogin() throws SQLException {
         //Scanner sc = new Scanner(System.in);
         boolean volverAlMenuGeneral = false;
 
@@ -53,7 +54,7 @@ public class MenuPrincipal {
         }
     }
 
-    public static void mostrarMenu(Usuario usuario) {
+    public static void mostrarMenu(Usuario usuario) throws SQLException {
 
         switch (usuario.getTipoDeUser()) {
             case 1:
@@ -89,7 +90,7 @@ public class MenuPrincipal {
 
             switch (op) {
                 case 1:
-                    admin.agregarMaterial();
+                    //admin.agregarMaterial();
                     break;
                 case 2:
                     //admin.gestionarRecursos();
@@ -127,7 +128,7 @@ public class MenuPrincipal {
                 case 1:
                     System.out.print("Ingrese el código del libro que desea reservar: ");
                     String codigoSeleccionado = sc.nextLine();
-                    alumno.solicitarReservaLibro(codigoSeleccionado);
+                   // alumno.solicitarReservaLibro(codigoSeleccionado);
                     break;
                 case 2:
                     alumno.verCatalogoLibros();
@@ -148,13 +149,13 @@ public class MenuPrincipal {
         }
     }
 
-    private static void mostrarMenuDocente(Clases.Docente docente) {
+    private static void mostrarMenuDocente(Clases.Docente docente) throws SQLException {
         Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
         while (activo) {
             System.out.println("\n=== MENÚ DOCENTE ===");
-            System.out.println("1. Ver información personal");
+            System.out.println("1. Mostrar los libros");
             System.out.println("2. Reservar libro");
             System.out.println("3. Ver mis reservas");
             System.out.println("9. Cerrar sesión");
@@ -165,15 +166,11 @@ public class MenuPrincipal {
 
             switch (op) {
                 case 1:
-                    docente.mostrarInfo();
+                    docente.verCatalogoLibros();
                     break;
                 case 2:
-                    // Mostrar catálogo
-                    docente.verCatalogoLibros();
-                    System.out.print("Ingrese el código del libro que desea reservar: ");
-                    String codigoSeleccionado = sc.nextLine();
-                    docente.solicitarReservaLibro(codigoSeleccionado);
-                    break;
+                    docente.solicitarReservaLibro();
+                     break;
                 case 3:
                     // docente.verReservas(); 
                     break;
@@ -203,26 +200,14 @@ public class MenuPrincipal {
 
             switch (op) {
                 case 1: {
-                    // Simulación: Reserva de Libro
-                    Libro libro = new Libro("L001", "Cien Años de Soledad", "Disponible", "Gabriel García Márquez", new Date(), true, ",", "accion");
-                    Usuario estudiante = new Alumno("EST123", "pass123", "Sofía", "López");
-                    ReservaLibro reservaLibro = new ReservaLibro(
-                            LocalDate.now().plusDays(7), // Fecha devolución
-                            libro,
-                            "Pendiente", // Estado inicial
-                            LocalDate.now(), // Fecha reserva
-                            1.0, // Duración
-                            LocalTime.of(9, 30), // Hora
-                            estudiante
-                    );
-                    recep.validarReservaLibro(reservaLibro);
+                   
                     break;
                 }
 
                 case 2: {
                     // Simulación: Reserva de Recurso Tecnológico
-                    RecursoTecnologico tablet = new Tablet("D001", "samsung");
-                    Usuario docente = new Docente("DOC001", "docpass", "Luis", "Gonzales");
+                   /* RecursoTecnologico tablet = new Tablet("D001", "samsung");
+                    //Usuario docente = new Docente(001, "docpass", "Luis", "Gonzales");
 
                     ReservaRecursoTecnologico reservaTEC = new ReservaRecursoTecnologico(
                             "Reserva tecnológica",
@@ -233,7 +218,7 @@ public class MenuPrincipal {
                             LocalTime.of(10, 0),
                             docente
                     );
-                    recep.validarReservaTecnologica(reservaTEC);
+                    recep.validarReservaTecnologica(reservaTEC);*/
                     break;
                 }
 

@@ -24,26 +24,6 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.apellido = apellido;
         this.tipoDeUser = 2;
         this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
-                "M001",
-                "Programación en Java",
-                "Disponible",
-                "James Gosling",
-                new java.util.Date(),
-                true,
-                "Programación en Java",
-                "Programación"
-        ));
-        listaLibros.add(new Libro(
-                "M002",
-                "Estructuras de Datos",
-                "Disponible",
-                "Robert Lafore",
-                new java.util.Date(),
-                true,
-                "Estructuras de Datos",
-                "Computación"
-        ));
     }
 
     public Alumno(String id_codigo, String contraseña, String nombre, String apellido, String carrera) {
@@ -54,26 +34,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.tipoDeUser = 2;
         this.carrera = carrera;
         this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
-                "M001",
-                "Programación en Java",
-                "Disponible",
-                "James Gosling",
-                new java.util.Date(),
-                true,
-                "Programación en Java",
-                "Programación"
-        ));
-        listaLibros.add(new Libro(
-                "M002",
-                "Estructuras de Datos",
-                "Disponible",
-                "Robert Lafore",
-                new java.util.Date(),
-                true,
-                "Estructuras de Datos",
-                "Computación"
-        ));
+        
     }
 
     public List<ReservaRecursoTecnologico> getReservasRT() {
@@ -230,7 +191,8 @@ public class Alumno extends Usuario implements IServicioPrestamos {
             System.out.println("No hay libros en la sala.");
         } else {
             for (Libro libro : lista) {
-                System.out.println("Código: " + libro.getCodigo() + " | Título: " + libro.getTitulo() + " | Disponibilidad: " + (libro.isDisponibilidad() ? "Disponible" : "No disponible"));
+               
+                //System.out.println("Código: " + libro.getCodigo() + " | Título: " + libro.getTitulo() + " | Disponibilidad: " + (libro.isDisponibilidad() ? "Disponible" : "No disponible"));
 
             }
         }
@@ -245,49 +207,10 @@ public class Alumno extends Usuario implements IServicioPrestamos {
     }
 
     //@Override
-    public boolean solicitarReservaLibro(String codigoLibro) {
-        Libro libroRecep = null;
-        for (Libro libro : listaLibros) {
-            if (libro.getCodigo().equals(codigoLibro)) {
-                libroRecep = libro;
-                break;
-            }
-        }
-        Scanner sc = new Scanner(System.in);
-        System.out.print("¿Desea reservar el libro \"" + libroRecep.getTitulo() + "\"? (S/N): ");
-        String confirmar = sc.nextLine();
-        if (confirmar.equalsIgnoreCase("S")) {
 
-            ReservaLibro reservaL = new ReservaLibro(null, libroRecep, "pendiente", LocalDate.now(), 12.2, LocalTime.now(), this);
-            libroRecep.setDisponibilidad(false);
-            agregarReserva(reservaL);
-            System.out.println("Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
-        } else {
-            System.out.println("Reserva cancelada.");
-        }
-        return true;
-    }
-
+    @Override
     public void cancelarReserva() {
-        System.out.println("Reserva cancelada por el alumno.");
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public void mostrarInfo() {
-        System.out.println("Alumno: " + nombre + " " + apellido + ", Carrera: " + carrera);
-    }
-
-    @Override
-    public void verificarCredenciales() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void bloquearUsuario() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void cerrarSesion() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+   
 }
