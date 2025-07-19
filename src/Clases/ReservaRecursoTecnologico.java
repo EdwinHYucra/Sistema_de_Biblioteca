@@ -1,13 +1,14 @@
 package Clases;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ReservaRecursoTecnologico extends Reserva {
     private String tipoReserva;
-    private String IDcodigo;
+    private int IDcodigo;
     private RecursoTecnologico recursoTecnologico;
 
-    public ReservaRecursoTecnologico(String tipoReserva, String IDcodigo, RecursoTecnologico recursoTecnologico, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
+    public ReservaRecursoTecnologico(String tipoReserva, int IDcodigo, RecursoTecnologico recursoTecnologico, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
         super(fechaReserva, duracion, horaReserva, usuario);
         this.tipoReserva = tipoReserva;
         this.IDcodigo = IDcodigo;
@@ -28,18 +29,29 @@ public class ReservaRecursoTecnologico extends Reserva {
     }
     @Override
     public void mostrarInfo(){
-        System.out.println("Mostrando informacion del la clase padre como la del hijo");
+        System.out.println("Reserva de recurso tecnologico"+IDcodigo);
     }
 
-    Object getRecurso() {
+    /*Object getRecurso() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     void setFechaDevolucion(String fechaDevolucion) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
+
+    public int getCodigo() {
+        return IDcodigo;
+    }
+    public RecursoTecnologico getRecursoTecnologico() {
+        return recursoTecnologico;
     }
 
-    public String getCodigo() {
-        return null;
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

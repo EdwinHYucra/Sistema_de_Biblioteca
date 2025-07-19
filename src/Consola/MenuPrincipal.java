@@ -37,7 +37,7 @@ public class MenuPrincipal {
             System.out.print("Contraseña: ");
             String password = sc.nextLine();
 
-            Usuario usuario = LoginController.autenticar(codigo, password);
+            Usuario usuario = UsuarioDA.autenticar(codigo, password);
 
             if (usuario != null) {
                 System.out.println("Bienvenido, " + usuario.getNombre());
@@ -59,16 +59,16 @@ public class MenuPrincipal {
     public static void mostrarMenu(Usuario usuario) {
 
         switch (usuario.getTipoDeUser()) {
-            case "Administrador":
+            case 1:
                 mostrarMenuAdministrador((Clases.Administrador) usuario);
                 break;
-            case "Alumno":
+            case 2:
                 mostrarMenuAlumno((Clases.Alumno) usuario);
                 break;
-            case "Docente":
+            case 3:
                 mostrarMenuDocente((Clases.Docente) usuario);
                 break;
-            case "Recepcionista":
+            case 4:
                 mostrarMenuRecepcionista((Clases.Recepcionista) usuario);
                 break;
             default:
@@ -129,7 +129,7 @@ public class MenuPrincipal {
             switch (op) {
                 case 1:
                     System.out.print("Ingrese el código del libro que desea reservar: ");
-                    String codigoSeleccionado = sc.nextLine();
+                    int codigoSeleccionado = 0;
                     alumno.solicitarReservaLibro(codigoSeleccionado);
                     break;
                 case 2:
@@ -174,9 +174,11 @@ public class MenuPrincipal {
                     // Mostrar catálogo
                     docente.verCatalogoLibros();
                     System.out.print("Ingrese el código del libro que desea reservar: ");
-                    String codigoSeleccionado = sc.nextLine();
+                    int codigoSeleccionado = 0;
                     docente.solicitarReservaLibro(codigoSeleccionado);
                     break;
+
+
                 case 3:
                     // docente.verReservas(); 
                     break;
@@ -205,15 +207,34 @@ public class MenuPrincipal {
             sc.nextLine(); // limpiar buffer
 
             switch (op) {
-                case 1: {
-                    System.out.print("Ingrese el código de reserva del libro: ");
+                case 1: {                   
+                    System.out.print("Ingrese el ID de reserva del libro: ");
                     String codigo = sc.nextLine();
-                    Reserva reserva = UsuarioDA.BuscarReserva(codigo);
+                    int idReserva;
+
+                    try {
+                        idReserva = Integer.parseInt(codigo); // <--- ¡AQUÍ ESTÁ LA CLAVE! Convertimos a int
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: El ID de reserva debe ser un número entero válido.");
+                        break; // Salimos del case si la conversión falla
+                    }
+
+                    Reserva reserva = UsuarioDA.buscarReserva(idReserva);
 
                     if (reserva instanceof ReservaLibro) {
                         System.out.print("Ingrese fecha de devolución (yyyy-MM-dd): ");
                         String fechaDev = sc.nextLine();
                         recep.validarReservaLibro((ReservaLibro) reserva, fechaDev);
+                        
+                        sc.nextLine();
+                        System.out.print("¿Deseas cambiar el estado de la reserva? (s/n): ");
+                        String resp = sc.nextLine();
+                        if (resp.equalsIgnoreCase("s")) {
+                            System.out.print("Nuevo estado: ");
+                            String nuevoEstado = sc.nextLine();
+                            UsuarioDA.modificarEstadoReserva(idReserva, nuevoEstado);
+                            System.out.println("Estado actualizado.");
+                         }
                     } else {
                         System.out.println(" No se encontró una reserva de libro con ese código.");
                     }
@@ -221,47 +242,101 @@ public class MenuPrincipal {
                 }
 
                 case 2: {
-                    System.out.print("Ingrese el código de reserva tecnológica: ");
-                    String codigo = sc.nextLine();
-                    Reserva reserva = UsuarioDA.BuscarReserva(codigo);
+                    System.out.print("Ingrese el ID de reserva tecnológica: "); // Cambiado "código" a "ID" para claridad
+                    String codigoStr = sc.nextLine();
+                    int idReserva;
 
+                    try {
+                        idReserva = Integer.parseInt(codigoStr);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: El ID de reserva debe ser un número entero válido.");
+                        break;
+                    }
+
+                    Reserva reserva = UsuarioDA.buscarReserva(idReserva);
                     if (reserva instanceof ReservaRecursoTecnologico) {
+                        ReservaRecursoTecnologico resTec = (ReservaRecursoTecnologico) reserva;
+                        recep.validarReservaTecnologica(resTec);
+
+                        System.out.println("Reserva tecnológica validada.");
+                        System.out.println("Inicio: " + resTec.getFechaReserva() + " " + resTec.getHoraReserva());
+                        System.out.println("Fin: " + resTec.getFechaHoraFin());
+
+                        // sc.nextLine(); // Esta línea también es un error aquí.
+
+                        System.out.print("¿Deseas cambiar el estado de la reserva? (s/n): ");
+                        String resp = sc.nextLine();
+                        if (resp.equalsIgnoreCase("s")) {
+                            System.out.print("Nuevo estado: ");
+                            String nuevoEstado = sc.nextLine();
+                            UsuarioDA.modificarEstadoReserva(idReserva, nuevoEstado);
+                            System.out.println("Estado actualizado.");
+                        }
+                    } else {
+                        System.out.println("No se encontró una reserva tecnológica con ese ID o el tipo no coincide.");
+                    }
+                    break;
+                
+
+                    /*if (reserva instanceof ReservaRecursoTecnologico) {
                         System.out.print("Ingrese fecha de devolución (yyyy-MM-dd): ");
                         String fechaDev = sc.nextLine();
                         recep.validarReservaTecnologica((ReservaRecursoTecnologico) reserva, fechaDev);
                     } else {
                         System.out.println(" No se encontró una reserva tecnológica con ese código.");
                     }
-                    break;
+                    break;*/
                 }
 
                 case 3: {
-                    System.out.print("Ingrese el código de reserva de ambiente: ");
-                    String codigo = sc.nextLine();
-                    Reserva reserva = UsuarioDA.BuscarReserva(codigo);
+                    System.out.print("Ingrese el ID de reserva de ambiente: "); // Cambiado "código" a "ID" para claridad
+                    String codigoStr = sc.nextLine();
+                    int idReserva;
 
+                    try {
+                        idReserva = Integer.parseInt(codigoStr);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: El ID de reserva debe ser un número entero válido.");
+                        break;
+                    }
+
+                    Reserva reserva = UsuarioDA.buscarReserva(idReserva);
                     if (reserva instanceof ReservaDeAmbiente) {
-                        System.out.print("Ingrese fecha de devolución (yyyy-MM-dd): ");
-                        String fechaDev = sc.nextLine();
-                        recep.validarReservaAmbiente((ReservaDeAmbiente) reserva, fechaDev);
+                        ReservaDeAmbiente resAmb = (ReservaDeAmbiente) reserva;
+                        recep.validarReservaAmbiente(resAmb);
+
+                        System.out.println("Reserva de ambiente validada.");
+                        System.out.println("Inicio: " + resAmb.getFechaReserva() + " " + resAmb.getHoraReserva());
+                        System.out.println("Fin: " + resAmb.getFechaHoraFin());
+
+                        // sc.nextLine(); // Esta línea también es un error aquí.
+
+                        System.out.print("¿Deseas cambiar el estado de la reserva? (s/n): ");
+                        String resp = sc.nextLine();
+                        if (resp.equalsIgnoreCase("s")) {
+                            System.out.print("Nuevo estado: ");
+                            String nuevoEstado = sc.nextLine();
+                            UsuarioDA.modificarEstadoReserva(idReserva, nuevoEstado);
+                            System.out.println("Estado actualizado.");
+                        }
                     } else {
-                        System.out.println(" No se encontró una reserva de ambiente con ese código.");
+                        System.out.println("No se encontró una reserva de ambiente con ese ID o el tipo no coincide.");
                     }
                     break;
                 }
 
-                case 4: {
-                    System.out.print("Ingrese fecha de inicio (yyyy-MM-dd): ");
-                    String fechaInicioStr = sc.nextLine();
-                    System.out.print("Ingrese fecha de fin (yyyy-MM-dd): ");
-                    String fechaFinStr = sc.nextLine();
+                    case 4: {
+                        System.out.print("Ingrese fecha de inicio (yyyy-MM-dd): ");
+                        String fechaInicioStr = sc.nextLine();
+                        System.out.print("Ingrese fecha de fin (yyyy-MM-dd): ");
+                        String fechaFinStr = sc.nextLine();
 
-                    LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, DateTimeFormatter.ISO_LOCAL_DATE);
-                    LocalDate fechaFin = LocalDate.parse(fechaFinStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                        LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                        LocalDate fechaFin = LocalDate.parse(fechaFinStr, DateTimeFormatter.ISO_LOCAL_DATE);
 
-                   recep.generarReporte(fechaInicio, fechaFin);
-                    break;
-                }
+                       recep.generarReporte(fechaInicio, fechaFin);
+                        break;
+                    }
 
                 case 5:
                     System.out.println(" Sesión cerrada.");

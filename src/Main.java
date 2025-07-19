@@ -1,3 +1,4 @@
+
 import Clases.*;
 import Consola.MenuPrincipal;
 import Acceso_Datos.*;
@@ -12,7 +13,6 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        /*Scanner sc = new Scanner(System.in); 
         boolean salir = false;
 
         while (!salir) {
@@ -40,13 +40,13 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opción no válida.");
-            }*/
-
-
-        Usuario usuario = new Recepcionista ("FGEE", "EEEEE", "HOLI", "EFE");
-        usuario.setTipoDeUser("Recepcionista");
-        MenuPrincipal.mostrarMenu(usuario);
-        ConexionBD.conectar();
+            }
+        }
     }
 }
+        /*Usuario usuario = new Recepcionista ("FGEE", "EEEEE", "HOLI", "EFE");
+        usuario.setTipoDeUser("Recepcionista");
+        MenuPrincipal.mostrarMenu(usuario);
+        ConexionBD.conectar();*/
+    
 

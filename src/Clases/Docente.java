@@ -36,11 +36,11 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Docente";
+        this.tipoDeUser = 3;
         this.especialidad = especialidad;
          this.listaLibros = new ArrayList<>();
         listaLibros.add(new Libro(
-                "M001",
+                1,
                 "Programación en Java",
                 "Disponible",
                 "James Gosling",
@@ -50,7 +50,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                 "Programación"
         ));
         listaLibros.add(new Libro(
-                "M002",
+                2,
                 "Estructuras de Datos",
                 "Disponible",
                 "Robert Lafore",
@@ -66,10 +66,10 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Docente";
+        this.tipoDeUser = 3;
         this.listaLibros = new ArrayList<>();
         listaLibros.add(new Libro(
-                "M001",
+                1,
                 "Programación en Java",
                 "Disponible",
                 "James Gosling",
@@ -79,7 +79,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                 "Programación"
         ));
         listaLibros.add(new Libro(
-                "M002",
+                2,
                 "Estructuras de Datos",
                 "Disponible",
                 "Robert Lafore",
@@ -121,10 +121,10 @@ public class Docente extends Usuario implements IServicioPrestamos {
     }
 
     //@Override
-    public boolean solicitarReservaLibro(String codigoLibro) {
+    public boolean solicitarReservaLibro(int codigoLibro) {
         Libro libroRecep = null;
         for (Libro libro : listaLibros) {
-            if (libro.getCodigo().equals(codigoLibro)){           
+            if (libro.getCodigo()==(codigoLibro)){           
             libroRecep = libro;
             break;
             }

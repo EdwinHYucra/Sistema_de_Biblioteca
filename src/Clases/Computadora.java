@@ -8,8 +8,8 @@ public class Computadora extends RecursoTecnologico implements IBloqueo {
     private String cpu;
     private boolean bloqueada;
 
-    public Computadora(String IDcodigo, String ram, String procesador, String cpu, boolean estado) {
-        this.IDcodigo = IDcodigo;
+    public Computadora(int IDcodigo, String ram, String procesador, String cpu, boolean estado) {
+        super(IDcodigo);
         this.ram = ram;
         this.procesador = procesador;
         this.cpu = cpu;

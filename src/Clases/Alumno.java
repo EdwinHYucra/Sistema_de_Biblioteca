@@ -22,10 +22,10 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+        this.tipoDeUser = 2;
         this.listaLibros = new ArrayList<>();
         listaLibros.add(new Libro(
-                "M001",
+                1,
                 "Programación en Java",
                 "Disponible",
                 "James Gosling",
@@ -35,7 +35,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 "Programación"
         ));
         listaLibros.add(new Libro(
-                "M002",
+                2,
                 "Estructuras de Datos",
                 "Disponible",
                 "Robert Lafore",
@@ -51,11 +51,11 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+        this.tipoDeUser = 2;
         this.carrera = carrera;
         this.listaLibros = new ArrayList<>();
         listaLibros.add(new Libro(
-                "M001",
+                1,
                 "Programación en Java",
                 "Disponible",
                 "James Gosling",
@@ -65,7 +65,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 "Programación"
         ));
         listaLibros.add(new Libro(
-                "M002",
+                2,
                 "Estructuras de Datos",
                 "Disponible",
                 "Robert Lafore",
@@ -107,7 +107,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         }
         
         // 2) Buscar la sala
-        Sala sala1 = new Sala("SALA101", "Disponible",6);
+        Sala sala1 = new Sala(2, "Disponible",6);
         /*ReservaDeAmbiente reservaAmb = new ReservaDeAmbiente(
             "RES001", // código de reserva
             5,        // capacidad máxima
@@ -180,18 +180,18 @@ public class Alumno extends Usuario implements IServicioPrestamos {
             switch (opcion) {
                 case 1:
 
-                    Tablet tablet1 = new Tablet("T001", "Samsung Galaxy Tab A8");
+                    Tablet tablet1 = new Tablet(1, "Samsung Galaxy Tab A8");
 
-                    ReservaRecursoTecnologico rRecTecTap = new ReservaRecursoTecnologico("Computadora", "14625", tablet1, LocalDate.now(), 12.5, LocalTime.now(), this);
+                    ReservaRecursoTecnologico rRecTecTap = new ReservaRecursoTecnologico("Computadora", 3, tablet1, LocalDate.now(), 12.5, LocalTime.now(), this);
                     reservasRT.add(rRecTecTap);
                     System.out.println("Ha reservado una Tablet correctamente.");
 
                     break;
                 case 2:
 
-                    Computadora pc1 = new Computadora("C001", "16GB", "Intel Core i5", "HP ProDesk", true);
+                    Computadora pc1 = new Computadora(2, "16GB", "Intel Core i5", "HP ProDesk", true);
 
-                    ReservaRecursoTecnologico rRecTecCom = new ReservaRecursoTecnologico("Computadora", "14625", pc1, LocalDate.now(), 12.5, LocalTime.now(), this);
+                    ReservaRecursoTecnologico rRecTecCom = new ReservaRecursoTecnologico("Computadora", 2, pc1, LocalDate.now(), 12.5, LocalTime.now(), this);
                     reservasRT.add(rRecTecCom);
 
                     System.out.println("Ha reservado una Computadora correctamente.");
@@ -245,10 +245,11 @@ public class Alumno extends Usuario implements IServicioPrestamos {
     }
 
     //@Override
-    public boolean solicitarReservaLibro(String codigoLibro) {
+    public boolean solicitarReservaLibro(int codigoLibro) {
         Libro libroRecep = null;
+        
         for (Libro libro : listaLibros) {
-            if (libro.getCodigo().equals(codigoLibro)) {
+            if (libro.getCodigo()==(codigoLibro)) {
                 libroRecep = libro;
                 break;
             }

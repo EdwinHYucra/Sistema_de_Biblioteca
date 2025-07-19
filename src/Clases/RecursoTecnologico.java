@@ -1,17 +1,20 @@
 package Clases;
 
 public class RecursoTecnologico {
-    String IDcodigo;
-//
+    public int IDcodigo;
+    
+    public RecursoTecnologico(int IDcodigo) {
+    this.IDcodigo = IDcodigo;
+   }
     public boolean VerificarDisponibilidad() {
         return true; 
     }
 
-    public String getIDcodigo() {
+    public int getIDcodigo() {
         return IDcodigo;
     }
 
-    public void setIDcodigo(String IDcodigo) {
+    public void setIDcodigo(int IDcodigo) {
         this.IDcodigo = IDcodigo;
     }
 

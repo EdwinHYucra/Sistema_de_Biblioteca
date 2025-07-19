@@ -12,7 +12,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
     public Administrador(String id_codigo, String contraseña) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     //Constructor de Prueba
@@ -21,7 +21,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         this.contraseña = contraseña;
         this.nombre = nombre;
 
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     public Administrador(String id_codigo, String contraseña, String nombre, String apellido) {
@@ -29,7 +29,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     /* 
@@ -142,10 +142,23 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         System.out.println("2. Archivo Multimedia");
         System.out.println("3. Archivo Digital");
         System.out.println("Opcion: ");
-        int tipo = Integer.parseInt(ad.nextLine());
+        int tipo;
+        try {
+            tipo = Integer.parseInt(ad.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Opción inválida. Por favor, ingrese un número (1, 2 o 3).");
+            return;
+        }
+
+        System.out.print("Codigo: ");
+        int codigo; // <--- Declarado como int
+        try {
+            codigo = Integer.parseInt(ad.nextLine()); // <--- Conversión de String a int aquí
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El código debe ser un número entero.");
+            return;
+        }
         
-        System.out.println("Codigo: ");
-        String codigo = ad.nextLine();
         System.out.println("Nombre: ");
         String nombre = ad.nextLine();
         System.out.println("Estado: ");
@@ -218,12 +231,17 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         Scanner ad = new Scanner(System.in);
         System.out.println("\n=== EDITAR MATERIAL ===");
         System.out.println("Ingrese el código del material a editar: ");
-        String codigoBuscado = ad.nextLine();
+        int codigoBuscado; // <--- Declarado como int
+        try {
+            codigoBuscado = Integer.parseInt(ad.nextLine()); // <--- Conversión de String a int aquí
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El código debe ser un número entero.");
+            return;
+        }
 
         Material materialEncontrado = null;
-
         for (Material m : materiales) {
-            if (m.getCodigo().equals(codigoBuscado)) {
+            if (m.getCodigo() == codigoBuscado) { // <--- Comparación de int con int
                 materialEncontrado = m;
                 break;
             }
@@ -324,12 +342,17 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         Scanner ad = new Scanner(System.in);
         System.out.println("\n=== ELIMINAR MATERIAL ===");
         System.out.println("Ingrese el código del material a eliminar: ");
-        String codigoBuscado = ad.nextLine();
+        int codigoBuscado; // <--- Declarado como int
+        try {
+            codigoBuscado = Integer.parseInt(ad.nextLine()); // <--- Conversión de String a int aquí
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El código debe ser un número entero.");
+            return;
+        }
 
         Material materialEncontrado = null;
-
         for (Material m : materiales) {
-            if (m.getCodigo().equals(codigoBuscado)) {
+            if (m.getCodigo() == codigoBuscado) { // <--- Comparación de int con int
                 materialEncontrado = m;
                 break;
             }
@@ -360,10 +383,22 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         System.out.println("1. Tablet");
         System.out.println("2. Computadora");
         System.out.print("Opción: ");
-        int tipo = Integer.parseInt(ad.nextLine());
+        int tipo;
+        try {
+            tipo = Integer.parseInt(ad.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Opción inválida. Por favor, ingrese un número (1 o 2).");
+            return;
+        }
 
         System.out.print("ID Código: ");
-        String IDcodigo = ad.nextLine();
+        int IDcodigo; // <--- Declarado como int
+        try {
+            IDcodigo = Integer.parseInt(ad.nextLine()); // <--- Conversión de String a int aquí
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El ID Código debe ser un número entero.");
+            return;
+        }
 
         if (tipo == 1) {
             System.out.print("Modelo: ");
@@ -404,11 +439,17 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         Scanner ad = new Scanner(System.in);
         System.out.println("\n=== EDITAR RECURSO TECNOLÓGICO ===");
         System.out.print("Ingrese el ID Código del recurso a editar: ");
-        String IDcodigoBuscado = ad.nextLine();
+        int IDcodigoBuscado; // <--- Declarado como int
+        try {
+            IDcodigoBuscado = Integer.parseInt(ad.nextLine()); // <--- Conversión de String a int aquí
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El ID Código debe ser un número entero.");
+            return;
+        }
 
         RecursoTecnologico recursoEncontrado = null;
         for (RecursoTecnologico r : recursos) {
-            if (r.getIDcodigo().equals(IDcodigoBuscado)) {
+            if (r.getIDcodigo() == IDcodigoBuscado) { // <--- Comparación de int con int
                 recursoEncontrado = r;
                 break;
             }
@@ -472,11 +513,17 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         Scanner ad = new Scanner(System.in);
         System.out.println("\n=== ELIMINAR RECURSO TECNOLÓGICO ===");
         System.out.print("Ingrese el ID Código del recurso a eliminar: ");
-        String IDcodigoBuscado = ad.nextLine();
+        int IDcodigoBuscado; // <--- Declarado como int
+        try {
+            IDcodigoBuscado = Integer.parseInt(ad.nextLine()); // <--- Conversión de String a int aquí
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El ID Código debe ser un número entero.");
+            return;
+        }
 
         RecursoTecnologico recursoEncontrado = null;
         for (RecursoTecnologico r : recursos) {
-            if (r.getIDcodigo().equals(IDcodigoBuscado)) {
+            if (r.getIDcodigo() == IDcodigoBuscado) { // <--- Comparación de int con int
                 recursoEncontrado = r;
                 break;
             }

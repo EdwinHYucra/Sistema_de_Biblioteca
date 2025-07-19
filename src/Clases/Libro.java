@@ -8,7 +8,7 @@ public class Libro extends Material {
     private String titulo;
     private String genero;
 
-    public Libro(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
+    public Libro(int codigo, String nombre, String estado, String autor, Date fechaPublicacion,
                  boolean disponibilidad, String titulo, String genero) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
         this.disponibilidad = disponibilidad;

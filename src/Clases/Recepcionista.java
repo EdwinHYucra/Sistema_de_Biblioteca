@@ -11,23 +11,17 @@ public class Recepcionista extends Usuario {
     public Recepcionista(String id_codigo, String contraseña) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
     }
 
     //constructor de prueba
-    public Recepcionista(String id_codigo, String contraseña, String nombre) {
-        this.id_codigo = id_codigo;
-        this.contraseña = contraseña;
-        this.nombre = nombre;
-        this.tipoDeUser = "Recepcionista";
-    }
 
     public Recepcionista(String id_codigo, String contraseña, String nombre, String apellido) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
     }
 
     public void registrarDevolucion() {
@@ -50,22 +44,29 @@ public class Recepcionista extends Usuario {
         }
     }
 
-    public void validarReservaAmbiente(ReservaDeAmbiente resAmbiente, String fechaDevolucion) {
+    public void validarReservaAmbiente(ReservaDeAmbiente resAmbiente) {
         if (resAmbiente != null && resAmbiente.getSala() != null) {
+            resAmbiente.calcularFechaHoraFinDesdeAhora(); // Nuevo método en clase reserva
             resAmbiente.setEstado("Reservado");
-            resAmbiente.setFechaDevolucion(fechaDevolucion);
-            System.out.println("Reserva de ambiente recepcionada: Sala " + resAmbiente.getSala().getCodigo());
+            
+            System.out.println("Reserva de ambiente recepcionada:" );
+            System.out.println("Sala: " + resAmbiente.getSala().getCodigo());
+            System.out.println("Inicio: " + resAmbiente.getFechaReserva() + " " + resAmbiente.getHoraReserva());
+            System.out.println("Fin: " + resAmbiente.getFechaHoraFin());
         } else {
             System.out.println("️ Sala o reserva inválida.");
         }
     }
 
-    public void validarReservaTecnologica(ReservaRecursoTecnologico resTECno, String fechaDevolucion) {
+    public void validarReservaTecnologica(ReservaRecursoTecnologico resTECno) {
         if (resTECno != null && resTECno.verificarDisponibilidad()) {
-            resTECno.realizar(); // Aquí puedes hacer que cambie el estado si fuera necesario
+            resTECno.calcularFechaHoraFinDesdeAhora(); // Método definido en clase reserva
             resTECno.setEstado("Reservado");
-            resTECno.setFechaDevolucion(fechaDevolucion);
-            System.out.println("Reserva de recurso tecnológico recepcionada para: " + resTECno.getUsuario().getNombre());
+            
+            System.out.println("Reserva de recurso tecnológico recepcionadaa: " );
+            System.out.println("Usuario: " + resTECno.getUsuario().getNombre());
+            System.out.println("Inicio: " + resTECno.getFechaReserva() + " " + resTECno.getHoraReserva());
+            System.out.println("Fin: " + resTECno.getFechaHoraFin());
         } else {
             System.out.println("️ Recurso no disponible o reserva nula.");
         }

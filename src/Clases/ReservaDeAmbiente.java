@@ -6,6 +6,7 @@ package Clases;
  */
 import Interfaces.IBloqueo;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,14 @@ import java.util.List;
  */
 public class ReservaDeAmbiente extends Reserva implements IBloqueo {
 
-    private String codigo;
+    private int codigo;
     private int capacidadMax;
     private String estado = "Disponible";
     private int tiempoRestante;
     private List<Alumno> listaAlumnos;
     private Sala sala;
 
-    public ReservaDeAmbiente(String codigo, int tiempoEnMinutos, Sala sala, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
+    public ReservaDeAmbiente(int codigo, int tiempoEnMinutos, Sala sala, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
         super(fechaReserva, duracion, horaReserva, usuario);
 
         if (tiempoEnMinutos < 60 || tiempoEnMinutos > 120) {
@@ -37,11 +38,11 @@ public class ReservaDeAmbiente extends Reserva implements IBloqueo {
         this.listaAlumnos = new ArrayList<>();
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -110,7 +111,15 @@ public class ReservaDeAmbiente extends Reserva implements IBloqueo {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    void setFechaDevolucion(String fechaDevolucion) {
+    /*void setFechaDevolucion(String fechaDevolucion) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
+
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

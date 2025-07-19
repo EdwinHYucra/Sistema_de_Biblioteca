@@ -5,8 +5,8 @@ public class Tablet extends RecursoTecnologico {
 
     private String estado;
 
-    public Tablet(String IDcodigo, String modelo ) {
-        this.IDcodigo = IDcodigo;
+    public Tablet(int IDcodigo, String modelo ) {
+        super(IDcodigo);
         this.modelo = modelo;
         this.estado = "disponible";
     }
