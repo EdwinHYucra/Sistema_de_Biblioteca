@@ -4,13 +4,13 @@ package Clases;
 import java.util.Date;
 
 public class Material {
-    private String codigo;
+    private int codigo;
     private String nombre;
     private String estado;
     private String autor;
     private Date fechaPublicacion;
 
-    public Material(String codigo, String nombre, String estado, String autor, Date fechaPublicacion) {
+    public Material(int codigo, String nombre, String estado, String autor, Date fechaPublicacion) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.estado = estado;
@@ -18,11 +18,11 @@ public class Material {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 

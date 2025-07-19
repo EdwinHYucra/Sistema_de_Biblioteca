@@ -4,13 +4,12 @@ import java.time.LocalTime;
 
 public class ReservaRecursoTecnologico extends Reserva {
     private String tipoReserva;
-    private String IDcodigo;
+    private int IDcodigo;
     private RecursoTecnologico recursoTecnologico;
 
     public ReservaRecursoTecnologico(String tipoReserva, String IDcodigo, RecursoTecnologico recursoTecnologico, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
         super(fechaReserva, duracion, horaReserva, usuario);
         this.tipoReserva = tipoReserva;
-        this.IDcodigo = IDcodigo;
         this.recursoTecnologico = recursoTecnologico;
     }
     
@@ -21,11 +20,11 @@ public class ReservaRecursoTecnologico extends Reserva {
     public void setModelo(String tipoReserva) {
         this.tipoReserva = tipoReserva;
     }
-    public String getIDcodigo() {
+    public int getIDcodigo() {
         return IDcodigo;
     }
 
-    public void setIDcodigo(String IDcodigo) {
+    public void setIDcodigo(int IDcodigo) {
         this.IDcodigo = IDcodigo;
     }
     

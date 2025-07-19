@@ -1,8 +1,8 @@
 package Consola;
 
+import Acceso_Datos.UsuarioDA;
 import Clases.*;
 
-import Controladores.LoginController;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -20,7 +20,7 @@ public class MenuPrincipal {
     }
 
     public MenuPrincipal(Scanner scanner, Usuario usuario) {
-        this.sc = scanner;s
+        this.sc = scanner;
         this.usuario = usuario;
     }
 
@@ -34,7 +34,7 @@ public class MenuPrincipal {
             System.out.print("Contraseña: ");
             String password = sc.nextLine();
 
-            Usuario usuario = LoginController.autenticar(codigo, password);
+            Usuario usuario = UsuarioDA.autenticar(codigo, password);
 
             if (usuario != null) {
                 System.out.println("Bienvenido, " + usuario.getNombre());
@@ -56,7 +56,7 @@ public class MenuPrincipal {
     public void mostrarMenu(Usuario usuario) {
 
         switch (usuario.getTipoDeUser()) {
-            case "Administrador":
+            case 1:
                 mostrarMenuAdministrador((Clases.Administrador) usuario);
                 break;
             /*case "Alumno":
@@ -74,7 +74,6 @@ public class MenuPrincipal {
     }
 
     private void mostrarMenuAdministrador(Clases.Administrador admin) {
-        //Scanner sc = new Scanner(System.in);
         boolean activo = true;
 
         while (activo) {
@@ -92,46 +91,54 @@ public class MenuPrincipal {
             System.out.println("11. Cerrar sesión");
 
             System.out.print("Opción: ");
-            int op = sc.nextInt();
-            sc.nextLine();
 
-            switch (op) {
-                case 1:
-                    admin.agregarMaterial();
-                    break;
-                case 2:
-                    admin.editarMaterial();
-                    break;
-                case 3:
-                    admin.eliminarMaterial();
-                    break;
-                case 4:
-                    admin.agregarRecursoTecnologico();
-                    break;
-                case 5:
-                    admin.editarRecursoTecnologico();
-                    break;
-                case 6:
-                    admin.eliminarRecursoTecnologico();
-                    break;
-                case 7:
-                    admin.agregarSala();
-                    break;
-                case 8:
-                    admin.editarSala();
-                    break;
-                case 9:
-                    admin.eliminarSala();
-                    break;
-                case 10:
-                    admin.exportarInfo();
-                    break;
-                case 11:
-                    System.out.println("Sesión cerrada.");
-                    activo = false;
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
+            if (sc.hasNextInt()) {
+                int op = sc.nextInt();
+                sc.nextLine();
+
+                switch (op) {
+                    case 1:
+                        admin.agregarMaterial();
+                        break;
+                    case 2:
+                        admin.editarMaterial();
+                        break;
+                    case 3:
+                        admin.eliminarMaterial();
+                        break;
+                    case 4:
+                        admin.agregarRecursoTecnologico();
+                        break;
+                    case 5:
+                        admin.editarRecursoTecnologico();
+                        break;
+                    case 6:
+                        admin.eliminarRecursoTecnologico();
+                        break;
+                    case 7:
+                        admin.agregarSala();
+                        break;
+                    case 8:
+                        admin.editarSala();
+                        break;
+                    case 9:
+                        admin.eliminarSala();
+                        break;
+                    case 10:
+                        admin.exportarInfo();
+                        break;
+                    case 11:
+                        System.out.println("Sesión cerrada.");
+                        activo = false;
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                        break;
+
+                }
+            } else {
+                System.out.println("Entrada no valida. Por favor ingrese un numero valido");
+                sc.nextLine();
             }
         }
     }
@@ -297,5 +304,5 @@ public class MenuPrincipal {
                     System.out.println("Opción no válida.");
             }
         }
-    }
-}*/
+    }*/
+}

@@ -36,10 +36,10 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Docente";
+        this.tipoDeUser = 3;
         this.especialidad = especialidad;
          this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
+        /*listaLibros.add(new Libro(
                 "M001",
                 "Programación en Java",
                 "Disponible",
@@ -58,7 +58,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                 true,
                 "Estructuras de Datos",
                 "Computación"
-        ));
+        ));*/
     }
 
     public Docente(String id_codigo, String contraseña, String nombre, String apellido) {
@@ -66,9 +66,9 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Docente";
+        this.tipoDeUser = 3;
         this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
+        /*listaLibros.add(new Libro(
                 "M001",
                 "Programación en Java",
                 "Disponible",
@@ -87,7 +87,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                 true,
                 "Estructuras de Datos",
                 "Computación"
-        ));
+        ));*/
     }
 
     public String getEspecialidad() {
@@ -123,7 +123,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
     //@Override
     public boolean solicitarReservaLibro(String codigoLibro) {
         Libro libroRecep = null;
-        for (Libro libro : listaLibros) {
+       /* for (Libro libro : listaLibros) {
             if (libro.getCodigo().equals(codigoLibro)){           
             libroRecep = libro;
             break;
@@ -140,7 +140,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                             System.out.println("Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
                         } else {
                             System.out.println("Reserva cancelada.");
-                        }
+                        }*/
         return true;
     }
 
@@ -163,4 +163,5 @@ public class Docente extends Usuario implements IServicioPrestamos {
     public boolean solicitarReserva() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

@@ -1,3 +1,4 @@
+
 import Clases.*;
 import Consola.MenuPrincipal;
 import Acceso_Datos.*;
@@ -9,10 +10,9 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-
+        //ConexionBD.conectar();
         Scanner sc = new Scanner(System.in);
 
-        /*Scanner sc = new Scanner(System.in); 
         boolean salir = false;
 
         while (!salir) {
@@ -32,7 +32,8 @@ public class Main {
             }
             switch (opcion) {
                 case 1:
-                    MenuPrincipal.iniciarLogin();
+                    MenuPrincipal m = new MenuPrincipal();
+                    m.iniciarLogin();
                     break;
                 case 2:
                     System.out.println("Gracias por usar el sistema.");
@@ -40,12 +41,9 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opción no válida.");
-            }*/
 
-
-        Usuario usuario = new Administrador("FGEE", "EEEEE", "HOLI", "EFE");
-        usuario.setTipoDeUser("Administrador");
-        MenuPrincipal mp = new MenuPrincipal();
-        mp.iniciarLogin();
+            }
+        }
     }
+    
 }

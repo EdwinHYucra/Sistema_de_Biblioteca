@@ -8,54 +8,53 @@ package Clases;
  * Clase que representa una sala o ambiente.
  */
 public class Sala {
-    private String codigo;
-    private String estado;
-    private int capacidadMax;
+    private int codigo;
+    private String nombresala;
+    private int capacidad;
 
     // Constructor con validación
-    public Sala(String codigo, String estado, int capacidadMax) {
-        if (capacidadMax < 3 || capacidadMax > 6) {
+    public Sala(int codigo, String nombresala, int capacidad) {
+        if (capacidad < 3 || capacidad > 6) {
             throw new IllegalArgumentException("La capacidad máxima debe estar entre 3 y 6 personas.");
         }
-        this.codigo = codigo;
-        this.estado = estado;
-        this.capacidadMax = capacidadMax;
+        this.nombresala = nombresala;
+        this.capacidad= capacidad;
     }
 
     // Getters y Setters
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getNombresala() {
+        return nombresala;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setNombresala(String nombresala) {
+        this.nombresala = nombresala;
     }
 
-    public int getCapacidadMax() {
-        return capacidadMax;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setCapacidadMax(int capacidadMax) {
-        if (capacidadMax < 3 || capacidadMax > 6) {
+    public void setCapacidad(int capacidad) {
+        if (capacidad< 3 || capacidad > 6) {
             throw new IllegalArgumentException("La capacidad máxima debe estar entre 3 y 6 personas.");
         }
-        this.capacidadMax = capacidadMax;
+        this.capacidad = capacidad;
     }
 
     @Override
     public String toString() {
         return "Sala{" +
                "codigo='" + codigo + '\'' +
-               ", estado='" + estado + '\'' +
-               ", capacidadMax=" + capacidadMax +
+               ", nombresala='" + nombresala + '\'' +
+               ", capacidad=" + capacidad +
                '}';
     }
 
@@ -64,7 +63,7 @@ public class Sala {
     }
     public void mostrarInfo() {
         System.out.println("ID Código: " + codigo);
-        System.out.println("Modelo: " + estado);
-        System.out.println("CantidadMax: " + capacidadMax);
+        System.out.println("Nombre de la sala: " + nombresala);
+        System.out.println("Cantidad: " + capacidad);
     }
 }

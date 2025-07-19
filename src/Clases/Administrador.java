@@ -7,31 +7,29 @@ import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 public class Administrador extends Usuario implements IServiciosRecursos {
 
     Scanner ad = new Scanner(System.in);
 
     public Administrador(String id_codigo, String contraseña) {
-        this.id_codigo = id_codigo;
         this.contraseña = contraseña;
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     //Constructor de Prueba
     public Administrador(String id_codigo, String contraseña, String nombre) {
-        this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
 
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     public Administrador(String id_codigo, String contraseña, String nombre, String apellido) {
-        this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Administrador";
+        this.tipoDeUser = 1;
     }
 
     public void opcionesAdmi() {
@@ -65,9 +63,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 case 1: // LIBRO
                     System.out.println("=== Por favor ingrese los siguientes datos ===");
                     System.out.println("Codigo del libro: ");
-                    String codigoL = ad.nextLine().trim();
-                    if (codigoL.isEmpty()) {
-                        System.out.println("Codigo no puede estar vacío.");
+                    int codigoL = ad.nextInt();
+                    if (codigoL <= 0) {
+                        System.out.println("Código inválido. Debe ser mayor a 0.");
                         break;
                     }
 
@@ -126,7 +124,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     }
 
                     Libro libro = new Libro(codigoL, nombreL, estadoL, autorL, fechaPublicacion, disponibilidad, titulo, genero);
-                    if (UsuarioDA.agregarLibro(libro)) {
+                    int id = 1;
+                    if (UsuarioDA.agregarLibro(libro, id)) {
                         System.out.println("\nLibro agregado correctamente:");
                         libro.mostrarInfo();
                     } else {
@@ -286,11 +285,11 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         switch (opcionEM) {
             case 1: {
                 System.out.print("Ingrese el código del libro a editar: ");
-                int codL = ad.nextInt();
-                Material materialEncontrado = UsuarioDA.buscarLibro(codL);
+                int codEEL = ad.nextInt();
+                Material materialEncontrado = UsuarioDA.buscarLibro(codEEL);
 
                 if (materialEncontrado == null) {
-                    System.out.println("Libro no encontrado con el código: " + codL);
+                    System.out.println("Libro no encontrado con el código: " + codEEL);
                     return;
                 }
 
@@ -520,11 +519,11 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         switch (opcionEM) {
             case 1: {
                 System.out.print("Ingrese el código del libro a eliminar: ");
-                int codL = ad.nextInt();
-                Material materialEncontrado = UsuarioDA.buscarLibro(codL);
+                int codEL = ad.nextInt();
+                Material materialEncontrado = UsuarioDA.buscarLibro(codEL);
 
                 if (materialEncontrado == null) {
-                    System.out.println("Libro no encontrado con el código: " + codL);
+                    System.out.println("Libro no encontrado con el código: " + codEL);
                     return;
                 }
 
@@ -535,7 +534,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 String confirmacion = ad.nextLine();
                 if (confirmacion.equalsIgnoreCase("si")) {
 
-                    if (UsuarioDA.eliminarLibro(codL)) {
+                    if (UsuarioDA.eliminarLibro(codEL)) {
                         System.out.println("Libro eliminado correctamente.");
                     } else {
                         System.out.println("Error al eliminar el libro.");
@@ -633,9 +632,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 case 1: // TABLET
                     System.out.println("=== Por favor ingrese los siguientes datos ===");
                     System.out.println("Codigo del la tablet: ");
-                    String IDcodigoT = ad.nextLine().trim();
-                    if (IDcodigoT.isEmpty()) {
-                        System.out.println("Codigo no puede estar vacío.");
+                    int IDcodigoT = ad.nextInt();
+                    if (IDcodigoT <= 0) {
+                        System.out.println("Código inválido. Debe ser mayor a 0.");
                         break;
                     }
 
@@ -646,15 +645,16 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         break;
                     }
 
-                    System.out.print("Estado del tablet (Disponible/Prestado): ");
-                    String estadoT = ad.nextLine().trim();
-                    if (estadoT.isEmpty()) {
-                        System.out.println("El estado de la tablet no puede estar vacío.");
+                    System.out.print("Sistema Operativo de la tablet: ");
+                    String sisOpT = ad.nextLine().trim();
+                    if (sisOpT.isEmpty()) {
+                        System.out.println("El Sistema Operativo de la tablet no puede estar vacío.");
                         break;
                     }
 
-                    Tablet tablet = new Tablet(IDcodigoT, modeloT, estadoT);
-                    if (UsuarioDA.agregarTablet(tablet)) {
+                    Tablet tablet = new Tablet(IDcodigoT, modeloT, sisOpT);
+                    int tipoRecurso = 1;
+                    if (UsuarioDA.agregarTablet(tablet, tipoRecurso)) {
                         System.out.println("\nTablet agregado correctamente:");
                         tablet.mostrarInfo();
                     } else {
@@ -665,9 +665,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 case 2: // COMPUTADORA
                     System.out.println("=== Por favor ingrese los siguientes datos ===");
                     System.out.println("Codigo del la Computadora: ");
-                    String IDcodigoC = ad.nextLine().trim();
-                    if (IDcodigoC.isEmpty()) {
-                        System.out.println("Codigo no puede estar vacío.");
+                    int IDcodigoC = ad.nextInt();
+                    if(IDcodigoC <= 0){
+                        System.out.println("Codigo invalido. Debe ser mayor a 0.");
                         break;
                     }
 
@@ -677,18 +677,18 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         System.out.println("Ram no puede estar vacío.");
                         break;
                     }
+                    
+                    System.out.print("Sistema Operativo(Ipad/Android): ");
+                    String sistOpC = ad.nextLine().trim();
+                    if (sistOpC.isEmpty()) {
+                        System.out.println("Sistema Operativo no puede estar vacío.");
+                        break;
+                    }
 
                     System.out.print("Procesador de la computadora: ");
                     String procC = ad.nextLine().trim();
                     if (procC.isEmpty()) {
                         System.out.println("Procesador no puede estar vacío.");
-                        break;
-                    }
-
-                    System.out.print("Cpu: ");
-                    String Cpu = ad.nextLine().trim();
-                    if (Cpu.isEmpty()) {
-                        System.out.println("Cpu no puede estar vacío.");
                         break;
                     }
 
@@ -707,8 +707,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
                     boolean estadoC = Boolean.parseBoolean(estadoStr);
 
-                    Computadora computadora = new Computadora(IDcodigoC, ramC, procC, Cpu, estadoC);
-                    if (UsuarioDA.agregarComputadora(computadora)) {
+                    Computadora computadora = new Computadora(IDcodigoC, ramC, sistOpC, procC, estadoC);
+                    tipoRecurso= 2;
+                    if (UsuarioDA.agregarComputadora(computadora, tipoRecurso)) {
                         System.out.println("\nComputadora agregado correctamente:");
                         computadora.mostrarInfo();
                     } else {
@@ -766,10 +767,10 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         recursoEncontrado.setModelo(modeloT);
                     }
 
-                    System.out.print("Nuevo estado: ");
-                    String estadoT = ad.nextLine();
-                    if (!estadoT.isEmpty()) {
-                        recursoEncontrado.setEstado(estadoT);
+                    System.out.print("Nuevo sistema Operativo: ");
+                    String sisOpT= ad.nextLine();
+                    if (!sisOpT.isEmpty()) {
+                        recursoEncontrado.setSistemaOperativo(sisOpT);
                     }
 
                     if (UsuarioDA.actualizarTablet(tablet)) {
@@ -803,17 +804,16 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     if (!ramC.isEmpty()) {
                         computadora.setRam(ramC);
                     }
+                    System.out.print("Nuevo Sistema Operativo: ");
+                    String sisOpC = ad.nextLine();
+                    if (!sisOpC .isEmpty()) {
+                        computadora.setSistemaOperativo(sisOpC );
+                    }
 
                     System.out.print("Nuevo procesador: ");
                     String procC = ad.nextLine();
                     if (!procC.isEmpty()) {
                         computadora.setProcesador(procC);
-                    }
-
-                    System.out.print("Nuevo CPU: ");
-                    String cpu = ad.nextLine();
-                    if (!cpu.isEmpty()) {
-                        computadora.setCpu(cpu);
                     }
 
                     System.out.print("¿Condición desbloqueada? (true/false): ");
@@ -931,22 +931,22 @@ public class Administrador extends Usuario implements IServiciosRecursos {
 
         System.out.println("=== Por favor ingrese los siguientes datos ===");
         System.out.println("Codigo del libro: ");
-        String codigoS = ad.nextLine().trim();
-        if (codigoS.isEmpty()) {
+        int codigoS = ad.nextInt();
+        if (codigoS <=0) {
             System.out.println("Codigo no puede estar vacío.");
-
-            System.out.print("Estado del ambiente: ");
-            String estadoS = ad.nextLine().trim();
-            if (estadoS.isEmpty()) {
+        }
+            System.out.print("Nombre de la sala: ");
+            String nombresala= ad.nextLine().trim();
+            if (nombresala.isEmpty()) {
                 System.out.println("Estado no puede estar vacío.");
                 return;
             }
 
             System.out.print("Capacidad máxima: ");
-            int capacidadMax;
+            int capacidad;
             try {
-                capacidadMax = Integer.parseInt(ad.nextLine());
-                if (capacidadMax <= 0) {
+                capacidad = Integer.parseInt(ad.nextLine());
+                if (capacidad <= 0) {
                     System.out.println("Capacidad debe ser mayor que cero.");
                     return;
                 }
@@ -955,7 +955,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 return;
             }
 
-            Sala sala = new Sala(codigoS, estadoS, capacidadMax);
+            Sala sala = new Sala(codigoS, nombresala, capacidad);
 
             if (UsuarioDA.agregarSala(sala)) {
                 System.out.println("Ambiente agregado correctamente:");
@@ -964,7 +964,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 System.out.println("Error al agregar ambiente.");
             }
         }
-    }
+    
 
     public void editarSala() {
         System.out.println("\n=== EDITAR AMBIENTE ===");
@@ -981,26 +981,29 @@ public class Administrador extends Usuario implements IServiciosRecursos {
         salaEncontrada.mostrarInfo();
         System.out.println("Ingrese los nuevos datos (deje en blanco si no desea cambiar):");
 
-        System.out.print("Nuevo estado: ");
-        String estado = ad.nextLine();
-        if (!estado.isEmpty()) {
-            salaEncontrada.setEstado(estado);
+        System.out.print("Nuevo Nombre sala: ");
+        String nombresala = ad.nextLine();
+        if (!nombresala.isEmpty()) {
+            salaEncontrada.setNombresala(nombresala);
         }
 
         System.out.print("Nueva capacidad máxima: ");
-        String capStr = ad.nextLine();
-        if (!capStr.isEmpty()) {
-            try {
-                int cap = Integer.parseInt(capStr);
-                if (cap > 0) {
-                    salaEncontrada.setCapacidadMax(cap);
-                } else {
-                    System.out.println("Capacidad inválida. No se actualizó.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Formato inválido. No se actualizó.");
+
+        if (ad.hasNextInt()) { 
+            int cap = ad.nextInt();
+            ad.nextLine(); 
+
+            if (cap > 0) {
+                salaEncontrada.setCapacidad(cap);
+                System.out.println("Capacidad actualizada.");
+            } else {
+                System.out.println("Capacidad inválida. Debe ser mayor a 0.");
             }
+        } else {
+            System.out.println("Entrada inválida. Debe ingresar un número.");
+            ad.nextLine(); 
         }
+
 
         if (UsuarioDA.actualizarSala(salaEncontrada)) {
             System.out.println("Ambiente editado correctamente:");
@@ -1038,15 +1041,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
     }
 
     public void exportarInfo() {
-        try {
-            FileWriter writer = new FileWriter("exportacion.txt");
-            writer.write("Exportación de información:\n");
-            writer.write("Aquí puedes poner los datos que quieras exportar.\n");
-            writer.write("Por ejemplo: Último material agregado o información fija.\n");
-            writer.close();
-            System.out.println("Información exportada correctamente a exportacion.txt");
-        } catch (IOException e) {
-            System.out.println("Error al exportar información: " + e.getMessage());
-        }
+        
+     
     }
 }

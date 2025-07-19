@@ -22,9 +22,9 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+        this.tipoDeUser = 2;
         this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
+        /*listaLibros.add(new Libro(
                 "M001",
                 "Programación en Java",
                 "Disponible",
@@ -43,7 +43,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 true,
                 "Estructuras de Datos",
                 "Computación"
-        ));
+        ));*/
     }
 
     public Alumno(String id_codigo, String contraseña, String nombre, String apellido, String carrera) {
@@ -51,10 +51,10 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+        this.tipoDeUser = 2;
         this.carrera = carrera;
         this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
+        /*listaLibros.add(new Libro(
                 "M001",
                 "Programación en Java",
                 "Disponible",
@@ -73,7 +73,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 true,
                 "Estructuras de Datos",
                 "Computación"
-        ));
+        ));*/
     }
 
     public List<ReservaRecursoTecnologico> getReservasRT() {
@@ -177,7 +177,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 continue;
             }
 
-            switch (opcion) {
+            /*switch (opcion) {
                 case 1:
 
                     Tablet tablet = new Tablet("T001", "Samsung Galaxy Tab A8");
@@ -202,7 +202,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                     break;
                 default:
                     System.out.println("Opción no válida, intente nuevamente.");
-            }
+            }*/
         }
     }
 
@@ -246,12 +246,12 @@ public class Alumno extends Usuario implements IServicioPrestamos {
 
     //@Override
     public boolean solicitarReservaLibro(String codigoLibro) {
-        Libro libroRecep = null;
-        for (Libro libro : listaLibros) {
+       /* Libro libroRecep = null;
+        /*for (Libro libro : listaLibros) {
             if (libro.getCodigo().equals(codigoLibro)) {
                 libroRecep = libro;
                 break;
-            }
+            
         }
         Scanner sc = new Scanner(System.in);
         System.out.print("¿Desea reservar el libro \"" + libroRecep.getTitulo() + "\"? (S/N): ");
@@ -264,7 +264,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
             System.out.println("Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
         } else {
             System.out.println("Reserva cancelada.");
-        }
+        }*/
         return true;
     }
 

@@ -5,14 +5,14 @@ import Interfaces.IBloqueo;
 public class Computadora extends RecursoTecnologico implements IBloqueo {
     private String ram;
     private String procesador;
-    private String cpu;
+    private String sistemaOperativo;
     private boolean bloqueada;
 
-    public Computadora(String IDcodigo, String ram, String procesador, String cpu, boolean estado) {
-        this.IDcodigo = IDcodigo;
+    public Computadora(int IDcodigo, String ram, String sistemaOperativo, String procesador, boolean estado) {
+        super();
         this.ram = ram;
         this.procesador = procesador;
-        this.cpu = cpu;
+        this.sistemaOperativo = sistemaOperativo;
         this.bloqueada = !estado;  
     }
     
@@ -48,6 +48,15 @@ public class Computadora extends RecursoTecnologico implements IBloqueo {
     public void setRam(String ram) {
         this.ram = ram;
     }
+    
+    public String getSistemaOperativo(){
+        return sistemaOperativo;
+        
+    }
+    
+    public void setSistemaOperativo(String sistemaOperativo){
+        this.sistemaOperativo = sistemaOperativo;
+    }
 
     public String getProcesador() {
         return procesador;
@@ -57,19 +66,11 @@ public class Computadora extends RecursoTecnologico implements IBloqueo {
         this.procesador = procesador;
     }
 
-    public String getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(String cpu) {
-        this.cpu = cpu;
-    }
-
     public void mostrarInfo() {
         System.out.println("ID Código: " + IDcodigo);
         System.out.println("RAM: " + ram);
+        System.out.println("Sistema Operativo: " + sistemaOperativo);
         System.out.println("Procesador: " + procesador);
-        System.out.println("CPU: " + cpu);
         System.out.println("Estado: " + (bloqueada ? "Bloqueada" : "Desbloqueada"));
     }
 }

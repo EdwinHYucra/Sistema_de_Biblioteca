@@ -13,7 +13,7 @@ public class Usuario implements IAutenticacion {
     protected String contraseña;
     protected String nombre;
     protected String apellido;
-    protected String tipoDeUser;
+    protected int tipoDeUser;
     protected List<Penalidad> penalidades = new ArrayList<>();
 
     public Usuario() {
@@ -57,11 +57,11 @@ public class Usuario implements IAutenticacion {
         this.apellido = apellido;
     }
 
-    public String getTipoDeUser() {
+    public int getTipoDeUser() {
         return tipoDeUser;
     }
 
-    public void setTipoDeUser(String tipoDeUser) {
+    public void setTipoDeUser(int tipoDeUser) {
         this.tipoDeUser = tipoDeUser;
     }
 

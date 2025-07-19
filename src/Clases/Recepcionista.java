@@ -9,7 +9,7 @@ public class Recepcionista extends Usuario {
     public Recepcionista(String id_codigo, String contraseña) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
     }
 
     //constructor de prueba
@@ -17,7 +17,7 @@ public class Recepcionista extends Usuario {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
     }
 
     public Recepcionista(String id_codigo, String contraseña, String nombre, String apellido) {
@@ -25,7 +25,7 @@ public class Recepcionista extends Usuario {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
     }
 
     public void registrarDevolucion() {
