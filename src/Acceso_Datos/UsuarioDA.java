@@ -85,14 +85,13 @@ public class UsuarioDA {
                         rs.getString("codigo"),
                         rs.getString("contrasenia")
                 );
-                // Asegúrate de que estos setters existen en tu clase Usuario.java
+       
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setApellido(rs.getString("apellido"));
                 usuario.setTipoDeUser(rs.getInt("tipo_usuario_id"));
-                // NOTA: Eliminado el 'usuario.setCorreo(rs.getString("correo"));' para no añadir campos extra.
+                
             } else {
-                // No imprimir si no se encuentra un usuario para no saturar la consola
-                // System.out.println("No se encontró un usuario con el código: " + id);
+                
             }
         } catch (SQLException e) {
             System.out.println("Error al buscar usuario: " + e.getMessage());
@@ -100,7 +99,7 @@ public class UsuarioDA {
         return usuario;
     }
 
-    // Método para buscar un Libro por ID (necesario para construir ReservaLibro)
+    // Método para buscar un Libro por ID 
     public static Libro buscarLibro(int id) {
         Libro libro = null;
         String sql = "SELECT libro_id, nombre, autor, fecha_publicacion, genero, idioma, ISBN, editorial, edicion" + " FROM Libro WHERE libro_id = ?";
@@ -112,16 +111,15 @@ public class UsuarioDA {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // Se mantiene el uso de rs.getDate("fecha_publicacion") tal como lo proporcionaste.
-                // Asegúrate que tu constructor de Libro coincide con este tipo de dato.
+                
                 libro = new Libro(
                         rs.getInt("libro_id"),
-                        rs.getString("nombre"), // Asumo que este es el título
+                        rs.getString("nombre"), 
                         "Disponible",
                         rs.getString("autor"),
-                        rs.getDate("fecha_publicacion"), // Mantenido tal cual tu código.
+                        rs.getDate("fecha_publicacion"), 
                         true,
-                        rs.getString("nombre"), // Si 'nombre' de DB es el 'titulo' del constructor
+                        rs.getString("nombre"), 
                         rs.getString("genero")
                 );
             }
@@ -131,10 +129,10 @@ public class UsuarioDA {
         return libro;
     }
 
-    // Método para buscar una Sala por ID (necesario para construir ReservaDeAmbiente)
+    // Método para buscar una Sala por ID 
     public static Sala buscarSala(int id) {
         Sala sala = null;
-        // Se corrige a 'nombresala' que es el nombre correcto de la columna en la DB.
+ 
         String sql = "SELECT codigo, nombresala, capacidad FROM Sala WHERE codigo = ?";
 
         try (Connection conn = ConexionBD.conectar();
@@ -144,7 +142,7 @@ public class UsuarioDA {
             if (rs.next()) {
                 sala = new Sala(
                         rs.getInt("codigo"),
-                        rs.getString("nombresala"), // Corregido para usar 'nombresala'
+                        rs.getString("nombresala"), 
                         rs.getInt("capacidad")
                 );
             }
@@ -154,12 +152,9 @@ public class UsuarioDA {
         return sala;
     }
 
-    // Método para buscar un RecursoTecnologico por ID.
-    // Este método ahora es más inteligente y devuelve el tipo específico (Tablet, Computadora) si corresponde.
     public static RecursoTecnologico buscarRecursoTecnologico(int id) {
         RecursoTecnologico recurso = null;
-        // Consulta unida para obtener información de RecursoTecnologico, Tablet y Computadora.
-        // Se usa 'codigo' y 'tipo' según el esquema de la DB.
+     
         String sql = "SELECT RT.codigo, RT.tipo, " +
                      "T.modelo, T.sistemaOperativo AS tablet_so, " +
                      "C.ram, C.procesador, C.sistemaOperativo AS compu_so, C.estado AS compu_estado " +
@@ -179,20 +174,17 @@ public class UsuarioDA {
 
                 if ("Tablet".equalsIgnoreCase(tipoRecurso)) {
                     String modelo = rs.getString("modelo");
-                    // ASUMPCIÓN MÍNIMA: Constructor Tablet(int codigo, String modelo)
-                    // Ajusta si tu constructor es diferente (ej. solo toma el código, o también el sistemaOperativo)
+                
                     recurso = new Tablet(codigoRecurso, modelo);
                 } else if ("Computadora".equalsIgnoreCase(tipoRecurso)) {
-                    // ASUMPCIÓN MÍNIMA: Constructor Computadora(int codigo, String ram, String procesador, String sistemaOperativo, boolean estado)
-                    // Ajusta si tu constructor es diferente.
+                   
                     String ram = rs.getString("ram");
                     String procesador = rs.getString("procesador");
                     String sistemaOperativoCompu = rs.getString("compu_so");
                     boolean estadoDesbloqueada = rs.getBoolean("compu_desbloqueada");
                     recurso = new Computadora(codigoRecurso, ram, procesador, sistemaOperativoCompu, estadoDesbloqueada);
                 } else {
-                    // ASUMPCIÓN MÍNIMA: Constructor RecursoTecnologico(int codigo) como lo tenías originalmente.
-                    // Ajusta si tu constructor toma más campos.
+                    
                     recurso = new RecursoTecnologico(codigoRecurso);
                 }
             }
@@ -204,7 +196,7 @@ public class UsuarioDA {
 
     // --- Métodos de Obtención de Listas de Reservas (para generarReporte) ---
 
-    // Este es el método que Recepcionista está llamando como `UsuarioDA.getReservasLibro()`
+    // get`
     public static List<ReservaLibro> getReservasLibro() {
         List<ReservaLibro> lista = new ArrayList<>();
         String sql = "SELECT R.id, R.fechaReserva, R.usuario_responsable_id, " +
@@ -250,7 +242,7 @@ public class UsuarioDA {
         return lista;
     }
 
-    // Este es el método que Recepcionista está llamando como `UsuarioDA.getReservasAmbiente()`
+   //gets
     public static List<ReservaDeAmbiente> getReservasAmbiente() {
         List<ReservaDeAmbiente> lista = new ArrayList<>();
         String sql = "SELECT R.id, R.fechaReserva, R.usuario_responsable_id, " +
@@ -271,14 +263,14 @@ public class UsuarioDA {
                 Sala sala = buscarSala(rs.getInt("sala_codigo"));
 
                 LocalDate fechaRes = LocalDate.parse(rs.getString("fechaReserva"));
-                // Asumiendo formato "YYYY-MM-DD HH:MM:SS" y lo convertimos a ISO para LocalDateTime.parse
+
                 LocalDateTime fechaHoraInicio = LocalDateTime.parse(rs.getString("fechaHoraInicio").replace(" ", "T"));
                 LocalTime horaInicio = fechaHoraInicio.toLocalTime();
                 LocalDateTime fechaHoraFin = LocalDateTime.parse(rs.getString("fechaHoraFin").replace(" ", "T"));
                 double duracion = rs.getDouble("duracionHoras");
                 int tiempoEnMinutos = (int) (duracion * 60);
 
-                if (usuario != null && sala != null) { // Solo si encontramos el usuario y la sala relacionados
+                if (usuario != null && sala != null) { 
                     ReservaDeAmbiente res = new ReservaDeAmbiente(
                             rs.getInt("id"),
                             tiempoEnMinutos,
@@ -302,7 +294,7 @@ public class UsuarioDA {
         return lista;
     }
 
-    // Este es el método que Recepcionista está llamando como `UsuarioDA.getReservasTecnologicas()`
+
     public static List<ReservaRecursoTecnologico> getReservasTecnologicas() {
         List<ReservaRecursoTecnologico> lista = new ArrayList<>();
         String sql = "SELECT R.id, R.fechaReserva, R.usuario_responsable_id, " +
@@ -320,7 +312,7 @@ public class UsuarioDA {
 
             while (rs.next()) {
                 Usuario usuario = BuscarUsuario(rs.getString("usuario_responsable_id"));
-                // Usa el método mejorado que devuelve el tipo específico
+
                 RecursoTecnologico recursoTec = buscarRecursoTecnologico(rs.getInt("recurso_id"));
 
                 LocalDate fechaRes = LocalDate.parse(rs.getString("fechaReserva"));
@@ -329,12 +321,10 @@ public class UsuarioDA {
                 LocalDateTime fechaHoraFin = LocalDateTime.parse(rs.getString("fechaHoraFin").replace(" ", "T"));
                 double duracion = rs.getDouble("duracionHoras");
 
-                if (usuario != null && recursoTec != null) { // Solo si encontramos el usuario y el recurso relacionados
-                    // Se mantiene el valor literal "RecursoTecnologico" para el tipo de recurso
-                    // tal como lo tenías en tu código original, para evitar cambios de constructor.
+                if (usuario != null && recursoTec != null) { 
                     ReservaRecursoTecnologico res = new ReservaRecursoTecnologico(
-                            "RecursoTecnologico", // Mantenido el valor literal que tenías
-                            rs.getInt("id"),      // ID de reserva
+                            "RecursoTecnologico", 
+                            rs.getInt("id"),      
                             recursoTec,
                             fechaRes,
                             duracion,
@@ -355,11 +345,10 @@ public class UsuarioDA {
         return lista;
     }
 
-    // --- Métodos Adicionales Requeridos por MenuPrincipal (y también para búsquedas en Validar Reserva) ---
+    // --- Métodos en Validar Reserva ---
 
     // Método general para buscar cualquier tipo de Reserva por su ID (estático)
     public static Reserva buscarReserva(int idReserva) {
-        // Intenta buscar en cada tipo de reserva
         ReservaLibro reservaLibro = buscarReservaLibro(idReserva);
         if (reservaLibro != null) {
             return reservaLibro;
@@ -386,9 +375,9 @@ public class UsuarioDA {
         boolean exito = false;
 
         try (Connection conn = ConexionBD.conectar()) {
-            conn.setAutoCommit(false); // Inicia la transacción
+            conn.setAutoCommit(false); 
 
-            // 1. Obtener el ID del nuevo estado
+
             int nuevoEstadoId = -1;
             try (PreparedStatement pstmtEstado = conn.prepareStatement(sqlEstadoId)) {
                 pstmtEstado.setString(1, nuevoEstadoNombre);
@@ -402,7 +391,7 @@ public class UsuarioDA {
                 }
             }
 
-            // 2. Actualizar el estado de la reserva
+
             try (PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdateReserva)) {
                 pstmtUpdate.setInt(1, nuevoEstadoId);
                 pstmtUpdate.setInt(2, idReserva);
@@ -430,7 +419,7 @@ public class UsuarioDA {
         return exito;
     }
 
-    // --- Métodos auxiliares privados para buscar reservas específicas por ID (usados por buscarReserva) ---
+    // metodos auxi para buscar reserva
 
     // Este es el método interno para buscar un solo ReservaLibro por ID
     private static ReservaLibro buscarReservaLibro(int reservaId) {
@@ -468,13 +457,11 @@ public class UsuarioDA {
                             horaRes,
                             usuario
                     );
-                    // Si ReservaLibro tiene un setter para el ID, o el constructor lo asigna
-                    // reservaLibro.setId(rs.getInt("id"));
+
                 }
             }
         } catch (SQLException | DateTimeParseException e) {
-            // No imprimir error aquí, ya que buscarReserva general maneja el "no encontrado"
-            // System.err.println("Error al buscar reserva de libro: " + e.getMessage());
+
         }
         return reservaLibro;
     }
@@ -509,7 +496,7 @@ public class UsuarioDA {
 
                 if (usuario != null && recursoTec != null) {
                     reservaRecTec = new ReservaRecursoTecnologico(
-                            // Mantenido el valor literal "RecursoTecnologico"
+   
                             "RecursoTecnologico",
                             rs.getInt("id"),
                             recursoTec,
@@ -524,7 +511,7 @@ public class UsuarioDA {
                 }
             }
         } catch (SQLException | DateTimeParseException e) {
-            // No imprimir error aquí
+
         }
         return reservaRecTec;
     }
@@ -574,7 +561,6 @@ public class UsuarioDA {
                 }
             }
         } catch (SQLException | DateTimeParseException e) {
-            // No imprimir error aquí
         }
         return reservaAmb;
     }
