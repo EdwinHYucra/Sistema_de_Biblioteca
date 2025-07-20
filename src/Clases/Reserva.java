@@ -14,20 +14,25 @@ import java.time.LocalDate;
 public abstract class Reserva {
     protected int id;
     protected LocalDate fechaReserva;
-    protected double duracion;
-    protected LocalTime horaReserva;
-    protected Usuario usuario;
+    protected int tipoReserva;
+    protected String usuario;
     protected String estado; //metodo nueovo
 
-    public Reserva(LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
+    public Reserva(LocalDate fechaReserva, String estado, String usuario) {
         this.fechaReserva = fechaReserva;
-        this.duracion = duracion;
-        this.horaReserva = horaReserva;
         this.usuario = usuario;
         this.estado = "Pendiente"; //  Estado por defecto
-    
+        }
+
+    public Reserva(int id, LocalDate fechaReserva, int tipoReserva, String usuario, String estado) {
+        this.id = id;
+        this.fechaReserva = fechaReserva;
+        this.tipoReserva = tipoReserva;
+        this.usuario = usuario;
+        this.estado = estado;
     }
 
+    
     public int getId() {
         return id;
     }
@@ -44,27 +49,11 @@ public abstract class Reserva {
         this.fechaReserva = fechaReserva;
     }
 
-    public double getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(double duracion) {
-        this.duracion = duracion;
-    }
-
-    public LocalTime getHoraReserva() {
-        return horaReserva;
-    }
-
-    public void setHoraReserva(LocalTime horaReserva) {
-        this.horaReserva = horaReserva;
-    }
-
-    public Usuario getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
     // nuevo met para estad
@@ -75,6 +64,7 @@ public abstract class Reserva {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    
 
     // Método abstracto común a todos los hijos
     /*
