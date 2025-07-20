@@ -8,12 +8,12 @@ package Clases;
  * Clase que representa una sala o ambiente.
  */
 public class Sala {
-    private String codigo;
+    private int codigo;
     private String estado;
     private int capacidadMax;
 
     // Constructor con validación
-    public Sala(String codigo, String estado, int capacidadMax) {
+    public Sala(int codigo, String estado, int capacidadMax) {
         if (capacidadMax < 3 || capacidadMax > 6) {
             throw new IllegalArgumentException("La capacidad máxima debe estar entre 3 y 6 personas.");
         }
@@ -23,11 +23,11 @@ public class Sala {
     }
 
     // Getters y Setters
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
