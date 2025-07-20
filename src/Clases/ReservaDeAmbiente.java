@@ -6,6 +6,7 @@ package Clases;
  */
 import Interfaces.IBloqueo;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,57 +17,69 @@ import java.util.List;
  */
 public class ReservaDeAmbiente extends Reserva implements IBloqueo {
 
-    private String codigo;
-    private int capacidadMax;
-    private String estado = "Disponible";
-    private int tiempoRestante;
-    private List<Alumno> listaAlumnos;
-    private Sala sala;
+    private int id;
+    private int reserva_id;
+    private int salaCodigo;
+    private LocalDateTime fechaHoraInicio;
+    private LocalDateTime fechaHoraFin;
+    private int duracion;
+     private List<Alumno> listaAlumnos;
 
-    public ReservaDeAmbiente(String codigo, int tiempoEnMinutos, Sala sala, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
-        super(fechaReserva, duracion, horaReserva, usuario);
-
-        if (tiempoEnMinutos < 60 || tiempoEnMinutos > 120) {
-            throw new IllegalArgumentException("El tiempo debe estar entre 60 y 120 minutos.");
-        }
-
-        this.codigo = codigo;
-        this.capacidadMax = sala.getCapacidadMax();
-        this.tiempoRestante = tiempoEnMinutos;
-        this.sala = sala;
-        this.listaAlumnos = new ArrayList<>();
+    public ReservaDeAmbiente(int codigo, int salaCodigo, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int duracion, int id, LocalDate fechaReserva, int tipoReserva, String usuario, String estado) {
+        super(id, fechaReserva, tipoReserva, usuario, estado);
+        this.id = codigo;
+        this.salaCodigo = salaCodigo;
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.fechaHoraFin = fechaHoraFin;
+        this.duracion = duracion;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public int getId() {
+        return id;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getCapacidadMax() {
-        return capacidadMax;
+    public int getReserva_id() {
+        return reserva_id;
     }
 
-    public void setCapacidadMax(int capacidadMax) {
-        this.capacidadMax = capacidadMax;
+    public void setReserva_id(int reserva_id) {
+        this.reserva_id = reserva_id;
     }
 
-    public String getEstado() {
-        return estado;
+    public int getSalaCodigo() {
+        return salaCodigo;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setSalaCodigo(int salaCodigo) {
+        this.salaCodigo = salaCodigo;
     }
 
-    public int getTiempoRestante() {
-        return tiempoRestante;
+    public LocalDateTime getFechaHoraInicio() {
+        return fechaHoraInicio;
     }
 
-    public void setTiempoRestante(int tiempoRestante) {
-        this.tiempoRestante = tiempoRestante;
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+        this.fechaHoraInicio = fechaHoraInicio;
+    }
+
+    public LocalDateTime getFechaHoraFin() {
+        return fechaHoraFin;
+    }
+
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
+        this.fechaHoraFin = fechaHoraFin;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
     }
 
     public List<Alumno> getListaAlumnos() {
@@ -77,36 +90,14 @@ public class ReservaDeAmbiente extends Reserva implements IBloqueo {
         this.listaAlumnos = listaAlumnos;
     }
 
-    public Sala getSala() {
-        return sala;
-    }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
-    }
-
-    public void agregarAlumno(Alumno alumno) {
-        if (listaAlumnos.size() >= capacidadMax) {
-            System.out.println("No se puede agregar más alumnos. Capacidad máxima alcanzada.");
-        } else {
-            listaAlumnos.add(alumno);
-            System.out.println("Alumno agregado: " + alumno.getNombre());
-        }
-    }
-
-    public void verificarEstado() {
-        System.out.println("Sala [" + codigo + "] - Estado: " + estado + " - Tiempo restante: " + tiempoRestante + " min");
-    }
-
-    @Override
-    public void restringirAcceso() {
-        estado = "Bloqueada";
-        tiempoRestante = 0;
-        System.out.println("Sala [" + codigo + "] bloqueada por tiempo expirado.");
-    }
-
     @Override
     public void mostrarInfo() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public void restringirAcceso() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+     
 }
