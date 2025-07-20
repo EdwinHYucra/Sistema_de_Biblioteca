@@ -16,7 +16,7 @@ public class ReservaLibro extends Reserva {
     private String estado;
 
     public ReservaLibro(LocalDate fechadevolucion, Libro libro, String estado, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
-        super(fechaReserva, duracion, horaReserva, usuario);
+        super();
         this.fechadevolucion = fechadevolucion;
         this.libro = libro;
         this.estado = estado;

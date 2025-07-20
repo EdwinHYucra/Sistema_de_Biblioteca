@@ -14,97 +14,75 @@ import java.util.List;
  *
  * @author user
  */
-public class ReservaDeAmbiente extends Reserva implements IBloqueo {
+public class ReservaDeAmbiente extends Reserva {
 
-    private String codigo;
-    private int capacidadMax;
-    private String estado = "Disponible";
-    private int tiempoRestante;
-    private List<Alumno> listaAlumnos;
-    private Sala sala;
+    private int codigo;
+    private int reserva_id;
+    private int sala_codigo;
+    private String fechaHoraInicio;
+    private String fechaHoraFin;
+    private int duracion;
 
-    public ReservaDeAmbiente(String codigo, int tiempoEnMinutos, Sala sala, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
-        super(fechaReserva, duracion, horaReserva, usuario);
+    public ReservaDeAmbiente(int codigo, int reserva_id,int sala_codigo,String fechaHoraInicio, String fechaHoraFin, int duracion) {
+        super();
 
-        if (tiempoEnMinutos < 60 || tiempoEnMinutos > 120) {
-            throw new IllegalArgumentException("El tiempo debe estar entre 60 y 120 minutos.");
-        }
+       
 
         this.codigo = codigo;
-        this.capacidadMax = sala.getCapacidadMax();
-        this.tiempoRestante = tiempoEnMinutos;
-        this.sala = sala;
-        this.listaAlumnos = new ArrayList<>();
+        this.reserva_id = reserva_id;
+        this.sala_codigo = sala_codigo;
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.fechaHoraFin = fechaHoraFin;
+        this.duracion = duracion;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
-    public int getCapacidadMax() {
-        return capacidadMax;
+    public int getReserva_id() {
+        return reserva_id;
     }
 
-    public void setCapacidadMax(int capacidadMax) {
-        this.capacidadMax = capacidadMax;
+    public void setReserva_id(int reserva_id) {
+        this.reserva_id = reserva_id;
     }
 
-    public String getEstado() {
-        return estado;
+    public int getSala_codigo() {
+        return sala_codigo;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setSala_codigo(int sala_codigo) {
+        this.sala_codigo = sala_codigo;
     }
 
-    public int getTiempoRestante() {
-        return tiempoRestante;
+    public String getFechaHoraInicio() {
+        return fechaHoraInicio;
     }
 
-    public void setTiempoRestante(int tiempoRestante) {
-        this.tiempoRestante = tiempoRestante;
+    public void setFechaHoraInicio (String fechaHoraInicio) {
+        this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public List<Alumno> getListaAlumnos() {
-        return listaAlumnos;
+    public String getFechaHoraFin() {
+        return fechaHoraInicio;
     }
 
-    public void setListaAlumnos(List<Alumno> listaAlumnos) {
-        this.listaAlumnos = listaAlumnos;
+    public void setFechaHoraFin (String fechaHoraFin) {
+        this.fechaHoraFin = fechaHoraFin;
+    }
+    
+    public int getDuracion() {
+        return duracion;
     }
 
-    public Sala getSala() {
-        return sala;
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
     }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
-    }
-
-    public void agregarAlumno(Alumno alumno) {
-        if (listaAlumnos.size() >= capacidadMax) {
-            System.out.println("No se puede agregar más alumnos. Capacidad máxima alcanzada.");
-        } else {
-            listaAlumnos.add(alumno);
-            System.out.println("Alumno agregado: " + alumno.getNombre());
-        }
-    }
-
-    public void verificarEstado() {
-        System.out.println("Sala [" + codigo + "] - Estado: " + estado + " - Tiempo restante: " + tiempoRestante + " min");
-    }
-
-    @Override
-    public void restringirAcceso() {
-        estado = "Bloqueada";
-        tiempoRestante = 0;
-        System.out.println("Sala [" + codigo + "] bloqueada por tiempo expirado.");
-    }
-
     @Override
     public void mostrarInfo() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

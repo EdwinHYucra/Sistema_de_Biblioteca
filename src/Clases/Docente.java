@@ -12,7 +12,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
 
     private String especialidad;
     private List<ReservaLibro> reservas = new ArrayList<>();
-    private List<Libro> listaLibros; 
+    private List<Libro> listaLibros;
 
     public void agregarReserva(ReservaLibro RLibro) {
         reservas.add(RLibro);
@@ -28,9 +28,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
                 System.out.println("• " + titulo);
             }
         }
-    }
-*/
-    
+    }*/
     public Docente(String id_codigo, String contraseña, String nombre, String apellido, String especialidad) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
@@ -38,7 +36,7 @@ public class Docente extends Usuario implements IServicioPrestamos {
         this.apellido = apellido;
         this.tipoDeUser = 3;
         this.especialidad = especialidad;
-         this.listaLibros = new ArrayList<>();
+        this.listaLibros = new ArrayList<>();
         /*listaLibros.add(new Libro(
                 "M001",
                 "Programación en Java",
@@ -97,27 +95,26 @@ public class Docente extends Usuario implements IServicioPrestamos {
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
     }
-/*
-    public void agregarLibroASala(Libro libro) {
+
+    /*public void agregarLibroASala(Libro libro) {
         salaDocente.add(libro);
-    }
-*/
+    }*/
     public void verCatalogoLibros() {
 
         System.out.println("--- Catálogo de la sala del docente ---");
         if (listaLibros.isEmpty()) {
             System.out.println("No hay libros en la sala.");
-        } else {
+        }
+        /*else {
             for (Libro libro : listaLibros) {
                 System.out.println("Código: " + libro.getCodigo() + " | Título: " + libro.getTitulo() + " | Disponibilidad: " + (libro.isDisponibilidad() ? "Disponible" : "No disponible"));
 
-            }
-        }
+            }*/
     }
+}
 
-    @Override
-    public boolean validarDisponibilidadReserva() {
-        return !estaPenalizado();
+/* public boolean validarDisponibilidadReserva() {
+        return true;
     }
 
     //@Override
@@ -140,12 +137,11 @@ public class Docente extends Usuario implements IServicioPrestamos {
                             System.out.println("Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
                         } else {
                             System.out.println("Reserva cancelada.");
-                        }*/
+                        }
         return true;
-    }
-
-    //Metodo de prueba
-    public List<Libro> obtenerLibros() {
+    }*/
+//Metodo de prueba
+/*public List<Libro> obtenerLibros() {
         return listaLibros;
     }
 
@@ -164,4 +160,4 @@ public class Docente extends Usuario implements IServicioPrestamos {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-}
+}/*

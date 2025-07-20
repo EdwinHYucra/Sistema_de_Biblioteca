@@ -71,7 +71,7 @@ public class UsuarioDA {
     public List<Libro> obtenerLibros() {
         List<Libro> listaLibros = new ArrayList<>();
 
-        String sql = "SELECT codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero FROM Libro";
+        String sql = "SELECT codigo, nombre, autor, fechaPublicacion, genero, idioma, ISBN, editorail, edicion FROM Libro";
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
@@ -79,12 +79,13 @@ public class UsuarioDA {
                 Libro libro = new Libro(
                         rs.getInt("codigo"),
                         rs.getString("nombre"),
-                        rs.getString("estado"),
                         rs.getString("autor"),
-                        rs.getDate("fechaPublicacion"),
-                        rs.getBoolean("disponibilidad"),
-                        rs.getString("titulo"),
-                        rs.getString("genero")
+                        rs.getDate("fechaPublicacion").toLocalDate(),
+                        rs.getString("genero"),
+                        rs.getString("idioma"),
+                        rs.getString("ISBN"),
+                        rs.getString("editorial"),
+                        rs.getString("edicion")
                 );
                 listaLibros.add(libro);
             }
@@ -99,7 +100,7 @@ public class UsuarioDA {
     public static Libro buscarLibro(int id) {
         Libro libro = null;
 
-        String sql = "SELECT codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero "
+        String sql = "SELECT codigo, nombre, autor, fechaPublicacion, genero, idioma, ISBN, editorial, edicion "
                 + "FROM Libro WHERE codigo=?";
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -112,12 +113,13 @@ public class UsuarioDA {
                 libro = new Libro(
                         rs.getInt("codigo"),
                         rs.getString("nombre"),
-                        rs.getString("estado"),
                         rs.getString("autor"),
-                        rs.getDate("fechaPublicacion"),
-                        rs.getBoolean("disponibilidad"),
-                        rs.getString("titulo"),
-                        rs.getString("genero")
+                        rs.getDate("fechaPublicacion").toLocalDate(),
+                        rs.getString("genero"),
+                        rs.getString("idioma"),
+                        rs.getString("ISBN"),
+                        rs.getString("editorial"),
+                        rs.getString("edicion")
                 );
             } else {
                 System.out.println("No se encontró un libro con el código: " + id);
@@ -157,22 +159,27 @@ public class UsuarioDA {
     }
 
     public static boolean agregarLibro(Libro libro, int id) {
-        String sql = "INSERT INTO Libro (codigo, nombre, estado, autor, fechaPublicacion, disponibilidad, titulo, genero) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Libro (codigo, nombre, autor, fechaPublicacion, genero, idioma, ISBN, editorial, edicion) VALUES (?,?,?,?,?,?,?,?)";
 
         libro.setCodigo(agregarMaterial(id));
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, libro.getCodigo());
-            stmt.setString(1, libro.getNombre());
-            stmt.setString(1, libro.getAutor());
-            stmt.setString(1, libro.getFechaPublicacion().toString());
-            stmt.setString(1, libro.getTitulo());
-            stmt.setString(1, libro.getGenero());
+            stmt.setString(2, libro.getNombre());
+            stmt.setString(3, libro.getAutor());
+            stmt.setString(4, libro.getFechaPublicacion().toString());
+            stmt.setString(5, libro.getGenero());
+            stmt.setString(6, libro.getIdioma());
+            stmt.setString(7, libro.getISBN());
+            stmt.setString(8, libro.getEditorial());
+            stmt.setString(9, libro.getEdicion());
+            
 
             stmt.executeQuery();
+            System.out.println("Se agrego libro");
             agregarEjemplar(libro.getCodigo());
         } catch (SQLException e) {
-            System.out.println("Error al agregar material: " + e.getMessage());
+            System.out.println("Error al agregar libro: " + e.getMessage());
         }
         return true;
 

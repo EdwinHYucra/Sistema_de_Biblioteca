@@ -8,7 +8,7 @@ public class ReservaRecursoTecnologico extends Reserva {
     private RecursoTecnologico recursoTecnologico;
 
     public ReservaRecursoTecnologico(String tipoReserva, String IDcodigo, RecursoTecnologico recursoTecnologico, LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
-        super(fechaReserva, duracion, horaReserva, usuario);
+        super();
         this.tipoReserva = tipoReserva;
         this.recursoTecnologico = recursoTecnologico;
     }

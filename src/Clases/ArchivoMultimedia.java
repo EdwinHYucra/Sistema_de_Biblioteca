@@ -1,34 +1,78 @@
 
 package Clases;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ArchivoMultimedia extends Material {
-    private double tamaño;
-    private double duracion;
+    private int archivo_id;
+    private String nombre;
+    private String autor;
+    private LocalDateTime fecha_publicacion;
+    private String tamaño;
+    private String duracion;
     private String formato;
+    private String resolucion;
+    private String tipoMultimedia;
 
-    public ArchivoMultimedia(int codigo, String nombre, String estado, String autor, Date fechaPublicacion,
-                             double tamaño, double duracion, String formato) {
-        super(codigo, nombre, estado, autor, fechaPublicacion);
+    public ArchivoMultimedia(int archivo_id, String nombre, String autor, LocalDateTime fecha_publicacion, String tamaño, String duracion, String formato, String resolucion, String tipoMultimedia) {
+        super();
+        this.archivo_id = archivo_id;
+        this.nombre = nombre;
+        this.autor = autor;
+        this.fecha_publicacion = fecha_publicacion;
         this.tamaño = tamaño;
         this.duracion = duracion;
         this.formato = formato;
+        this.resolucion = resolucion;
+        this.tipoMultimedia = tipoMultimedia;
     }
 
-    public double getTamaño() {
+    public int getArchivo_id() {
+        return archivo_id;
+    }
+
+    public void setArchivo_id(int archivo_id) {
+        this.archivo_id = archivo_id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public LocalDateTime getFecha_publicacion() {
+        return fecha_publicacion;
+    }
+
+    public void setFecha_publicacion(LocalDateTime fecha_publicacion) {
+        this.fecha_publicacion = fecha_publicacion;
+    }
+
+    public String getTamaño() {
         return tamaño;
     }
 
-    public void setTamaño(double tamaño) {
+    public void setTamaño(String tamaño) {
         this.tamaño = tamaño;
     }
 
-    public double getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(double duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
@@ -40,17 +84,23 @@ public class ArchivoMultimedia extends Material {
         this.formato = formato;
     }
 
-    
-    
-    public void reproducir() {
-        System.out.println("Reproduciendo archivo multimedia...");
+    public String getResolucion() {
+        return resolucion;
     }
 
-    public void detener() {
-        System.out.println("Deteniendo archivo multimedia...");
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
     }
 
-    public void descargar() {
-        System.out.println("Descargando archivo multimedia...");
+    public String getTipoMultimedia() {
+        return tipoMultimedia;
     }
+
+    public void setTipoMultimedia(String tipoMultimedia) {
+        this.tipoMultimedia = tipoMultimedia;
+    }
+    
+    
+
+    
 }
