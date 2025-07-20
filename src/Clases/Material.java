@@ -28,5 +28,6 @@ public class Material {
        System.out.println("Tipo Material id: " + tipo_Material_id);
     
     }
+
     
 }

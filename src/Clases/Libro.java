@@ -14,7 +14,7 @@ public class Libro extends Material {
     private String editorial;
     private String edicion;
 
-    public Libro( int libroID, String nombre, String autor, LocalDate fechaPublicacion, String genero, String idioma, String ISBN, String editorial, String edicion) {
+    public Libro(int libroID, String nombre, String autor, LocalDate fechaPublicacion, String genero, String idioma, String ISBN, String editorial, String edicion) {
         super();
         this.libroID = libroID;
         this.nombre = nombre;
@@ -25,7 +25,6 @@ public class Libro extends Material {
         this.ISBN = ISBN;
         this.editorial = editorial;
         this.edicion = edicion;
-
     }
 
     public int getLibroID() {
@@ -100,4 +99,5 @@ public class Libro extends Material {
         this.edicion = edicion;
     }
 
+    
 }

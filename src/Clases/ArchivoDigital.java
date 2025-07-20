@@ -1,8 +1,7 @@
 
 package Clases;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ArchivoDigital extends Material {
     private int archivo_id;
@@ -10,10 +9,10 @@ public class ArchivoDigital extends Material {
     private String autor;
     private String formato;
     private String tamaño;
-    private LocalDateTime fechaPublicacion;
+    private LocalDate fechaPublicacion;
     private String ruta;
 
-    public ArchivoDigital(int archivo_id, String nombre, String autor, String formato, String tamaño, LocalDateTime fechaPublicacion, String ruta) {
+    public ArchivoDigital(int archivo_id, String nombre, String autor, String formato, String tamaño, LocalDate fechaPublicacion, String ruta) {
         super();
         this.archivo_id = archivo_id;
         this.nombre = nombre;
@@ -64,11 +63,11 @@ public class ArchivoDigital extends Material {
         this.tamaño = tamaño;
     }
 
-    public LocalDateTime getFechaPublicacion() {
+    public LocalDate getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(LocalDateTime fechaPublicacion) {
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 

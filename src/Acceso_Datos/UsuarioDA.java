@@ -66,8 +66,9 @@ public class UsuarioDA {
         return usuario;
     }
 
-    //Crud Libro
-    // 1 Consultar
+    /* Crud Material */ 
+    /* ***AGREGAR ARCHIVOS, EDITAR Y ELIMINAR**** */
+    //LIBRO
     public List<Libro> obtenerLibros() {
         List<Libro> listaLibros = new ArrayList<>();
 
@@ -132,7 +133,6 @@ public class UsuarioDA {
         return libro;
     }
 
-    //2 Agregar Libro
     public static int agregarMaterial(int id) {
         int lastId = -1;
 
@@ -203,20 +203,19 @@ public class UsuarioDA {
         }
     }
 
-    //3 Modificar Libro
     public static boolean actualizarLibro(Libro libro) {
-        String sql = "UPDATE Libro SET nombre=?, estado=?, autor=?, fechaPublicacion=?, disponibilidad=?, titulo=?, genero=? WHERE codigo=?";
+        String sql = "UPDATE Libro SET nombre=?, autor=?, fechaPublicacion=?, genero=?, idioma=?, ISBN=?, editorial=?, edicion=?, WHERE codigo=?";
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, libro.getNombre());
-            stmt.setString(2, libro.getEstado());
-            stmt.setString(3, libro.getAutor());
-            stmt.setString(4, libro.getFechaPublicacion().toString());
-            stmt.setBoolean(5, libro.isDisponibilidad());
-            stmt.setString(6, libro.getTitulo());
-            stmt.setString(7, libro.getGenero());
-            stmt.setInt(8, libro.getCodigo());
+            stmt.setString(2, libro.getAutor());
+            stmt.setString(3, libro.getFechaPublicacion().toString());
+            stmt.setString(4, libro.getGenero());
+            stmt.setString(5, libro.getIdioma());
+            stmt.setString(6, libro.getISBN());
+            stmt.setString(7, libro.getEditorial());
+            stmt.setString(8, libro.getEdicion());
 
             stmt.executeUpdate();
             System.out.println("Libro editado correctamente.");
@@ -228,7 +227,6 @@ public class UsuarioDA {
         }
     }
 
-    //4 Eliminar Libro
     public static boolean eliminarLibro(int codigo) {
         String sql = "DELETE FROM Libro WHERE codigo=?";
 
@@ -246,12 +244,278 @@ public class UsuarioDA {
         }
     }
 
+    
+    //ARCHIVO MULTIMEDIA
+    public List<ArchivoMultimedia> obtenerArchivoMultimedia() {
+        List<ArchivoMultimedia> listaArchivoMultimedia = new ArrayList<>();
 
+        String sql = "SELECT archivo_id, nombre, autor, fecha_publicacion, tamaño, duracion, formato, resolucion, tipoMultimedia FROM ArchivoMultimedia ";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                ArchivoMultimedia archivoMultimedia = new ArchivoMultimedia(
+                        rs.getInt("archivo_id"),
+                        rs.getString("nombre"),
+                        rs.getString("autor"),
+                        rs.getDate("fecha_publicacion").toLocalDate(),
+                        rs.getString("tamaño"),
+                        rs.getString("duracion"),
+                        rs.getString("formato"),
+                        rs.getString("resolucion"),
+                        rs.getString("tipoMultimedia")
+                );
+                listaArchivoMultimedia.add(archivoMultimedia);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener archivos multimedia: " + e.getMessage());
+        }
+
+        return listaArchivoMultimedia;
+    }
+
+    public static ArchivoMultimedia buscarArchivoMultimedia(int id) {
+        ArchivoMultimedia archivoMultimedia = null;
+
+        String sql = "SELECT archivo_id, nombre, autor, fecha_publicacion, tamaño, duracion, formato, resolucion, tipoMultimedia "
+                + "FROM ArchivoMultimedia WHERE codigo=?";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                archivoMultimedia = new ArchivoMultimedia(
+                        rs.getInt("archivo_id"),
+                        rs.getString("nombre"),
+                        rs.getString("autor"),
+                        rs.getDate("fecha_publicacion").toLocalDate(),
+                        rs.getString("tamaño"),
+                        rs.getString("duracion"),
+                        rs.getString("formato"),
+                        rs.getString("resolucion"),
+                        rs.getString("tipoMultimedia")
+                );
+            } else {
+                System.out.println("No se encontro el archivo multimedia con el código: " + id);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar archivo multimedia: " + e.getMessage());
+        }
+
+        return archivoMultimedia;
+    }
+    
+    public static boolean agregarArchivoMultimedia(ArchivoMultimedia archivoMultimedia, int id) {
+        String sql = "INSERT INTO ArchivoMultimedia (archivo_id, nombre, autor, fecha_publicacion, genero, idioma, ISBN, editorial, edicion) VALUES (?,?,?,?,?,?,?,?)";
+
+        archivoMultimedia.setCodigo(agregarMaterial(id));
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, archivoMultimedia.getArchivo_id());
+            stmt.setString(2, archivoMultimedia.getNombre());
+            stmt.setString(3, archivoMultimedia.getAutor());
+            stmt.setString(4, archivoMultimedia.getFecha_publicacion().toString());
+            stmt.setString(5, archivoMultimedia.getTamaño());
+            stmt.setString(6, archivoMultimedia.getDuracion());
+            stmt.setString(7, archivoMultimedia.getFormato());
+            stmt.setString(8, archivoMultimedia.getResolucion());
+            stmt.setString(9, archivoMultimedia.getTipoMultimedia());
+            
+
+            stmt.executeQuery();
+            System.out.println("Se agrego archivo multimedia");
+        } catch (SQLException e) {
+            System.out.println("Error al agregar archivo multimedia: " + e.getMessage());
+        }
+        return true;
+
+    }
+
+    public static boolean actualizarArchivoMultimedia(ArchivoMultimedia archivoMultimedia) {
+        String sql = "UPDATE ArchivoMultimedia SET nombre=?, autor=?, fecha_publicacion=?, tamaño=?, duracion=?, formato=?, resolucion=?, tipoMultimedia=? WHERE codigo=?";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, archivoMultimedia.getNombre());
+            stmt.setString(2, archivoMultimedia.getAutor());
+            stmt.setString(3, archivoMultimedia.getFecha_publicacion().toString());
+            stmt.setString(4, archivoMultimedia.getTamaño());
+            stmt.setString(5, archivoMultimedia.getDuracion());
+            stmt.setString(6, archivoMultimedia.getFormato());
+            stmt.setString(7, archivoMultimedia.getResolucion());
+            stmt.setString(8, archivoMultimedia.getTipoMultimedia());
+            
+            stmt.executeUpdate();
+            System.out.println("Archivo Multimedia editado correctamente.");
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al editar libro: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean eliminarArchivoMultimedia(int codigo){
+        String sql = "DELETE FROM ArchivoMultimedia WHERE archivo_id=?";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, codigo);
+            stmt.executeUpdate();
+
+            System.out.println("Libro eliminado correctamente.");
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar libro: " + e.getMessage());
+            return false;
+        }
+    }
+  
+    
+    //ARCHIVO DIGITAL:
+    public List<ArchivoDigital> obtenerArchivoDigital() {
+        List<ArchivoDigital> listaArchivoDigital = new ArrayList<>();
+
+        String sql = "SELECT archivo_id, nombre, autor, formato, tamaño, fechaPublicacion, ruta  FROM ArchivoDigital";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                ArchivoDigital archivoDigital = new ArchivoDigital(
+                        rs.getInt("archivo_id"),
+                        rs.getString("nombre"),
+                        rs.getString("autor"),
+                        rs.getString("formato"),
+                        rs.getString("tamaño"),
+                        rs.getDate("fechaPublicacion").toLocalDate(),
+                        rs.getString("ruta")
+  
+                );
+                listaArchivoDigital.add(archivoDigital);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener archivo digital: " + e.getMessage());
+        }
+
+        return listaArchivoDigital;
+    }
+
+    public static ArchivoDigital buscarArchivoDigital(int id) {
+        ArchivoDigital archivoDigital = null;
+
+        String sql = "SELECT archivo_id, nombre, autor, formato, tamaño, fechaPublicacion, ruta "
+                + "FROM ArchivoDigital WHERE codigo=?";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                archivoDigital = new ArchivoDigital(
+                        rs.getInt("archivo_id"),
+                        rs.getString("nombre"),
+                        rs.getString("autor"),
+                        rs.getString("formato"),
+                        rs.getString("tamaño"),
+                        rs.getDate("fechaPublicacion").toLocalDate(),
+                        rs.getString("ruta")
+                );
+            } else {
+                System.out.println("No se encontró el archivo digital con el código: " + id);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar libro: " + e.getMessage());
+        }
+
+        return archivoDigital;
+    }
+
+    public static boolean agregarArchivoDigital(ArchivoDigital archivoDigital, int id) {
+        String sql = "INSERT INTO ArchivoDigital (archivo_id, nombre, autor, formato, tamaño, fechaPublicacion, ruta) VALUES (?,?,?,?,?,?,?,?)";
+
+        archivoDigital.setCodigo(agregarMaterial(id));
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, archivoDigital.getArchivo_id());
+            stmt.setString(2, archivoDigital.getNombre());
+            stmt.setString(3, archivoDigital.getAutor());
+            stmt.setString(4, archivoDigital.getFormato());
+            stmt.setString(5, archivoDigital.getTamaño());
+            stmt.setString(6, archivoDigital.getFechaPublicacion().toString());
+            stmt.setString(7, archivoDigital.getRuta());
+            
+
+            stmt.executeQuery();
+            System.out.println("Se agrego archivo digital");
+            
+        } catch (SQLException e) {
+            System.out.println("Error al agregar archivo digital: " + e.getMessage());
+        }
+        return true;
+
+    }
+
+    public static boolean actualizarArchivoDigital(ArchivoDigital archivoDigital) {
+        String sql = "UPDATE ArchivoDigital SET nombre=?, autor=?, formato=?, tamaño=?, fechaPublicacion=?, ruta=? WHERE codigo=?";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, archivoDigital.getNombre());
+            stmt.setString(2, archivoDigital.getAutor());
+            stmt.setString(3, archivoDigital.getFormato());
+            stmt.setString(4, archivoDigital.getTamaño());
+            stmt.setString(5, archivoDigital.getFechaPublicacion().toString());
+            stmt.setString(6, archivoDigital.getRuta());
+
+            stmt.executeUpdate();
+            System.out.println("Archivo digital editado correctamente.");
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al editar archivo digital: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean eliminarArchivoDigital(int codigo){
+        String sql = "DELETE FROM ArchivoDigital WHERE codigo=?";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, codigo);
+            stmt.executeUpdate();
+
+            System.out.println("Archivo digital eliminado correctamente.");
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar archivo digital: " + e.getMessage());
+            return false;
+        }
+    }
+
+    
+    
+    
+    
+    
     /*Crud Recurso Tecnologico*/
     //1 insetar Recurso Tecnologico
     /**
      * ***AGREGAR ARCHIVOS, EDITAR Y ELIMINAR****
      */
+    
+    //TABLET:
     public List<Tablet> obtenerTablet() {
         List<Tablet> listaTablet = new ArrayList();
         String sql = "SELECT codigo, modelo, sistemaOperativo FROM Tablet";
@@ -379,6 +643,8 @@ public class UsuarioDA {
         }
     }
 
+    
+    //COMPUTADORA:
     public List<Computadora> obtenerComputadoras() {
         List<Computadora> listaComputadora = new ArrayList();
         String sql = "SELECT codigo, ram, sistemaOperativo, procesador FROM Computadora";
@@ -453,7 +719,6 @@ public class UsuarioDA {
         }
     }
 
-    //2 Eliminar Recurso Tecnologico
     public static boolean actualizarComputadora(Computadora computadora) {
         String sql = "UPDATE Computadora SET ram=?, sistemaOperativo=?, procesador=? WHERE codigo=?";
 
@@ -490,6 +755,11 @@ public class UsuarioDA {
         }
     }
 
+    
+    
+    
+    
+    
 
     /*Crud Sala*/
     //1 Crud Sala
@@ -559,8 +829,6 @@ public class UsuarioDA {
             return false;
         }
     }
-
-   
 
     public static boolean actualizarSala(Sala sala) {
         String sql = "UPDATE Sala SET nombresala=?, capacidad=? WHERE codigo=?";

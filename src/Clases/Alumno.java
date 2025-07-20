@@ -76,7 +76,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         ));*/
     }
 
-    public List<ReservaRecursoTecnologico> getReservasRT() {
+    /*public List<ReservaRecursoTecnologico> getReservasRT() {
         return reservasRT;
     }
 
@@ -154,7 +154,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         // 7) Mostrar estado de la reserva
         reservaAmb.verificarEstado();
         System.out.println("Ha reservado la sala correctamente.");*/
-    }
+    /*}
 
     public void ReservarRecursoTecnologico() {
         Scanner sc = new Scanner(System.in);
@@ -203,7 +203,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 default:
                     System.out.println("Opción no válida, intente nuevamente.");
             }*/
-        }
+        /*}
     }
 
     public String getCarrera() {
@@ -265,8 +265,8 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         } else {
             System.out.println("Reserva cancelada.");
         }*/
-        return true;
-    }
+        /*return true;*/
+    /*}
 
     public void cancelarReserva() {
         System.out.println("Reserva cancelada por el alumno.");
@@ -289,5 +289,5 @@ public class Alumno extends Usuario implements IServicioPrestamos {
     @Override
     public void cerrarSesion() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
+    }*/
 }

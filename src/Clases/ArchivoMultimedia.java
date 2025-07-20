@@ -1,21 +1,20 @@
 
 package Clases;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ArchivoMultimedia extends Material {
     private int archivo_id;
     private String nombre;
     private String autor;
-    private LocalDateTime fecha_publicacion;
+    private LocalDate fecha_publicacion;
     private String tamaño;
     private String duracion;
     private String formato;
     private String resolucion;
     private String tipoMultimedia;
 
-    public ArchivoMultimedia(int archivo_id, String nombre, String autor, LocalDateTime fecha_publicacion, String tamaño, String duracion, String formato, String resolucion, String tipoMultimedia) {
+    public ArchivoMultimedia(int archivo_id, String nombre, String autor, LocalDate fecha_publicacion, String tamaño, String duracion, String formato, String resolucion, String tipoMultimedia) {
         super();
         this.archivo_id = archivo_id;
         this.nombre = nombre;
@@ -52,11 +51,11 @@ public class ArchivoMultimedia extends Material {
         this.autor = autor;
     }
 
-    public LocalDateTime getFecha_publicacion() {
+    public LocalDate getFecha_publicacion() {
         return fecha_publicacion;
     }
 
-    public void setFecha_publicacion(LocalDateTime fecha_publicacion) {
+    public void setFecha_publicacion(LocalDate fecha_publicacion) {
         this.fecha_publicacion = fecha_publicacion;
     }
 
