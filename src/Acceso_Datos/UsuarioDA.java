@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,47 +19,49 @@ import java.util.List;
  */
 public class UsuarioDA {
 
+    private final Connection conn;
+
+    public UsuarioDA(Connection conn) {
+        this.conn = conn;
+    }
+
     //Login
-    public static Usuario autenticar(String codigo, String password) {
+    public Usuario autenticar(String codigo, String password, UsuarioDA usuarioDA) {
         Usuario usuario = null;
+        String sql = "SELECT codigo, nombre, apellido, tipo_usuario_id FROM Usuario WHERE codigo=? AND contrasenia=?";
 
-        String sql = "SELECT codigo, nombre, apellido, tipo_usuario FROM Usuario WHERE codigo=? AND contrasenia=?";
-
-        try (Connection conn = ConexionSQLServer.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, codigo);
             stmt.setString(2, password);
 
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int tipo = rs.getInt("tipo_usuario_id");
+                    String nombre = rs.getString("nombre");
+                    String apellido = rs.getString("apellido");
 
-            if (rs.next()) {
+                    switch (tipo) {
+                        case 1:
+                            usuario = new Administrador(usuarioDA, codigo, password, nombre, apellido);
 
-                String tipo = rs.getString("tipo_usuario");
+                            break;
+                        case 2:
+                            usuario = new Alumno(usuarioDA, codigo, password, nombre, apellido);
 
-                String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
-
-                // factoría polimórfica
-                switch (tipo) {
-                    case "Alumno":
-                        usuario = new Alumno(codigo, password, nombre, apellido);
-                        break;
-                    case "Docente":
-                        usuario = new Docente(codigo, password, nombre, apellido);
-                        break;
-                    case "Administrador":
-                        usuario = new Administrador(codigo, password, nombre, apellido);
-                        break;
-                    case "Recepcionista":
-                        usuario = new Recepcionista(codigo, password, nombre, apellido);
-                        break;
-                    default:
-                        System.out.println("Tipo de usuario no soportado.");
+                            break;
+                        case 3:
+                            usuario = new Docente(usuarioDA, codigo, password, nombre, apellido);
+                            break;
+                        case 4:
+                            usuario = new Recepcionista(usuarioDA, codigo, password, nombre, apellido);
+                            break;
+                        default:
+                            System.out.println("Tipo de usuario no soportado.");
+                    }
+                } else {
+                    System.out.println("Credenciales incorrectas.");
                 }
-            } else {
-                System.out.println("Credenciales incorrectas.");
             }
-
         } catch (SQLException e) {
             System.out.println("Error en login: " + e.getMessage());
         }
@@ -66,118 +69,316 @@ public class UsuarioDA {
         return usuario;
     }
 
-    //Crud Libro
-    // 1 Consultar
     public List<Libro> obtenerLibros() {
-        List<Libro> listalibros = new ArrayList();
+        List<Libro> listaLibros = new ArrayList<>();
 
-        // consulta para buscar los libro
-        return listalibros;
+        String sql = "SELECT libro_id, nombre, autor, fecha_publicacion, genero, idioma, ISBN, editorial, edicion FROM Libro";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Libro libro = new Libro(
+                        rs.getInt("libro_id"),
+                        rs.getString("nombre"),
+                        rs.getString("autor"),
+                        LocalDate.parse(rs.getString("fecha_publicacion")),
+                        rs.getString("genero"),
+                        rs.getString("idioma"),
+                        rs.getString("ISBN"),
+                        rs.getString("editorial"),
+                        rs.getString("edicion")
+                );
+                listaLibros.add(libro);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener libros: " + e.getMessage());
+        }
+
+        return listaLibros;
     }
 
-    public Libro buscarLibro(String id) {
+    public boolean ValidarEjemplares(int Libro_id) {
+
+        String sql = "SELECT count()as 'Cantidad', ejemplar_id, estado from Ejemplar WHERE ESTADO = 'disponible' and libro_id = ? ";
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, Libro_id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int cantidad = rs.getInt("Cantidad");
+                if (cantidad > 0) {
+                    System.out.println("Ejemplares diaponibles");
+                    return true;
+
+                } else {
+                    System.out.println("Ejemplares de libro no disponible");
+                }
+                return false;
+            } else {
+                System.out.println("EJEMPLAR NO ENCONTRADO");
+            }
+            return false;
+
+        } catch (SQLException e) {
+            System.out.println("Error en login: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public Libro buscarLibro(int id) {
         Libro libro = null;
 
-        // consulta para buscar los libro
-        return libro;
+        String sql = "SELECT libro_id, nombre, autor, fecha_publicacion, genero,idioma,ISBN,editorial,edicion "
+                + "FROM Libro WHERE libro_id=?";
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                libro = new Libro(
+                        rs.getInt("libro_id"),
+                        rs.getString("nombre"),
+                        rs.getString("autor"),
+                        LocalDate.parse(rs.getString("fecha_publicacion")),
+                        rs.getString("genero"),
+                        rs.getString("idioma"),
+                        rs.getString("ISBN"),
+                        rs.getString("editorial"),
+                        rs.getString("edicion")
+                );
+                return libro;
+            } else {
+                System.out.println("No se encontró un libro con el código: " + id);
+                return libro;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar libro: " + e.getMessage());
+
+            return libro;
+        }
     }
 
-    //2 Agregar Libro
-    public boolean agregarLibro()/* <-- Todos los parametros*/ {
-        return true;
+    public int ObtenerEjemplar(int id) {
+        String sql = "Select ejemplar_id from ejemplar where libro_id = ? and estado = 'disponible'";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ejemplar_id");
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return 0;
+        }
     }
 
-    //3 Modificar Libro
-    public boolean modificarLibro()/* <-- Todos los parametros*/ {
-        return true;
-    }
+    public int RegistarReserva(String usuario, int tipodeReserva) {
+        String sql = "INSERT INTO Reserva(fechaReserva, tipoReserva_id, estado_id, usuario_responsable_id) VALUES (date('now'), ?, 1, ?)";
 
-    //4 Eliminar Libro
-    public boolean eliminarLibro(String id) {
-        return true;
-    }
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, tipodeReserva);
+            stmt.setString(2, usuario);
+            stmt.executeUpdate();
 
-    /*Crud Recurso Tecnologico*/
-    //1 insetar Recurso Tecnologico
-    public boolean agregarTablet() {
-        return true;
-    }
+            String sql2 = "SELECT last_insert_rowid() AS 'id'";
 
-    public boolean agregarComputadora() {
-        return true;
-    }
+            try (PreparedStatement stmt2 = conn.prepareStatement(sql2); ResultSet rs = stmt2.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
 
-    //2 Eliminar Recurso Tecnologico
-    public boolean eliminarTablet(String id) {
-        return true;
-    }
-
-    public boolean eliminarComputadora(String id) {
-        return true;
-    }
-
-    //consultar Recurso tecnologico
-    public List<Tablet> obtenerTablets() {
-        List<Tablet> listaTablets = new ArrayList();
-
-        // consulta para buscar los libro
-        return listaTablets;
-    }
-
-    public Tablet buscarTablet(String id) {
-        Tablet Tablet = null;
-
-        // consulta para buscar los libro
-        return Tablet;
-    }
-
-    public List<Computadora> obtenerComputadoras() {
-        List<Computadora> listaComputadoras = new ArrayList();
-
-        // consulta para buscar los libro
-        return listaComputadoras;
-    }
-
-    public Computadora buscarComputadora(String id) {
-        Computadora computadora = null;
-
-        // consulta para buscar los libro
-        return computadora;
-    }
-
-    /*Crud Sala*/
-    //1 Crud Sala
-    public boolean agregarSala() {
-        return true;
-    }
-
-    public boolean eliminarSala(String id) {
-        return true;
-    }
-    public List<Sala> obtenerSalas() {
-        List<Sala> listaSala = new ArrayList();
-
-        // consulta para buscar los libro
-        return listaSala;
-    }
-
-    public Sala buscarSala(String id) {
-        Sala sala = null;
-
-        // consulta para buscar los libro
-        return sala;
-    }
-
-    /*Crud Reservas*/
-    /*1 insertar Reserva de Libro*/
-    public int agregarReserva(){
+        } catch (SQLException e) {
+            System.out.println("Error al registrar reserva: " + e.getMessage());
+        }
         return 0;
+
     }
-    public boolean eliminarReserva(String id){
-        return true;
+
+    public boolean RegistarReservadeLibro(int reservar_id, int ejemplar_id) {
+        String sql = "insert into ReservaLibro(reserva_id, ejemplar_id)\n"
+                + "values\n"
+                + "(?, ?);";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, reservar_id);
+            stmt.setInt(2, ejemplar_id);
+            stmt.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return false;
+        }
+
     }
-    public boolean agregarReservaLibro(String id){
-        return true;
+
+    public boolean ModificarEjemplar(int id_ejemplar) {
+        String sql = "UPDATE Ejemplar\n"
+                + "set estado = 'no disponible'\n"
+                + "where ejemplar_id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_ejemplar);
+            stmt.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return false;
+        }
     }
-    
+
+    public Usuario buscarUsuario(String codigo_usuario) {
+        Usuario usuario = null;
+        String sql = "select u.codigo, u.correo, u.nombre, u.apellido, u.tipo_usuario_id,e.nombre as 'especialidad_nombre', c.nombre as 'carrera_nombre' from Usuario u \n"
+                + "LEFT join Especialidad e on e.id = u.especialidad_id\n"
+                + "LEFT join Carrera c on c.id = u.carrera_id\n"
+                + "WHERE u.codigo = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, codigo_usuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int tipo = rs.getInt("tipo_usuario_id");
+
+                    switch (tipo) {
+                        case 1:
+                            Administrador uadmin = new Administrador(
+                                    rs.getString("codigo"),
+                                    rs.getString("nombre"),
+                                    rs.getString("apellido"),
+                                    rs.getString("correo"),
+                                    tipo
+                            );
+
+                            return uadmin;
+
+                        case 2:
+
+                            Alumno ualunno = new Alumno(
+                                    rs.getString("carrera_nombre"),
+                                    rs.getString("codigo"),
+                                    rs.getString("nombre"),
+                                    rs.getString("apellido"),
+                                    rs.getString("correo"),
+                                    tipo);
+
+                            return ualunno;
+                        case 3:
+                            Docente udocente = new Docente(
+                                    rs.getString("especialidad_nombre"),
+                                    rs.getString("codigo"),
+                                    rs.getString("nombre"),
+                                    rs.getString("apellido"),
+                                    rs.getString("correo"),
+                                    tipo);
+                            return udocente;
+                        case 4:
+                            Recepcionista urecepcionista = new Recepcionista(
+                                    rs.getString("codigo"),
+                                    rs.getString("nombre"),
+                                    rs.getString("apellido"),
+                                    rs.getString("correo"),
+                                    tipo);
+                            return urecepcionista;
+                        default:
+                            System.out.println("Tipo de usuario no soportado.");
+                            return null;
+                    }
+                } else {
+                    System.out.println("Credenciales incorrectas.");
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en login: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Ejemplar buscarEjemplar(int id) {
+        String sql = "Select ejemplar_id, libro_id, estado from ejemplar where ejemplar_id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Ejemplar ej = new Ejemplar(
+                        rs.getInt("ejemplar_id"),
+                        rs.getInt("libro_id"),
+                        rs.getString("estado"));
+                return ej;
+            } else {
+                System.out.println("No se encontro el Ejemplar:");
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al agregar ejemplar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public ReservaLibro BuscarReservaLibro(int reserva_id) {
+        ReservaLibro rl = null;
+        String sql = "Select rl.reserva_id, r.fechaReserva,er.estado as 'EstadoReserva',\n"
+                + "r.usuario_responsable_id, \n"
+                + "l.libro_id,\n"
+                + "e.ejemplar_id from ReservaLibro rl \n"
+                + "join Reserva r on r.id = rl.reserva_id \n"
+                + "join EstadoReserva er on er.id = r.estado_id\n"
+                + "join Ejemplar e on e.ejemplar_id = rl.ejemplar_id\n"
+                + "join Libro l on l.libro_id = e.libro_id\n"
+                + "where rl.reserva_id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, reserva_id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                rl = new ReservaLibro(
+                        reserva_id,
+                        LocalDate.parse(rs.getString("fechaReserva")),
+                        rs.getString("EstadoReserva"),
+                        buscarUsuario(rs.getString("usuario_responsable_id")));
+
+                rl.setLibro(buscarLibro(rs.getInt("libro_id")));
+                rl.setEjemplar(buscarEjemplar(rs.getInt("ejemplar_id")));
+
+                return rl;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar Reserva Libro: " + e.getMessage());
+            return null;
+        }
+    }
 }

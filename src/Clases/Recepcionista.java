@@ -1,31 +1,33 @@
 package Clases;
 
+import Acceso_Datos.UsuarioDA;
+
 /**
  *
  * @author Dayanna
  */
 public class Recepcionista extends Usuario {
 
-    public Recepcionista(String id_codigo, String contraseña) {
-        this.id_codigo = id_codigo;
-        this.contraseña = contraseña;
-        this.tipoDeUser = "Recepcionista";
-    }
-
     //constructor de prueba
-    public Recepcionista(String id_codigo, String contraseña, String nombre) {
+    public Recepcionista(UsuarioDA usuarioda,String id_codigo, String contraseña, String nombre) {
+        super(usuarioda);
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
     }
 
-    public Recepcionista(String id_codigo, String contraseña, String nombre, String apellido) {
+    public Recepcionista(UsuarioDA usuarioda,String id_codigo, String contraseña, String nombre, String apellido) {
+        super(usuarioda);
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Recepcionista";
+        this.tipoDeUser = 4;
+    }
+
+    public Recepcionista(String id_codigo, String nombre, String apellido, String correo, int tipoDeUser) {
+        super(id_codigo, nombre, apellido, correo, tipoDeUser);
     }
 
     public void registrarDevolucion() {

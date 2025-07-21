@@ -1,37 +1,38 @@
 
 package Clases;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Material {
-    private String codigo;
-    private String nombre;
+    private int codigo;
     private String estado;
+    
+    private String nombre;
     private String autor;
-    private Date fechaPublicacion;
+    private LocalDate fechaPublicacion;
+    
 
-    public Material(String codigo, String nombre, String estado, String autor, Date fechaPublicacion) {
+    public Material(int codigo, String nombre, String estado, String autor, LocalDate fechaPublicacion) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.estado = estado;
         this.autor = autor;
         this.fechaPublicacion = fechaPublicacion;
     }
+    public Material(int codigo, String nombre, String autor, LocalDate fechaPublicacion) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.autor = autor;
+        this.fechaPublicacion = fechaPublicacion;
+    }
 
-    public String getCodigo() {
+
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getEstado() {
@@ -42,6 +43,14 @@ public class Material {
         this.estado = estado;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getAutor() {
         return autor;
     }
@@ -50,13 +59,14 @@ public class Material {
         this.autor = autor;
     }
 
-    public Date getFechaPublicacion() {
+    public LocalDate getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(Date fechaPublicacion) {
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
+    
     
     public void mostrarInfo() {
         System.out.println("Código: " + codigo);

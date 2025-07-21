@@ -1,20 +1,15 @@
 package Clases;
 
 public class Tablet extends RecursoTecnologico {
+    
     private String modelo;
+    private String sistemaOperativo;
 
-    private String estado;
-
-    public Tablet(String IDcodigo, String modelo ) {
-        this.IDcodigo = IDcodigo;
+    public Tablet(String modelo, String sistemaOperativo, int IDcodigo, String tipo, String estado) {
+        super(IDcodigo, tipo, estado);
         this.modelo = modelo;
-        this.estado = "disponible";
+        this.sistemaOperativo = sistemaOperativo;
     }
-
-    /*@Override
-    public boolean VerificarDisponibilidad() {
-        return stock > 0;
-    }*/
 
     public String getModelo() {
         return modelo;
@@ -24,16 +19,16 @@ public class Tablet extends RecursoTecnologico {
         this.modelo = modelo;
     }
 
-    /*public int getStock() {
-        return stock;
+    public String getSistemaOperativo() {
+        return sistemaOperativo;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }*/
-
+    public void setSistemaOperativo(String sistemaOperativo) {
+        this.sistemaOperativo = sistemaOperativo;
+    }
+    
     public void mostrarInfo() {
-        System.out.println("ID Código: " + IDcodigo);
+        System.out.println("ID Código: " + getIDcodigo());
         System.out.println("Modelo: " + modelo);
         //System.out.println("Stock: " + stock);
         System.out.println("Disponible: " + (VerificarDisponibilidad() ? "Sí" : "No"));

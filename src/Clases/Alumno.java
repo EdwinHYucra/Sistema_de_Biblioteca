@@ -1,8 +1,7 @@
 package Clases;
 
+import Acceso_Datos.UsuarioDA;
 import Interfaces.IServicioPrestamos;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,72 +9,37 @@ import java.util.Scanner;
 public class Alumno extends Usuario implements IServicioPrestamos {
 
     private String carrera;
-    //Variables de Prueba
     private List<ReservaLibro> reservas = new ArrayList<>();
     private List<ReservaRecursoTecnologico> reservasRT = new ArrayList<>();
-    private List<Libro> listaLibros = new ArrayList<>();
     private List<ReservaDeAmbiente> reservasSala = new ArrayList<>();
 
     //Constructor de Prueba
-    public Alumno(String contraseña, String id_codigo, String nombre, String apellido) {
+    public Alumno(UsuarioDA usuarioda, String id_codigo, String contraseña, String nombre, String apellido) {
+        super(usuarioda);
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
-        this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
-                "M001",
-                "Programación en Java",
-                "Disponible",
-                "James Gosling",
-                new java.util.Date(),
-                true,
-                "Programación en Java",
-                "Programación"
-        ));
-        listaLibros.add(new Libro(
-                "M002",
-                "Estructuras de Datos",
-                "Disponible",
-                "Robert Lafore",
-                new java.util.Date(),
-                true,
-                "Estructuras de Datos",
-                "Computación"
-        ));
+        this.tipoDeUser = 2;
+
     }
 
-    public Alumno(String id_codigo, String contraseña, String nombre, String apellido, String carrera) {
-        this.id_codigo = id_codigo;
-        this.contraseña = contraseña;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.tipoDeUser = "Alumno";
+    public Alumno(String carrera, String id_codigo, String nombre, String apellido, String correo, int tipoDeUser) {
+        super(id_codigo, nombre, apellido, correo, tipoDeUser);
         this.carrera = carrera;
-        this.listaLibros = new ArrayList<>();
-        listaLibros.add(new Libro(
-                "M001",
-                "Programación en Java",
-                "Disponible",
-                "James Gosling",
-                new java.util.Date(),
-                true,
-                "Programación en Java",
-                "Programación"
-        ));
-        listaLibros.add(new Libro(
-                "M002",
-                "Estructuras de Datos",
-                "Disponible",
-                "Robert Lafore",
-                new java.util.Date(),
-                true,
-                "Estructuras de Datos",
-                "Computación"
-        ));
     }
 
+    public Alumno(UsuarioDA usuarioda, String id_codigo, String contraseña, String nombre, String apellido, String carrera) {
+        super(usuarioda);
+        this.id_codigo = id_codigo;
+        this.contraseña = contraseña;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.tipoDeUser = 2;
+        this.carrera = carrera;
+    }
+
+    //Getters y Setters
     public List<ReservaRecursoTecnologico> getReservasRT() {
         return reservasRT;
     }
@@ -85,7 +49,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
     }
 
     public void Reservarsala() {
-        
+
         // 1) Intriducir la cantidad
         int capacidad = 0;
         boolean capacidadValida = false;
@@ -105,9 +69,9 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 System.out.println("Por favor ingrese un número válido.");
             }
         }
-        
+
         // 2) Buscar la sala
-        Sala sala1 = new Sala("SALA101", "Disponible",6);
+        //Sala sala1 = new Sala("SALA101", "Disponible",6);
         /*ReservaDeAmbiente reservaAmb = new ReservaDeAmbiente(
             "RES001", // código de reserva
             5,        // capacidad máxima
@@ -160,7 +124,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         Scanner sc = new Scanner(System.in);
         boolean salir = false;
 
-        while (!salir) {
+        /*while (!salir) {
             System.out.println("\n--- Opciones de Reserva de Recurso Tecnológico ---");
             System.out.println("1. Reservar Tablet");
             System.out.println("2. Reservar Computadora");
@@ -203,7 +167,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                 default:
                     System.out.println("Opción no válida, intente nuevamente.");
             }
-        }
+        }*/
     }
 
     public String getCarrera() {
@@ -214,58 +178,69 @@ public class Alumno extends Usuario implements IServicioPrestamos {
         this.carrera = carrera;
     }
 
+    //Metodos
+    public void verCatalogoLibros() {
+        System.out.println("--- Catálogo de la sala del docente ---");
+
+        List<Libro> listaLibros = usuarioDA.obtenerLibros();
+
+        for (Libro libro : listaLibros) {
+            System.out.println("Código: " + libro.getCodigo() + libro.getNombre());
+        }
+        /*if (listaLibros.isEmpty()) {
+            System.out.println("No hay libros en la sala.");
+        } else {
+            for (Libro libro : listaLibros) {
+                System.out.println("Código: " + libro.getCodigo()+ libro.getNombre());
+            }
+        }*/
+    }
+
+    public boolean solicitarReservaLibro() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Ingrese el código del libro que desea reservar: ");
+        int codigoLibro = sc.nextInt();
+        sc.nextLine();
+
+        if (usuarioDA.ValidarEjemplares(codigoLibro)) {
+            System.out.println("¿Desea reservar el libro? (S/N)");
+            String respuesta = sc.nextLine();
+
+            if (respuesta.equals("S")) {
+                int id_Ejemplar = usuarioDA.ObtenerEjemplar(codigoLibro);
+
+                int id_Reserva = usuarioDA.RegistarReserva(this.getId_codigo(), 1);
+
+                if (usuarioDA.RegistarReservadeLibro(id_Reserva, id_Ejemplar)) {
+                    usuarioDA.ModificarEjemplar(id_Ejemplar);
+
+                    System.out.println("Se realizo la reserva con exito!\n");
+
+                    ReservaLibro reslib = usuarioDA.BuscarReservaLibro(id_Reserva);
+                    
+                    System.out.println("Detalle de la Reserva");
+                    System.out.println("Codigo Reserva: " + reslib.getCodigo());
+                    System.out.println("Libro: "+ reslib.getLibro().getNombre());
+                    System.out.println("Ejemplar: "+ reslib.getEjemplar().getCodigo());
+                    System.out.println("Estado: "+ reslib.getEstado());
+                    System.out.println("Porfavor acercate a recepcion para recoger el libro con el codigo de reserva");
+                    
+                }
+
+            }
+        }
+
+        return true;
+    }
+
     public boolean validarDisponibilidadReserva() {
         return !estaPenalizado();
     }
 
     public boolean solicitarReserva() {
         return validarDisponibilidadReserva();
-    }
-
-    public void verCatalogoLibros() {
-        List<Libro> lista = obtenerLibros();
-
-        System.out.println("--- Catálogo de la sala del docente ---");
-        if (lista.isEmpty()) {
-            System.out.println("No hay libros en la sala.");
-        } else {
-            for (Libro libro : lista) {
-                System.out.println("Código: " + libro.getCodigo() + " | Título: " + libro.getTitulo() + " | Disponibilidad: " + (libro.isDisponibilidad() ? "Disponible" : "No disponible"));
-
-            }
-        }
-    }
-
-    public List<Libro> obtenerLibros() {
-        return listaLibros;
-    }
-
-    public void agregarReserva(ReservaLibro RLibro) {
-        reservas.add(RLibro);
-    }
-
-    //@Override
-    public boolean solicitarReservaLibro(String codigoLibro) {
-        Libro libroRecep = null;
-        for (Libro libro : listaLibros) {
-            if (libro.getCodigo().equals(codigoLibro)) {
-                libroRecep = libro;
-                break;
-            }
-        }
-        Scanner sc = new Scanner(System.in);
-        System.out.print("¿Desea reservar el libro \"" + libroRecep.getTitulo() + "\"? (S/N): ");
-        String confirmar = sc.nextLine();
-        if (confirmar.equalsIgnoreCase("S")) {
-
-            ReservaLibro reservaL = new ReservaLibro(null, libroRecep, "pendiente", LocalDate.now(), 12.2, LocalTime.now(), this);
-            libroRecep.setDisponibilidad(false);
-            agregarReserva(reservaL);
-            System.out.println("Reserva realizada con éxito para el libro \"" + libroRecep.getTitulo() + "\".");
-        } else {
-            System.out.println("Reserva cancelada.");
-        }
-        return true;
     }
 
     public void cancelarReserva() {

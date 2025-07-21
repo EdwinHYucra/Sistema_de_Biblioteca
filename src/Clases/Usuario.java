@@ -1,5 +1,6 @@
 package Clases;
 
+import Acceso_Datos.UsuarioDA;
 import java.util.List;
 import java.util.ArrayList;
 import Interfaces.IAutenticacion;
@@ -9,20 +10,41 @@ import Interfaces.IAutenticacion;
  */
 public class Usuario implements IAutenticacion {
 
+    protected UsuarioDA usuarioDA;
+
     protected String id_codigo;
     protected String contraseña;
     protected String nombre;
     protected String apellido;
-    protected String tipoDeUser;
+    protected String correo;
+    protected int tipoDeUser;
     protected List<Penalidad> penalidades = new ArrayList<>();
 
-    public Usuario() {
-        // constructor vacío opcional
+    public Usuario(UsuarioDA usuarioDA) {
+        this.usuarioDA = usuarioDA;
     }
 
+    public Usuario(String id_codigo, String nombre, String apellido, String correo, int tipoDeUser) {
+        this.id_codigo = id_codigo;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.tipoDeUser = tipoDeUser;
+    }
+
+    public Usuario() {
+    }
     public Usuario(String id_codigo, String contraseña) {
         this.id_codigo = id_codigo;
         this.contraseña = contraseña;
+    }
+
+    public UsuarioDA getUsuarioDA() {
+        return usuarioDA;
+    }
+
+    public void setUsuarioDA(UsuarioDA usuarioDA) {
+        this.usuarioDA = usuarioDA;
     }
 
     public String getId_codigo() {
@@ -57,12 +79,20 @@ public class Usuario implements IAutenticacion {
         this.apellido = apellido;
     }
 
-    public String getTipoDeUser() {
+    public int getTipoDeUser() {
         return tipoDeUser;
     }
 
-    public void setTipoDeUser(String tipoDeUser) {
+    public void setTipoDeUser(int tipoDeUser) {
         this.tipoDeUser = tipoDeUser;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public List<Penalidad> getPenalidades() {
