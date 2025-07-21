@@ -1,35 +1,29 @@
-
 package Clases;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Libro extends Material {
-    private boolean disponibilidad;
-    private String titulo;
-    private String genero;
 
-    public Libro(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
-                 boolean disponibilidad, String titulo, String genero) {
+    private String genero;
+    private String idioma;
+    private String ISBN;
+    private String editorial;
+    private String edicion;
+
+    public Libro(int codigo, String nombre, String estado, String autor, LocalDate fechaPublicacion,
+            boolean disponibilidad, String titulo, String genero) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
-        this.disponibilidad = disponibilidad;
-        this.titulo = titulo;
         this.genero = genero;
     }
 
-    public boolean isDisponibilidad() {
-        return disponibilidad;
-    }
-
-    public void setDisponibilidad(boolean disponibilidad) {
-        this.disponibilidad = disponibilidad;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public Libro(int codigo, String nombre, String autor, LocalDate fechaPublicacion,
+            String genero, String idioma, String isbn, String editorial, String edicion) {
+        super(codigo, nombre, autor, fechaPublicacion);
+        this.genero = genero;
+        this.idioma = idioma;
+        this.ISBN = isbn;
+        this.editorial = editorial;
+        this.edicion = edicion;
     }
 
     public String getGenero() {
@@ -39,4 +33,37 @@ public class Libro extends Material {
     public void setGenero(String genero) {
         this.genero = genero;
     }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(String editorial) {
+        this.editorial = editorial;
+    }
+
+    public String getEdicion() {
+        return edicion;
+    }
+
+    public void setEdicion(String edicion) {
+        this.edicion = edicion;
+    }
+
 }

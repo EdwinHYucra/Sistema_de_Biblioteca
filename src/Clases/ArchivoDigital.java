@@ -1,18 +1,21 @@
 
 package Clases;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class ArchivoDigital extends Material {
+    
     private String formato;
+    private String tamaño;
     private String ruta;
 
-    public ArchivoDigital(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
+    public ArchivoDigital(int codigo, String nombre, String estado, String autor, LocalDate fechaPublicacion,
                           String formato, String ruta) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
         this.formato = formato;
         this.ruta = ruta;
-    }
+    }    
 
     public String getFormato() {
         return formato;
@@ -20,6 +23,14 @@ public class ArchivoDigital extends Material {
 
     public void setFormato(String formato) {
         this.formato = formato;
+    }
+
+    public String getTamaño() {
+        return tamaño;
+    }
+
+    public void setTamaño(String tamaño) {
+        this.tamaño = tamaño;
     }
 
     public String getRuta() {
@@ -30,8 +41,6 @@ public class ArchivoDigital extends Material {
         this.ruta = ruta;
     }
     
-    
-
     public void abrir() {
         System.out.println("Abriendo archivo digital...");
     }

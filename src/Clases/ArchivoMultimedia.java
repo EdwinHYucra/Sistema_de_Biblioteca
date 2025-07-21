@@ -1,26 +1,29 @@
 
 package Clases;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ArchivoMultimedia extends Material {
-    private double tamaño;
+    
+    private String tamaño;
     private double duracion;
     private String formato;
+    private String resolucion;
+    private String tipoMultimedia;
 
-    public ArchivoMultimedia(String codigo, String nombre, String estado, String autor, Date fechaPublicacion,
-                             double tamaño, double duracion, String formato) {
+    public ArchivoMultimedia(int codigo, String nombre, String estado, String autor, LocalDate fechaPublicacion,
+                             String tamaño, double duracion, String formato) {
         super(codigo, nombre, estado, autor, fechaPublicacion);
         this.tamaño = tamaño;
         this.duracion = duracion;
         this.formato = formato;
     }
 
-    public double getTamaño() {
+    public String getTamaño() {
         return tamaño;
     }
 
-    public void setTamaño(double tamaño) {
+    public void setTamaño(String tamaño) {
         this.tamaño = tamaño;
     }
 
@@ -40,6 +43,23 @@ public class ArchivoMultimedia extends Material {
         this.formato = formato;
     }
 
+    public String getResolucion() {
+        return resolucion;
+    }
+
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
+    }
+
+    public String getTipoMultimedia() {
+        return tipoMultimedia;
+    }
+
+    public void setTipoMultimedia(String tipoMultimedia) {
+        this.tipoMultimedia = tipoMultimedia;
+    }
+
+    
     
     
     public void reproducir() {

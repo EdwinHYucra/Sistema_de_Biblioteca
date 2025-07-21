@@ -4,10 +4,21 @@
  */
 package Acceso_Datos;
 
-/**
- *
- * @author ehuan
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class ConexionBD {
-    
+
+    public static Connection conectar() {
+        Connection conn = null;
+        try {
+            String url = "jdbc:sqlite:src/DataBase/db_library_system.db";
+            conn = DriverManager.getConnection(url);
+            //System.out.println("Conexión a SQLite establecida.");
+        } catch (SQLException e) {
+            System.out.println("Error al conectar a SQLite: " + e.getMessage());
+        }
+        return conn;
+    }
 }

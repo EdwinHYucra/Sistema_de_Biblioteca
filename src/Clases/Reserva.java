@@ -12,18 +12,32 @@ import java.time.LocalDate;
  * @author ehuan
  */
 public abstract class Reserva {
-    protected LocalDate fechaReserva;
-    protected double duracion;
-    protected LocalTime horaReserva;
+    protected int codigo;
+    protected LocalDate fechaReserva; 
+    protected String estado;
     protected Usuario usuario;
 
-    public Reserva(LocalDate fechaReserva, double duracion, LocalTime horaReserva, Usuario usuario) {
+
+    public Reserva(int codigo, LocalDate fechaReserva, Usuario usuario) {
+        this.codigo = codigo;
         this.fechaReserva = fechaReserva;
-        this.duracion = duracion;
-        this.horaReserva = horaReserva;
         this.usuario = usuario;
     }
-    
+    public Reserva(int codigo, LocalDate fechaReserva, String estado, Usuario usuario) {
+        this.codigo = codigo;
+        this.fechaReserva = fechaReserva;
+        this.estado = estado;
+        this.usuario = usuario;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
     public LocalDate getFechaReserva() {
         return fechaReserva;
     }
@@ -32,20 +46,12 @@ public abstract class Reserva {
         this.fechaReserva = fechaReserva;
     }
 
-    public double getDuracion() {
-        return duracion;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setDuracion(double duracion) {
-        this.duracion = duracion;
-    }
-
-    public LocalTime getHoraReserva() {
-        return horaReserva;
-    }
-
-    public void setHoraReserva(LocalTime horaReserva) {
-        this.horaReserva = horaReserva;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Usuario getUsuario() {
@@ -55,6 +61,9 @@ public abstract class Reserva {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
+
+    // Método abstracto común a todos los hijos
     /*
     public boolean verificarDisponivilidad(){
         System.out.println("Se esta verificando");
