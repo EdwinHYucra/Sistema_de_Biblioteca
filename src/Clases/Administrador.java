@@ -2,7 +2,6 @@ package Clases;
 
 import Acceso_Datos.UsuarioDA;
 import Interfaces.IServiciosRecursos;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -41,10 +40,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 = "=== AGREGAR MATERIAL ===\n"
                 + "Seleccione tipo material\n"
                 + "1. Libro\n"
-                + "2. Ejemplar de Libro\n"
-                + "3. Archivo Multimedia\n"
-                + "4. Archivo Digital\n"
-                + "5. Salir\n"
+                + "2. Archivo Multimedia\n"
+                + "3. Archivo Digital\n"
+                + "4. Salir\n"
                 + "=========================\n"
                 + "Elija una opcion: ";
 
@@ -56,19 +54,20 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 System.out.println("Ingrese una opción válida numérica.");
                 opcionM = 0;
             }
-
             switch (opcionM) {
                 case 1: // LIBRO
-                    System.out.println("=== Por favor ingrese los siguientes datos ==="); //debe mostrar el ultimo codigo
-                    System.out.println("Codigo del libro: ");
-                    int libroID = ad.nextInt();
-                    if (libroID <= 0) {
-                        System.out.println("Código inválido. Debe ser mayor a 0.");
+                    System.out.println("=== Por favor ingrese los siguientes datos ===");
+
+                    
+                    int lastId = UsuarioDA.agregarMaterial(1);
+                    if (lastId <= 0) {
+                        System.out.println("Error al generar el código del material.");
                         break;
                     }
+                    System.out.println("Código generado para el libro: " + lastId);
 
                     System.out.print("Nombre del libro: ");
-                    String nombreL = ad.nextLine().trim();
+                    String nombreL = ad.nextLine();
                     if (nombreL.isEmpty()) {
                         System.out.println("Nombre no puede estar vacío.");
                         break;
@@ -81,7 +80,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         break;
                     }
 
-                    LocalDate fechaPublicacionL = null;
+                    LocalDate fecha_publicacionL = null;
                     boolean fechaValida = false;
 
                     DateTimeFormatter formatoL = DateTimeFormatter.ofPattern("dd-MM-yy");
@@ -96,7 +95,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         }
 
                         try {
-                            fechaPublicacionL = LocalDate.parse(input, formatoL);
+                            fecha_publicacionL = LocalDate.parse(input, formatoL);
                             fechaValida = true;
                         } catch (DateTimeParseException e) {
                             System.out.println("Formato de fecha inválido. Usa dd-MM-yy.");
@@ -138,9 +137,9 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         break;
                     }
 
-                    Libro libro = new Libro(libroID, nombreL, autor, fechaPublicacionL, genero, idioma, ISBN, editorial, edicion);
-                    int id = 1;
-                    if (UsuarioDA.agregarLibro(libro, id)) {
+                    Libro libro = new Libro(lastId, nombreL, autor, fecha_publicacionL, genero, idioma, ISBN, editorial, edicion);
+                    
+                    if (UsuarioDA.agregarLibro(libro, lastId)) {
                         System.out.println("\nLibro agregado correctamente:");
                         libro.mostrarInfo();
                     } else {
@@ -149,13 +148,13 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     break;
 
                 case 2: // ARCHIVO MULTIMEDIA
-                    System.out.println("=== Por favor ingrese los siguientes datos ===");
-                    System.out.println("Codigo de Archivo Multimedia: ");
-                    int archivo_idM = ad.nextInt();
-                    if (archivo_idM <= 0) {
-                        System.out.println("Código inválido. Debe ser mayor a 0.");
+
+                    lastId = UsuarioDA.agregarMaterial(2);
+                    if (lastId <= 0) {
+                        System.out.println("Error al generar el código del material.");
                         break;
                     }
+                   
 
                     System.out.print("Nombre del archivo: ");
                     String nombreM = ad.nextLine().trim();
@@ -228,9 +227,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         break;
                     }
 
-                    ArchivoMultimedia archivoMultimedia = new ArchivoMultimedia(archivo_idM, nombreM, autorM, fecha_publicacionM, tamañoM, duracionM, formatoM, resolucionM, tipoMultimediaM);
-                    id = 2;
-                    if (UsuarioDA.agregarArchivoMultimedia(archivoMultimedia, id)) {
+                    ArchivoMultimedia archivoMultimedia = new ArchivoMultimedia(lastId, nombreM, autorM, fecha_publicacionM, tamañoM, duracionM, formatoM, resolucionM, tipoMultimediaM);
+                    if (UsuarioDA.agregarArchivoMultimedia(archivoMultimedia, lastId)) {
                         System.out.println("\nArchivo multimedia agregado correctamente:");
                         archivoMultimedia.mostrarInfo();
                     } else {
@@ -239,14 +237,13 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     break;
 
                 case 3: // ARCHIVO DIGITAL
-                    System.out.println("=== Por favor ingrese los siguientes datos ===");
 
-                    System.out.println("Codigo del libro: ");
-                    int archivo_idD = ad.nextInt();
-                    if (archivo_idD <= 0) {
-                        System.out.println("Código inválido. Debe ser mayor a 0.");
+                    lastId = UsuarioDA.agregarMaterial(3);
+                    if (lastId <= 0) {
+                        System.out.println("Error al generar el código del material.");
                         break;
                     }
+                    System.out.println("Código generado para el libro: " + lastId);
 
                     System.out.print("Nombre: ");
                     String nombreD = ad.nextLine().trim();
@@ -305,9 +302,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                         break;
                     }
 
-                    ArchivoDigital archivoDigital = new ArchivoDigital(archivo_idD, nombreD, autorD, formatoD, tamañoD, fechaPublicacionD, ruta);
-                    id = 3;
-                    if (UsuarioDA.agregarArchivoDigital(archivoDigital, id)) {
+                    ArchivoDigital archivoDigital = new ArchivoDigital(lastId, nombreD, autorD, formatoD, tamañoD, fechaPublicacionD, ruta);
+                    if (UsuarioDA.agregarArchivoDigital(archivoDigital, lastId)) {
                         System.out.println("\nArchivo digital agregado correctamente:");
                         archivoDigital.mostrarInfo();
                     } else {
@@ -377,8 +373,8 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                     if (!fechaStr.isEmpty()) {
                         try {
                             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yy");
-                            LocalDate fechaPublicacion = LocalDate.parse(fechaStr, formato);
-                            libro.setFechaPublicacion(fechaPublicacion);
+                            LocalDate fecha_publicacion = LocalDate.parse(fechaStr, formato);
+                            libro.setFecha_publicacion(fecha_publicacion);
                         } catch (DateTimeParseException e) {
                             System.out.println("Formato de fecha inválido. No se actualizó.");
                         }
@@ -584,7 +580,7 @@ public class Administrador extends Usuario implements IServiciosRecursos {
                 break;
         }
     }
-    
+
     public void eliminarMaterial() {
         int opcionEM = 0;
         String menuEM = "\n=== ELIMINAR MATERIAL ===\n"

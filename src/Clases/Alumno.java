@@ -290,4 +290,19 @@ public class Alumno extends Usuario implements IServicioPrestamos {
     public void cerrarSesion() {
         throw new UnsupportedOperationException("Not supported yet.");
     }*/
+
+    @Override
+    public boolean validarDisponibilidadReserva() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean solicitarReserva() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void cancelarReserva() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

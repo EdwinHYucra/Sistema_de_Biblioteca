@@ -81,7 +81,7 @@ public class UsuarioDA {
                         rs.getInt("codigo"),
                         rs.getString("nombre"),
                         rs.getString("autor"),
-                        rs.getDate("fechaPublicacion").toLocalDate(),
+                        rs.getDate("fecha_publicacion").toLocalDate(),
                         rs.getString("genero"),
                         rs.getString("idioma"),
                         rs.getString("ISBN"),
@@ -115,7 +115,7 @@ public class UsuarioDA {
                         rs.getInt("codigo"),
                         rs.getString("nombre"),
                         rs.getString("autor"),
-                        rs.getDate("fechaPublicacion").toLocalDate(),
+                        rs.getDate("fecha_publicacion").toLocalDate(),
                         rs.getString("genero"),
                         rs.getString("idioma"),
                         rs.getString("ISBN"),
@@ -133,14 +133,14 @@ public class UsuarioDA {
         return libro;
     }
 
-    public static int agregarMaterial(int id) {
-        int lastId = -1;
+    public static int agregarMaterial(int tipo_material_id) {
+        int lastId =0;
 
-        String sql = "INSERT INTO Material (id) VALUES (?)";
+        String sql = "INSERT INTO Material (tipo_material_id) VALUES (?)";
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setInt(1, tipo_material_id);
             stmt.executeUpdate();
 
             String sql2 = "SELECT last_insert_rowid()";
@@ -150,38 +150,40 @@ public class UsuarioDA {
                     lastId = rs.getInt(1);
                 }
             }
+  
 
         } catch (SQLException e) {
             System.out.println("Error al agregar material: " + e.getMessage());
         }
-
-        return lastId;
+        
+        return tipo_material_id;
     }
 
-    public static boolean agregarLibro(Libro libro, int id) {
-        String sql = "INSERT INTO Libro (codigo, nombre, autor, fechaPublicacion, genero, idioma, ISBN, editorial, edicion) VALUES (?,?,?,?,?,?,?,?)";
+    public static boolean agregarLibro(Libro libro, int lastId) {
+        String sql = "INSERT INTO Libro (nombre, autor, fecha_publicacion, genero, idioma, ISBN, editorial, edicion) VALUES (?,?,?,?,?,?,?,?)";
 
-        libro.setCodigo(agregarMaterial(id));
+        libro.setCodigo(agregarMaterial(lastId ));
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, libro.getCodigo());
-            stmt.setString(2, libro.getNombre());
-            stmt.setString(3, libro.getAutor());
-            stmt.setString(4, libro.getFechaPublicacion().toString());
-            stmt.setString(5, libro.getGenero());
-            stmt.setString(6, libro.getIdioma());
-            stmt.setString(7, libro.getISBN());
-            stmt.setString(8, libro.getEditorial());
-            stmt.setString(9, libro.getEdicion());
+            stmt.setString(1, libro.getNombre());
+            stmt.setString(2, libro.getAutor());
+            stmt.setString(3, libro.getFecha_publicacion().toString());
+            stmt.setString(4, libro.getGenero());
+            stmt.setString(5, libro.getIdioma());
+            stmt.setString(6, libro.getISBN());
+            stmt.setString(7, libro.getEditorial());
+            stmt.setString(8, libro.getEdicion());
             
 
-            stmt.executeQuery();
+            stmt.execute();
             System.out.println("Se agrego libro");
-            agregarEjemplar(libro.getCodigo());
+            return true;
+            
+          
         } catch (SQLException e) {
             System.out.println("Error al agregar libro: " + e.getMessage());
         }
-        return true;
+        return false;
 
     }
 
@@ -204,13 +206,13 @@ public class UsuarioDA {
     }
 
     public static boolean actualizarLibro(Libro libro) {
-        String sql = "UPDATE Libro SET nombre=?, autor=?, fechaPublicacion=?, genero=?, idioma=?, ISBN=?, editorial=?, edicion=?, WHERE codigo=?";
+        String sql = "UPDATE Libro SET nombre=?, autor=?, fecha_publicacion=?, genero=?, idioma=?, ISBN=?, editorial=?, edicion=?, WHERE codigo=?";
 
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, libro.getNombre());
             stmt.setString(2, libro.getAutor());
-            stmt.setString(3, libro.getFechaPublicacion().toString());
+            stmt.setString(3, libro.getFecha_publicacion().toString());
             stmt.setString(4, libro.getGenero());
             stmt.setString(5, libro.getIdioma());
             stmt.setString(6, libro.getISBN());
@@ -310,10 +312,10 @@ public class UsuarioDA {
         return archivoMultimedia;
     }
     
-    public static boolean agregarArchivoMultimedia(ArchivoMultimedia archivoMultimedia, int id) {
+    public static boolean agregarArchivoMultimedia(ArchivoMultimedia archivoMultimedia, int lastId ) {
         String sql = "INSERT INTO ArchivoMultimedia (archivo_id, nombre, autor, fecha_publicacion, genero, idioma, ISBN, editorial, edicion) VALUES (?,?,?,?,?,?,?,?)";
 
-        archivoMultimedia.setCodigo(agregarMaterial(id));
+        archivoMultimedia.setCodigo(agregarMaterial(lastId));
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, archivoMultimedia.getArchivo_id());
@@ -440,19 +442,19 @@ public class UsuarioDA {
         return archivoDigital;
     }
 
-    public static boolean agregarArchivoDigital(ArchivoDigital archivoDigital, int id) {
-        String sql = "INSERT INTO ArchivoDigital (archivo_id, nombre, autor, formato, tamaño, fechaPublicacion, ruta) VALUES (?,?,?,?,?,?,?,?)";
+    public static boolean agregarArchivoDigital(ArchivoDigital archivoDigital, int lastId) {
+        String sql = "INSERT INTO ArchivoDigital (nombre, autor, formato, tamaño, fechaPublicacion, ruta) VALUES (?,?,?,?,?,?,?,?)";
 
-        archivoDigital.setCodigo(agregarMaterial(id));
+        archivoDigital.setCodigo(agregarMaterial(lastId));
         try (Connection conn = ConexionBD.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, archivoDigital.getArchivo_id());
-            stmt.setString(2, archivoDigital.getNombre());
-            stmt.setString(3, archivoDigital.getAutor());
-            stmt.setString(4, archivoDigital.getFormato());
-            stmt.setString(5, archivoDigital.getTamaño());
-            stmt.setString(6, archivoDigital.getFechaPublicacion().toString());
-            stmt.setString(7, archivoDigital.getRuta());
+        
+            stmt.setString(1, archivoDigital.getNombre());
+            stmt.setString(2, archivoDigital.getAutor());
+            stmt.setString(3, archivoDigital.getFormato());
+            stmt.setString(4, archivoDigital.getTamaño());
+            stmt.setString(5, archivoDigital.getFechaPublicacion().toString());
+            stmt.setString(6, archivoDigital.getRuta());
             
 
             stmt.executeQuery();

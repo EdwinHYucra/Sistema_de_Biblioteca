@@ -108,6 +108,21 @@ public class Docente extends Usuario implements IServicioPrestamos {
 
             }*/
     }
+
+    @Override
+    public boolean validarDisponibilidadReserva() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean solicitarReserva() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void cancelarReserva() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
 /* public boolean validarDisponibilidadReserva() {
@@ -158,3 +173,5 @@ public class Docente extends Usuario implements IServicioPrestamos {
     }
 
 }/*
+
+*/

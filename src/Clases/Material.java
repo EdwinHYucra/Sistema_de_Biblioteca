@@ -3,7 +3,7 @@ package Clases;
 
 public class Material {
     private int codigo;
-    private int tipo_Material_id;
+    private int tipo_material_id;
 
 
     public int getCodigo() {
@@ -14,18 +14,18 @@ public class Material {
         this.codigo = codigo;
     }
     
-    public int getTipo_Material_id() {
-        return tipo_Material_id;
+    public int getTipo_material_id() {
+        return tipo_material_id;
     }
 
-    public void setTipo_Material_id(int tipo_Material_id) {
-        this.tipo_Material_id = tipo_Material_id;
+    public void setTipo_material_id(int tipo_material_id) {
+        this.tipo_material_id = tipo_material_id;
     }
     
     
     public void mostrarInfo() {
        System.out.println("Codigo: "+codigo);
-       System.out.println("Tipo Material id: " + tipo_Material_id);
+       System.out.println("Tipo Material id: " + tipo_material_id);
     
     }
 

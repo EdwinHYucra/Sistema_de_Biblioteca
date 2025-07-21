@@ -4,22 +4,22 @@ import java.time.LocalDate;
 
 public class Libro extends Material {
 
-    private int libroID;
+    private int libro_id;
     private String nombre;
     private String autor;
-    private LocalDate fechaPublicacion;
+    private LocalDate fecha_publicacion;
     private String genero;
     private String idioma;
     private String ISBN;
     private String editorial;
     private String edicion;
 
-    public Libro(int libroID, String nombre, String autor, LocalDate fechaPublicacion, String genero, String idioma, String ISBN, String editorial, String edicion) {
+    public Libro(int libro_id, String nombre, String autor, LocalDate fecha_publicacion, String genero, String idioma, String ISBN, String editorial, String edicion) {
         super();
-        this.libroID = libroID;
+        this.libro_id = libro_id;
         this.nombre = nombre;
         this.autor = autor;
-        this.fechaPublicacion = fechaPublicacion;
+        this.fecha_publicacion = fecha_publicacion;
         this.genero = genero;
         this.idioma = idioma;
         this.ISBN = ISBN;
@@ -27,12 +27,12 @@ public class Libro extends Material {
         this.edicion = edicion;
     }
 
-    public int getLibroID() {
-        return libroID;
+    public int getLibro_id() {
+        return libro_id;
     }
 
-    public void setLibroID(int libroID) {
-        this.libroID = libroID;
+    public void setLibro_id(int libro_id) {
+        this.libro_id = libro_id;
     }
 
     public String getNombre() {
@@ -51,12 +51,12 @@ public class Libro extends Material {
         this.autor = autor;
     }
 
-    public LocalDate getFechaPublicacion() {
-        return fechaPublicacion;
+    public LocalDate getFecha_publicacion() {
+        return fecha_publicacion;
     }
 
-    public void setFechaPublicacion(LocalDate fechaPublicacion) {
-        this.fechaPublicacion = fechaPublicacion;
+    public void setFecha_publicacion(LocalDate fecha_publicacion) {
+        this.fecha_publicacion = fecha_publicacion;
     }
 
     public String getGenero() {
