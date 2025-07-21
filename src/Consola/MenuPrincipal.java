@@ -176,7 +176,7 @@ public class MenuPrincipal {
 
         while (activo) {
             System.out.println("\n=== MENÚ DOCENTE ===");
-            System.out.println("1. Ver información personal");
+            System.out.println("1. Ver catalogo");
             System.out.println("2. Reservar libro");
             System.out.println("3. Ver mis reservas");
             System.out.println("9. Cerrar sesión");
@@ -187,13 +187,11 @@ public class MenuPrincipal {
 
             switch (op) {
                 case 1:
-                    docente.mostrarInfo();
+                    docente.verCatalogoLibros();
                     break;
                 case 2:
-                    // Mostrar catálogo
-                    //docente.verCatalogoLibros();
-                    System.out.print("Ingrese el código del libro que desea reservar: ");
-                    String codigoSeleccionado = sc.nextLine();
+
+                    docente.solicitarReservaLibro();
                     //docente.solicitarReservaLibro(codigoSeleccionado);
                     break;
                 case 3:
