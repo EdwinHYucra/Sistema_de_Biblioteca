@@ -31,6 +31,14 @@ public class ReservaDeAmbiente extends Reserva implements IBloqueo {
         this.sala = sala;
     }
 
+    public ReservaDeAmbiente(String codigo_id, int duracion, Sala sala, int codigo, LocalDate fechaReserva, String estado, Usuario usuario) {
+        super(codigo, fechaReserva, estado, usuario);
+        this.codigo_id = codigo_id;
+        this.duracion = duracion;
+        this.sala = sala;
+    }
+    
+
     public String getCodigo_id() {
         return codigo_id;
     }

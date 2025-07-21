@@ -12,6 +12,7 @@ public class Sala {
     private int codigo;
     private String nombre;
     private int capacidadMax;
+    private String estado;
 
     // Constructor con validación
     public Sala(int codigo, String nombre, int capacidadMax) {
@@ -23,6 +24,22 @@ public class Sala {
         this.nombre = nombre;
         this.capacidadMax = capacidadMax;
     }
+
+    public Sala(int codigo, String nombre, int capacidadMax, String estado) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.capacidadMax = capacidadMax;
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
     // Getters y Setters
 
     public int getCodigo() {
