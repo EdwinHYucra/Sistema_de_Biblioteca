@@ -133,10 +133,11 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                         
                         if (usuarioDA.RegistarRecursoTecnologico(id_reserva, id_tablet, duracion)) {
                             
+                            
                             System.out.println("Se realizo la reserva con exito!\n");
                             
                             ReservaRecursoTecnologico resRecTec = usuarioDA.BuscarReservaRecursoTecnologico(id_reserva);
-                            
+                            usuarioDA.ModificarEstadoRecTec(resRecTec.getRecursoTecnologico().getCodigo());
                             resRecTec.mostrarInfo();
                         }
                         
@@ -168,6 +169,7 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                             
                             System.out.println("Se realizo la reserva con exito!\n");
                             ReservaRecursoTecnologico resRecTec = usuarioDA.BuscarReservaRecursoTecnologico(id_reserva);
+                            usuarioDA.ModificarEstadoRecTec(resRecTec.getRecursoTecnologico().getCodigo());
                             
                             resRecTec.mostrarInfo();
                         }
@@ -250,6 +252,8 @@ public class Alumno extends Usuario implements IServicioPrestamos {
                     System.out.println("Se realizo la reserva con exito!\n");
                     
                     ReservaDeAmbiente resAmb = usuarioDA.BuscarReservaAmbiente(id_reserva);
+                    
+                    usuarioDA.ModificarEstadoSala(resAmb.getSala().getCodigo());
                     resAmb.setListaAlumnos(listaalumnos);
                     resAmb.mostrarInfo();
                 }
