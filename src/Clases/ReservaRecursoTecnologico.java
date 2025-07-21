@@ -18,6 +18,13 @@ public class ReservaRecursoTecnologico extends Reserva {
         this.duracion = duracion;
         this.recursoTecnologico = recursoTecnologico;
     }
+
+    public ReservaRecursoTecnologico(int codigo_id, int duracion, RecursoTecnologico recursoTecnologico, int codigo, LocalDate fechaReserva, String estado, Usuario usuario) {
+        super(codigo, fechaReserva, estado, usuario);
+        this.codigo_id = codigo_id;
+        this.duracion = duracion;
+        this.recursoTecnologico = recursoTecnologico;
+    }
     
 
 

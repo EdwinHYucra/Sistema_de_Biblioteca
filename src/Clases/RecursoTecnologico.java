@@ -2,23 +2,23 @@ package Clases;
 
 public class RecursoTecnologico {
     
-    private int IDcodigo;
+    private int codigo;
     private String tipo;
     private String estado;
 //
 
-    public RecursoTecnologico(int IDcodigo, String tipo, String estado) {
-        this.IDcodigo = IDcodigo;
+    public RecursoTecnologico(int codigo, String tipo, String estado) {
+        this.codigo = codigo;
         this.tipo = tipo;
         this.estado = estado;
     }
 
-    public int getIDcodigo() {
-        return IDcodigo;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setIDcodigo(int IDcodigo) {
-        this.IDcodigo = IDcodigo;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getTipo() {

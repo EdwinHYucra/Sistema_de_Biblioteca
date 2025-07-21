@@ -140,7 +140,7 @@ public class MenuPrincipal {
             System.out.println("2. Reservar Libro");
             System.out.println("3. Reservar Salas");
             System.out.println("4. Reservar RecursoTecnologico");
-            System.out.println("4. Mis Reservas");
+            System.out.println("5. Mis Reservas");
             System.out.println("9. Cerrar sesión");
 
             System.out.print("Opción: ");
@@ -155,10 +155,10 @@ public class MenuPrincipal {
                     alumno.solicitarReservaLibro();
                     break;
                 case 3:
-                    alumno.Reservarsala();
+                    alumno.solicitarReservaAmbiente();
                     break;
                 case 4:
-                    alumno.ReservarRecursoTecnologico();
+                    alumno.solicitarReservaRecursoTecnologico();
                     break;
                 case 9:
                     System.out.println("Sesión cerrada.");

@@ -44,7 +44,7 @@ public class Computadora extends RecursoTecnologico implements IBloqueo {
     }
 
     public void mostrarInfo() {
-        System.out.println("ID Código: " + getIDcodigo());
+        System.out.println("ID Código: " + getCodigo());
         System.out.println("RAM: " + ram);
         System.out.println("Procesador: " + procesador);
         System.out.println("Estado: " + (bloqueada ? "Bloqueada" : "Desbloqueada"));

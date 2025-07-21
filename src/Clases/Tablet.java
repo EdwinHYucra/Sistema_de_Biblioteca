@@ -28,7 +28,7 @@ public class Tablet extends RecursoTecnologico {
     }
     
     public void mostrarInfo() {
-        System.out.println("ID Código: " + getIDcodigo());
+        System.out.println("ID Código: " + getCodigo());
         System.out.println("Modelo: " + modelo);
         //System.out.println("Stock: " + stock);
         System.out.println("Disponible: " + (VerificarDisponibilidad() ? "Sí" : "No"));
