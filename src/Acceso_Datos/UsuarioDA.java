@@ -25,7 +25,6 @@ public class UsuarioDA {
         this.conn = conn;
     }
 
-    //Login
     public Usuario autenticar(String codigo, String password, UsuarioDA usuarioDA) {
         Usuario usuario = null;
         String sql = "SELECT codigo, nombre, apellido, tipo_usuario_id FROM Usuario WHERE codigo=? AND contrasenia=?";
@@ -69,6 +68,7 @@ public class UsuarioDA {
         return usuario;
     }
 
+    // Alumno
     public List<Libro> obtenerLibros() {
         List<Libro> listaLibros = new ArrayList<>();
 
@@ -381,4 +381,142 @@ public class UsuarioDA {
             return null;
         }
     }
+    
+    //public ValidarRecursoTecnologico
+
+    //Docente
+    //Recepcionista
+    public Reserva buscarReserva(int idReserva) {
+
+        String sql = "Select id, fechaReserva, tipoReserva_id, estado_id,usuario_responsable_id"
+                + "From Reserva where id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idReserva);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                switch (rs.getInt("tipoReserva_id")) {
+                    case 1:
+                        return BuscarReservaLibro(idReserva);
+
+                    case 2:
+                        
+                        break;
+                    case 3:
+                        break;
+                }
+
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar Reserva Libro: " + e.getMessage());
+            return null;
+        }
+
+        System.out.println("No se encontró ninguna reserva con el ID: " + idReserva);
+        return null;
+    }
+
+    
+
+    // Este es el método interno para buscar un solo ReservaRecursoTecnologico por ID
+    /*private static ReservaRecursoTecnologico buscarReservaRecursoTecnologico(int reservaId) {
+        ReservaRecursoTecnologico reservaRecTec = null;
+        String sql = "SELECT RT.recurso_id, RT.fechaHoraInicio, RT.fechaHoraFin, RT.duracionHoras, "
+                + "R.id, R.fechaReserva, R.usuario_responsable_id, "
+                + "ER.estado, TR.tipo_reserva "
+                + "FROM Reserva R "
+                + "JOIN ReservaRecursoTecnologico RT ON R.id = RT.reserva_id "
+                + "JOIN EstadoReserva ER ON R.estado_id = ER.id "
+                + "JOIN TipoReserva TR ON R.tipoReserva_id = TR.id "
+                + "WHERE R.id = ? AND TR.tipo_reserva = 'Tecnológico'";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, reservaId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Usuario usuario = BuscarUsuario(rs.getString("usuario_responsable_id"));
+                RecursoTecnologico recursoTec = buscarRecursoTecnologico(rs.getInt("recurso_id")); // Usa el método mejorado
+
+                LocalDate fechaRes = LocalDate.parse(rs.getString("fechaReserva"));
+                LocalDateTime fechaHoraInicio = LocalDateTime.parse(rs.getString("fechaHoraInicio").replace(" ", "T"));
+                LocalTime horaInicio = fechaHoraInicio.toLocalTime();
+                LocalDateTime fechaHoraFin = LocalDateTime.parse(rs.getString("fechaHoraFin").replace(" ", "T"));
+                double duracion = rs.getDouble("duracionHoras");
+
+                if (usuario != null && recursoTec != null) {
+                    reservaRecTec = new ReservaRecursoTecnologico(
+                            "RecursoTecnologico",
+                            rs.getInt("id"),
+                            recursoTec,
+                            fechaRes,
+                            duracion,
+                            horaInicio,
+                            usuario
+                    );
+                    reservaRecTec.setEstado(rs.getString("estado_nombre"));
+                    reservaRecTec.setFechaHoraInicio(fechaHoraInicio);
+                    reservaRecTec.setFechaHoraFin(fechaHoraFin);
+                }
+            }
+        } catch (SQLException | DateTimeParseException e) {
+
+        }
+        return reservaRecTec;
+    }*/
+
+    /*// Este es el método interno para buscar un solo ReservaDeAmbiente por ID
+    private static ReservaDeAmbiente buscarReservaAmbiente(int reservaId) {
+        ReservaDeAmbiente reservaAmb = null;
+        String sql = "SELECT RA.sala_codigo, RA.fechaHoraInicio, RA.fechaHoraFin, RA.duracionHoras, "
+                + "R.id, R.fechaReserva, R.usuario_responsable_id, "
+                + "ER.estado, TR.tipo_reserva "
+                + "FROM Reserva R "
+                + "JOIN ReservaAmbiente RA ON R.id = RA.reserva_id "
+                + "JOIN EstadoReserva ER ON R.estado_id = ER.id "
+                + "JOIN TipoReserva TR ON R.tipoReserva_id = TR.id "
+                + "WHERE R.id = ? AND TR.tipo_reserva = 'Ambiente'";
+
+        try (Connection conn = ConexionBD.conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, reservaId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Usuario usuario = BuscarUsuario(rs.getString("usuario_responsable_id"));
+                Sala sala = buscarSala(rs.getInt("sala_codigo"));
+
+                LocalDate fechaRes = LocalDate.parse(rs.getString("fechaReserva"));
+                LocalDateTime fechaHoraInicio = LocalDateTime.parse(rs.getString("fechaHoraInicio").replace(" ", "T"));
+                LocalTime horaInicio = fechaHoraInicio.toLocalTime();
+                LocalDateTime fechaHoraFin = LocalDateTime.parse(rs.getString("fechaHoraFin").replace(" ", "T"));
+                double duracion = rs.getDouble("duracionHoras");
+                int tiempoEnMinutos = (int) (duracion * 60);
+
+                if (usuario != null && sala != null) {
+                    reservaAmb = new ReservaDeAmbiente(
+                            rs.getInt("id"),
+                            tiempoEnMinutos,
+                            sala,
+                            fechaRes,
+                            duracion,
+                            horaInicio,
+                            usuario
+                    );
+                    reservaAmb.setEstado(rs.getString("estado_nombre"));
+                    reservaAmb.setFechaHoraInicio(fechaHoraInicio);
+                    reservaAmb.setFechaHoraFin(fechaHoraFin);
+                }
+            }
+        } catch (SQLException | DateTimeParseException e) {
+        }
+        return reservaAmb;
+    }*/
 }

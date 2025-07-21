@@ -180,23 +180,16 @@ public class Alumno extends Usuario implements IServicioPrestamos {
 
     //Metodos
     public void verCatalogoLibros() {
-        System.out.println("--- Catálogo de la sala del docente ---");
+        System.out.println("--- Catálogo de libros ---");
 
         List<Libro> listaLibros = usuarioDA.obtenerLibros();
 
         for (Libro libro : listaLibros) {
-            System.out.println("Código: " + libro.getCodigo() + libro.getNombre());
+            System.out.println("Código: " + libro.getCodigo()+ " Nombre: " + libro.getNombre());
         }
-        /*if (listaLibros.isEmpty()) {
-            System.out.println("No hay libros en la sala.");
-        } else {
-            for (Libro libro : listaLibros) {
-                System.out.println("Código: " + libro.getCodigo()+ libro.getNombre());
-            }
-        }*/
     }
 
-    public boolean solicitarReservaLibro() {
+    public void solicitarReservaLibro() {
 
         Scanner sc = new Scanner(System.in);
 
@@ -231,8 +224,6 @@ public class Alumno extends Usuario implements IServicioPrestamos {
 
             }
         }
-
-        return true;
     }
 
     public boolean validarDisponibilidadReserva() {
